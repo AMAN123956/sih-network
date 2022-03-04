@@ -1,6 +1,8 @@
 import React,{useState} from 'react'
 import { Tabs,Tab } from "react-bootstrap"
 
+import Startup from '../Startups/index';
+
 const NetworkTab = () => {
     const [key, setKey] = useState('home');
 
@@ -11,13 +13,13 @@ const NetworkTab = () => {
             onSelect={(k) => setKey(k)}
             className="mb-3"
         >
-            <Tab eventKey="startups" title="startups">
-                Startups
+            <Tab eventKey="startups" title="Startups">
+                <Startup />
             </Tab>
-            <Tab eventKey="mentors" title="Profile">
+            <Tab eventKey="mentors" title="Mentors">
                 Mentors
             </Tab>
-            <Tab eventKey="investors" title="Contact">
+            <Tab eventKey="investors" title="Investors">
                 Investors
             </Tab>
         </Tabs>
