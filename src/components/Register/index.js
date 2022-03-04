@@ -13,12 +13,17 @@ function Register() {
     const [password, setpassword] = useState("");
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [address,setAddress] = useState("");
+    const [address, setAddress] = useState("");
     const [user, setuser] = useState(null);
-    const [confirmPassword, setconfirmPassword] = useState("");
+    const [sector, setSector] = useState("");
+    const [industry, setIndustry] = useState("");
+    const [startupId,setStartupId] = useState("");
+    const [userType, setUserType] = useState("");
     const [error, seterror] = useState(null);
+    // Extra Field for Startup Verification Id
+    const [startupIdInput, setStartupIdInput] = useState(false)
     const history = useHistory();
-
+    console.log("hy" + userType)
     const localData = localStorage.getItem("driveUserInfo");
     const userInfo = localData ? JSON.parse(localData) : null;
     useEffect(() => {
@@ -34,52 +39,57 @@ function Register() {
         }, 3000);
     }
 
+    const setUserTypeFunc = (e) => {
+        setUserType(e.target.value)
+        if (e.target.value === 'startup') {
+            setStartupIdInput(true);
+        }
+        else {
+            setStartupIdInput(false);
+        }
+    }
     const submitRegister = async (e) => {
         e.preventDefault();
-        if (password !== confirmPassword) {
-            seterror("Password Mismatch");
-        } else {
-            try {
-                setLoading(true);
-                const { data } = await axios.post(`${url}/api/users`, {
-                    name: name,
-                    email,
-                    password,
-                });
+        try {
+            setLoading(true);
+            const { data } = await axios.post(`${url}/api/users`, {
+                name: name,
+                email,
+                password,
+            });
 
-                setLoading(false);
-                if (data && data.success) {
-                    localStorage.setItem(
-                        "driveUserInfo",
-                        JSON.stringify(data.data)
-                    );
-                    setSuccess(true);
-                    setuser(data.data);
+            setLoading(false);
+            if (data && data.success) {
+                localStorage.setItem(
+                    "driveUserInfo",
+                    JSON.stringify(data.data)
+                );
+                setSuccess(true);
+                setuser(data.data);
+            } else {
+                if (data) {
+                    seterror(data.message);
                 } else {
-                    if (data) {
-                        seterror(data.message);
-                    } else {
-                        seterror("Network error");
-                    }
+                    seterror("Network error");
                 }
-            } catch (e) {
-                setLoading(false);
-                seterror("Network Error");
             }
+        } catch (e) {
+            setLoading(false);
+            seterror("Network Error");
         }
+
     };
 
     return (
-        <div className="container d-flex  justify-content-center align-items-center ">
+        <div className="container d-flex justify-content-center align-items-center" style={{ "overflowY": "auto" }}>
             <div className={styles.leftSection}>
-                <h2 className={styles.logoHeading}>Drive</h2>
+                <h2 className={styles.logoHeading}>StartUp</h2>
                 <img
                     src={registerImg}
                     className={styles.registerImg}
                     alt="display_img"
                 />
             </div>
-
             <div
                 className="form-container my-1 py-4 px-4"
                 id="formBox"
@@ -115,9 +125,6 @@ function Register() {
                                     setemail(e.target.value);
                                 }}
                             />
-                            <Form.Text className="text-muted">
-                                We'll never share your email with anyone else.
-                            </Form.Text>
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
@@ -128,18 +135,6 @@ function Register() {
                                 value={password}
                                 onChange={(e) => {
                                     setpassword(e.target.value);
-                                }}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Confirm Password</Form.Label>
-                            <Form.Control
-                                type="password"
-                                placeholder="Password"
-                                required
-                                value={confirmPassword}
-                                onChange={(e) => {
-                                    setconfirmPassword(e.target.value);
                                 }}
                             />
                         </Form.Group>
@@ -155,6 +150,49 @@ function Register() {
                                 }}
                             />
                         </Form.Group>
+                        <Form.Group controlId="formBasicUserType">
+                            <Form.Label>User Type &nbsp;</Form.Label>
+                            <br />
+                            <select className={styles.selectOption} onChange={setUserTypeFunc
+                            }>
+                                <option value="entrepreneur">Entrepreneur</option>
+                                <option value="mentor">Mentor</option>
+                                <option value="investor">Investor</option>
+                                <option value="incubator">Incubator</option>
+                                <option value="startup">Startup</option>
+                            </select>
+                        </Form.Group>
+                        <Form.Group controlId="formBasicIndustry">
+                            <Form.Label>Industry &nbsp;</Form.Label>
+                            <br />
+                            <select className={styles.selectOption} onChange={(e) => {
+                                setIndustry(e.target.value);
+                            }}>
+                                <option value="advertising">Advertising</option>
+                                <option value="aeronautics">Aeronautics</option>
+                                <option value="agriculture">Agriculture</option>
+                            </select>
+                        </Form.Group>
+                        <Form.Group controlId="formBasicSector">
+                            <Form.Label>Sector &nbsp;</Form.Label>
+                            <select className={styles.selectOption} onChange={(e) => {
+                                setSector(e.target.value);
+                            }}>
+                                <option>Agriculture</option>
+                            </select>
+                        </Form.Group>
+                        {startupIdInput ? <Form.Group controlId="formBasicId">
+                            <Form.Label>Startup Id</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter Startup Id"
+                                required
+                                value={startupId}
+                                onChange={(e) => {
+                                    setStartupId(e.target.value);
+                                }}
+                            />
+                        </Form.Group> : null}
                         {loading ? (
                             <Loader1></Loader1>
                         ) : (
