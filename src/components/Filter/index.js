@@ -14,32 +14,70 @@ import 'react-accessible-accordion/dist/fancy-example.css';
 import { Country, State, City } from 'country-state-city';
 console.log(Country.getAllCountries())
 const states = State.getStatesOfCountry('IN')
-console.log(states)
+const cities = City.getCitiesOfCountry('IN')
+
 const Filter = () => {
-let [industry,updateIndustry] = useState([]);
-let [sector,updateSector] = useState([]);
+    let [industry, updateIndustry] = useState([]);
+    let [sector, updateSector] = useState([]);
+    let [state,updateState] = useState([])
+    let sectorFilterTodos = [];
+    let industryFilterTodos = [];
+    let stateFilterTodos = [];
+    const fetchData = () => {
+        console.log('network')
+        console.log(JSON.stringify(sector))
+    }
 
-const fetchData = () =>{
-    console.log('networl')
-    console.log(sector)
-}
-
-    const sectorFilter = (e) =>{
+    const industryFilter = (e) => {
         console.log(e.target.value)
-        if(sector.indexOf(e.target.value)){
-            sector = sector.filter(item => item != e.target.value)
-            updateSector(sector);
+
+        if (industry.includes(e.target.value)) {
+            industryFilterTodos = industry.filter((t) => t !== e.target.value);
+            localStorage.setItem("industry", JSON.stringify(industryFilterTodos));
+            updateIndustry(industryFilterTodos)
         }
-        else{
-            
-        updateSector(...sector,e.target.value)
+        else {
+            industryFilterTodos = [...industry];
+            industryFilterTodos.push(e.target.value);
+            localStorage.setItem("industry", JSON.stringify(industryFilterTodos));
+            updateIndustry(industryFilterTodos)
         }
-        localStorage.setItem("filter",sector);
         fetchData();
     }
 
 
-   
+    const sectorFilter = (e) => {
+        console.log(e.target.value)
+        if (sector.includes(e.target.value)) {
+            sectorFilterTodos = sector.filter((t) => t !== e.target.value);
+            localStorage.setItem("sector", JSON.stringify(sectorFilterTodos));
+            updateSector(sectorFilterTodos)
+        }
+        else {
+            sectorFilterTodos = [...sector];
+            sectorFilterTodos.push(e.target.value);
+            localStorage.setItem("sector", JSON.stringify(sectorFilterTodos));
+            updateSector(sectorFilterTodos)
+        }
+        fetchData();
+    }
+
+    const stateFilter = (e)=>{
+        console.log(e.target.value)
+        if (state.includes(e.target.value)) {
+            stateFilterTodos = sector.filter((t) => t !== e.target.value);
+            localStorage.setItem("state", JSON.stringify(stateFilterTodos));
+            updateState(stateFilterTodos)
+        }
+        else {
+            stateFilterTodos = [...state];
+            stateFilterTodos.push(e.target.value);
+            localStorage.setItem("state", JSON.stringify(stateFilterTodos));
+            updateState(stateFilterTodos)
+        }
+    }
+
+
     return (
         <div className={styles.container1}>
             <div className={styles.section1}>
@@ -57,16 +95,16 @@ const fetchData = () =>{
                         </AccordionItemHeading>
                         <AccordionItemPanel>
                             <Form.Group className="mb-1" controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" label="Advertising" value="advertising" />
+                                <Form.Check type="checkbox" onChange={industryFilter} label="Advertising" value="advertising" />
                             </Form.Group>
                             <Form.Group className="mb-1" controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" label="Agriculture" value="agriculture" />
+                                <Form.Check type="checkbox" onChange={industryFilter} label="Agriculture" value="agriculture" />
                             </Form.Group>
                             <Form.Group className="mb-1" controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" label="Aeronautics ,Defence" value="defence" />
+                                <Form.Check type="checkbox" onChange={industryFilter} label="Aeronautics ,Defence" value="defence" />
                             </Form.Group>
                             <Form.Group className="mb-1" controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" label="Ai" value="ai" />
+                                <Form.Check type="checkbox" onChange={industryFilter} label="Ai" value="ai" />
                             </Form.Group>
                         </AccordionItemPanel>
                     </AccordionItem>
@@ -84,13 +122,13 @@ const fetchData = () =>{
                                 <Form.Check type="checkbox" onChange={sectorFilter} label="Defence Equipment" value="defence" />
                             </Form.Group>
                             <Form.Group className="mb-1" controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" onChange={sectorFilter} label="Drones" value="" />
+                                <Form.Check type="checkbox" onChange={sectorFilter} label="Drones" value="drones" />
                             </Form.Group>
                             <Form.Group className="mb-1" controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" onChange={sectorFilter} label="Online Classified" value="" />
+                                <Form.Check type="checkbox" onChange={sectorFilter} label="Online Classified" value="classified" />
                             </Form.Group>
                             <Form.Group className="mb-1" controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" onChange={sectorFilter} label="Space Technology" value="" />
+                                <Form.Check type="checkbox" onChange={sectorFilter} label="Space Technology" value="space" />
                             </Form.Group>
                         </AccordionItemPanel>
                     </AccordionItem>
@@ -101,7 +139,7 @@ const fetchData = () =>{
                             </AccordionItemButton>
                         </AccordionItemHeading>
                         <AccordionItemPanel>
-
+                              
                         </AccordionItemPanel>
                     </AccordionItem>
                     <AccordionItem>
@@ -113,7 +151,7 @@ const fetchData = () =>{
                         <AccordionItemPanel>
                             {states.map(item => (
                                 <Form.Group className="mb-1" controlId="formBasicCheckbox">
-                                    <Form.Check type="checkbox" label={item.name} value={item.isoCode} />
+                                    <Form.Check type="checkbox" label={item.name} value={item.isoCode} onChange={stateFilter} />
                                 </Form.Group>
                             ))}
                         </AccordionItemPanel>

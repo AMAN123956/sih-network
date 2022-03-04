@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './styles.module.css'
 import Filter from '../Filter/index'
+import NetworkTab from '../Tabs/index'
 
 function Home() {
     return (
@@ -12,7 +13,9 @@ function Home() {
                 <div className={styles.leftSection}>
                     <Filter />
                 </div>
-                <div className={styles.rightSection}></div>
+                <div className={styles.rightSection}>
+                <NetworkTab />    
+                </div>
             </div>
         </div>
     )

@@ -4,6 +4,7 @@
     align-items: flex-start;
     justify-content: center;
     border:1px solid black;
+    width: 100vw;
 }
 
 .section1{
@@ -18,4 +19,16 @@
 }
 .section1 h2{
     font-size: 3.3rem;
+}
+.section2{
+    justify-content: center;
+    align-items: flex-start;
+    display: flex;
+}
+.section2 .leftSection{
+    width: 20vw;
+}
+.section2 .rightSection{
+    margin-left: 5%;
+    width: 80vw;
 }
