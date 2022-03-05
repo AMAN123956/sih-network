@@ -7,14 +7,14 @@ import { url } from "../../utilities";
 
 const BlindRegister = () => {
     const [step, updateStep] = useState(0);
-    const [name, setname] = useState(null);
+    const [name, setname] = useState("");
     const [email, setemail] = useState("");
     const [number, setnumber] = useState(null)
     const [industry, setindustry] = useState(null)
     const [sector, setsector] = useState(null)
     const [password, setpassword] = useState("");
     const [startupId, setstartupId] = useState(null)
-    const [userType, setUserType] = useState('entrepreneur');
+    const [userType, setUserType] = useState(null);
     const [startupDesc, setstartupDesc] = useState(null)
     const [startupAddress, setstartupAddress] = useState(null)
 
@@ -27,7 +27,7 @@ const BlindRegister = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const history = useHistory();
-    console.log("hy" + userType)
+ 
     const localData = localStorage.getItem("driveUserInfo");
     const userInfo = localData ? JSON.parse(localData) : null;
 
@@ -45,11 +45,9 @@ const BlindRegister = () => {
         setemail(e.target.value)
     }
 
-    const submitHandler = async () => {
+    const submitHandler = async (e) => {
         try {
-            console.log('hello')
-            console.log('n'+name)
-            if (!name) {
+            if (name===null) {
                 handleShow();
             }
             else if(!email){
@@ -87,17 +85,17 @@ const BlindRegister = () => {
     }
 
     document.addEventListener('keydown', (e) => {
-        console.log('heye')
-        console.log(typeof(e.key))
+
+        console.log(e.key)
         console.log(e.keyCode)
-        console.log(typeof(step))
         // Assign keys for step1 selection
         if (step === 0) {
-            if (e.keyCode === 69) {
+            console.log('step 0')
+            if (e.key === 'e' || e.key === 'E') {
                 setUserType('entrepreneur')
             }
-            else if (e.keyCode === 83) {
-               setUserType('startup')
+            else if (e.key === 's' || e.key === 'S') {
+                setUserType('startup')
             }
             else if (e.key === 'i' || e.key === 'I') {
                 setUserType('investor')
@@ -105,7 +103,6 @@ const BlindRegister = () => {
             else if (e.key === 'Shift') {
                 nextStep();
             }
-            else{ console.log('bad key')}
 
             // else if (e.key==='Control') {
             //     prevStep();
@@ -157,7 +154,7 @@ const BlindRegister = () => {
 
             }
 
-            if (e.key === 'Control') {
+            else if (e.key === 'Control') {
                 prevStep()
             }
             else {
@@ -220,7 +217,7 @@ const BlindRegister = () => {
         <div className={styles.container1}>
             <div className={styles.formSection}>
                 {step === 0 ?
-                    <div className="d-flex" id="one" >
+                    <div className="d-flex" id="one">
                         <div className={styles.leftSection}>
                             <Form.Group controlId="formBasicUserType">
                                 <Form.Label className={styles.formLabel}>Select User Type &nbsp;</Form.Label>
