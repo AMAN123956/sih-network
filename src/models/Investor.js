@@ -25,6 +25,10 @@ const investorSchema = new mongoose.Schema({
 			type: String,
 		},
 	],
+	mentor: {
+		type: Boolean,
+		default: false,
+	},
 	password: {
 		type: String,
 		required: true,

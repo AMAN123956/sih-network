@@ -14,7 +14,6 @@ app.use(cors());
 const PORT = process.env.PORT || 5000;
 
 app.use(morgan("dev"));
-app.use("/user", router);
 connectDB()
 	.then((conn) => {
 		console.log(

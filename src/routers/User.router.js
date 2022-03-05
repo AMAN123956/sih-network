@@ -1,12 +1,18 @@
 const {
 	register,
 	login,
-	fetchDetails,
+	getOne,
+	get,
+	update,
 } = require("../controllers/user.controller");
+const { protect } = require("../middleware/authMiddleware");
 
 const router = require("express").Router();
+
 router.route("/").post(register);
 router.route("/login").post(login);
-router.route("/").get(fetchDetails);
+router.route("/:id").get(getOne);
+router.route("/").get(get);
+router.route("/:id").put(protect, update);
 
-module.exports = { router };
+module.exports = router;

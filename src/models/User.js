@@ -6,32 +6,23 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		address: {
+		number: {
 			type: String,
+			required: true,
+			unique: true,
 		},
 		image: {
-			type: String,
-		},
-		tags: {
 			type: String,
 		},
 		password: {
 			type: String,
 			required: true,
 		},
-		type: {
-			type: String,
-			// enum: [
-			// 	"Investors",
-			// 	"Mentors",
-			// 	"Accelerators",
-			// 	"Corporates",
-			// 	"Incubators",
-			// ],
-		},
-		activated: {
-			type: Boolean,
-		},
+		interest: [
+			{
+				type: String,
+			},
+		],
 	},
 	{
 		timestamps: true,

@@ -3,8 +3,8 @@ const generateToken = require("../utils/generateToken");
 
 const register = async (req, res) => {
 	try {
-		const { name, address, image, tags, type, password } = req.body;
-		if (!name || !password || !type) {
+		const { name, number, image, password, interest } = req.body;
+		if (!name || !number || !password) {
 			return res.status(400).send({
 				success: false,
 				error: "Missing fields",
@@ -12,49 +12,44 @@ const register = async (req, res) => {
 		}
 		const user = new User({
 			name,
-			address,
+			number,
 			image,
-			tags,
-			type,
 			password,
+			interest,
 		});
-		const preUser = await User.find({ name, type });
-		if (preUser.length > 0) {
-			return res.status(400).send({
-				success: false,
-				error: "Already exists",
-			});
+		const preUser = await User.findOne({ number });
+		if (preUser) {
+			res.statusCode = 400;
+			throw new Error("Already exists");
 		}
 
 		const savedUser = await user.save();
 		res.status(200).send({
 			success: true,
-			data: savedUser,
+			data: {
+				name,
+				number,
+				image,
+			},
 		});
 	} catch (e) {
-		console.log(e);
-		return res.status(500).send({
-			success: false,
-			error: "Server error",
-		});
+		next(e);
 	}
 };
 
 const login = async (req, res) => {
 	try {
-		const { name, type, password } = req.body;
-		if (!name || !password || !type) {
+		const { number, password } = req.body;
+		if (!number || !password) {
 			return res.status(400).send({
 				success: false,
 				error: "Missing fields",
 			});
 		}
-		const user = await User.findOne({ name, type }).select("-__v");
+		const user = await User.findOne({ number }).select("-__v");
 		if (!user || !(await user.matchPassword(password))) {
-			return res.status(400).send({
-				success: false,
-				error: "Wrong name or password",
-			});
+			res.statusCode = 400;
+			throw new Error("Wrong number or password");
 		}
 		const token = generateToken(user._id);
 		const data = JSON.parse(JSON.stringify(user));
@@ -66,32 +61,75 @@ const login = async (req, res) => {
 			data,
 		});
 	} catch (e) {
-		console.log(e);
-		res.send({
-			success: false,
-			error: "Server error",
-		});
+		next(e);
 	}
 };
 
-const fetchDetails = async (req, res) => {
+const getOne = async (req, res, next) => {
 	try {
-		const filters = ["name", "type", "tags", "type", "activated"];
-		const query = JSON.parse(JSON.stringify(req.query));
-		for (let key in query) {
-			if (!filters.includes(key)) delete query[key];
+		const { id } = req.params;
+		const user = await User.findById(id).select("-password");
+		if (!user) {
+			res.statusCode = 400;
+			throw new Error("No such user");
 		}
-		const user = await User.find(query).select(["-password", "-__v"]);
-		res.status(200).send({
+		res.send({
 			success: true,
 			data: user,
 		});
 	} catch (e) {
-		return res.status(500).send({
-			success: false,
-			error: "Server error",
-		});
+		next(e);
 	}
 };
 
-module.exports = { register, login, fetchDetails };
+const get = async (req, res, next) => {
+	try {
+		const QRY = req.query;
+		const users = await User.find(QRY).select("-password");
+		res.send({
+			success: true,
+			data: users,
+		});
+	} catch (e) {
+		next(e);
+	}
+};
+
+const update = async (req, res, next) => {
+	try {
+		const user = req.user;
+		const { name, number, image, password, interest } = req.body;
+		if (user._id !== req.params.id) {
+			res.statusCode = 401;
+			throw new Error("Not authorized");
+		}
+
+		const preUser = await User.findOne({ number });
+		if (preUser) {
+			res.statusCode = 400;
+			throw new Error("Already exists");
+		}
+
+		user.name = name || user.name;
+		user.number = number || user.number;
+		user.image = image || user.image;
+		user.password = password || user.password;
+		user.interest = interest || user.interest;
+
+		await user.save();
+
+		res.send({
+			success: true,
+			data: {
+				name,
+				number,
+				image,
+				interest,
+			},
+		});
+	} catch (e) {
+		next(e);
+	}
+};
+
+module.exports = { register, login, getOne, get, update };

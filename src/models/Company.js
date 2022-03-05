@@ -41,6 +41,10 @@ const companySchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	activated: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 companySchema.methods.matchPassword = async function (enteredPassword) {
