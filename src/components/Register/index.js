@@ -13,12 +13,13 @@ function Register() {
     const [password, setpassword] = useState("");
     const [address, setAddress] = useState("");
     const [user, setuser] = useState(null);
+    const [number, setnumber] = useState(null)
     const [sector, setSector] = useState("");
     const [industry, setIndustry] = useState("");
     const [startupId, setStartupId] = useState("");
-    const [userType, setUserType] = useState("");
+    const [userType, setUserType] = useState("home");
     const [startupDesc, setStartupDesc] = useState("");
-    const [startupStage,setStartupStage] = useState("");
+    const [startupStage, setStartupStage] = useState("");
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, seterror] = useState(null);
@@ -44,7 +45,7 @@ function Register() {
         setUserType(e.target.value)
     }
 
-    const setStageTypeFunc = (e) =>{
+    const setStageTypeFunc = (e) => {
         setStartupStage(e.target.value)
     }
 
@@ -102,59 +103,11 @@ function Register() {
                 {error && <Message variant={"danger"}>{error}</Message>}
                 <div className="mt-0" style={{ height: "100%" }}>
                     <Form onSubmit={submitRegister}>
-                        <Form.Group controlId="formBasicName">
-                            <Form.Label>Username</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter Username"
-                                required
-                                value={name}
-                                onChange={(e) => {
-                                    setname(e.target.value);
-                                }}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="formBasicEmail">
-                            <Form.Label>Email address</Form.Label>
-                            <Form.Control
-                                type="email"
-                                placeholder="Enter email"
-                                required
-                                value={email}
-                                onChange={(e) => {
-                                    setemail(e.target.value);
-                                }}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control
-                                type="password"
-                                placeholder="Password"
-                                required
-                                value={password}
-                                onChange={(e) => {
-                                    setpassword(e.target.value);
-                                }}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="formBasicAddress">
-                            <Form.Label>Enter Your Address</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Noida, UP..."
-                                required
-                                value={address}
-                                onChange={(e) => {
-                                    setAddress(e.target.value);
-                                }}
-                            />
-                        </Form.Group>
                         <Form.Group controlId="formBasicUserType">
-                            <Form.Label>User Type &nbsp;</Form.Label>
+                            <Form.Label>Select User Type &nbsp;</Form.Label>
                             <br />
                             <select className={styles.selectOption} onChange={setUserTypeFunc
-                            }>
+                            } required>
                                 <option value="entrepreneur">Entrepreneur</option>
                                 <option value="mentor">Mentor</option>
                                 <option value="investor">Investor</option>
@@ -162,66 +115,127 @@ function Register() {
                                 <option value="startup">Startup</option>
                             </select>
                         </Form.Group>
-                        <Form.Group controlId="formBasicIndustry">
-                            <Form.Label>Industry &nbsp;</Form.Label>
-                            <br />
-                            <select className={styles.selectOption} onChange={(e) => {
-                                setIndustry(e.target.value);
-                            }}>
-                                <option value="advertising">Advertising</option>
-                                <option value="aeronautics">Aeronautics</option>
-                                <option value="agriculture">Agriculture</option>
-                            </select>
-                        </Form.Group>
-                        <Form.Group controlId="formBasicSector">
-                            <Form.Label>Sector &nbsp;</Form.Label>
-                            <select className={styles.selectOption} onChange={(e) => {
-                                setSector(e.target.value);
-                            }}>
-                                <option>Agriculture</option>
-                            </select>
-                        </Form.Group>
-                        {userType === 'startup' ? <Form.Group controlId="formBasicId">
-                            <Form.Label>Startup Id</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter Startup Id"
-                                required
-                                value={startupId}
-                                onChange={(e) => {
-                                    setStartupId(e.target.value);
-                                }}
-                            />
+                        {userType !== '' ? <div>
+                            <Form.Group controlId="formBasicName">
+                                <Form.Label>Username</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter Username"
+                                    required
+                                    value={name}
+                                    onChange={(e) => {
+                                        setname(e.target.value);
+                                    }}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="formBasicEmail">
+                                <Form.Label>Email address</Form.Label>
+                                <Form.Control
+                                    type="email"
+                                    placeholder="Enter email"
+                                    required
+                                    value={email}
+                                    onChange={(e) => {
+                                        setemail(e.target.value);
+                                    }}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="formBasicNumber">
+                                <Form.Label>Number</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter Mobile Number"
+                                    required
+                                    value={number}
+                                    onChange={(e) => {
+                                        setnumber(e.target.value);
+                                    }}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="formBasicPassword">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    placeholder="Password"
+                                    required
+                                    value={password}
+                                    onChange={(e) => {
+                                        setpassword(e.target.value);
+                                    }}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="formBasicIndustry">
+                                <Form.Label>Industry &nbsp;</Form.Label>
+                                <br />
+                                <select className={styles.selectOption} onChange={(e) => {
+                                    setIndustry(e.target.value);
+                                }}>
+                                    <option value="advertising">Advertising</option>
+                                    <option value="aeronautics">Aeronautics</option>
+                                    <option value="agriculture">Agriculture</option>
+                                </select>
+                            </Form.Group>
+                            <Form.Group controlId="formBasicSector">
+                                <Form.Label>Sector &nbsp;</Form.Label>
+                                <select className={styles.selectOption} onChange={(e) => {
+                                    setSector(e.target.value);
+                                }}>
+                                    <option>Agriculture</option>
+                                </select>
+                            </Form.Group>
+                            {userType === 'startup' ? <Form.Group controlId="formBasicId">
+                                <Form.Label>Startup Id</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter Startup Id"
+                                    required
+                                    value={startupId}
+                                    onChange={(e) => {
+                                        setStartupId(e.target.value);
+                                    }}
+                                />
 
-                            <Form.Label className="my-1">Startup Description</Form.Label>
-                            <Form.Control as="textarea" rows={3} placeholder="Enter Startup Description"
-                                required
-                                value={startupDesc}
-                                onChange={(e) => {
-                                    setStartupDesc(e.target.value);
-                                }} />
-                            <Form.Label className="my-1">Stage &nbsp;</Form.Label>
-                            <br />
-                            <select className={styles.selectOption} onChange={setStageTypeFunc
-                            }>
-                                <option value="ideation">Ideation</option>
-                                <option value="validation">Validation</option>
-                                <option value="tracation">Early Tracation</option>
-                                <option value="scaling">Scaling</option>
-                               
-                            </select>
-                        </Form.Group> : null}
-                        {loading ? (
-                            <Loader1></Loader1>
-                        ) : (
-                            <Button
-                                type="submit"
-                                className={styles.btn}
-                                disabled={loading}
-                            >
-                                Signup
-                            </Button>
-                        )}
+                                <Form.Label className="my-1">Startup Description</Form.Label>
+                                <Form.Control as="textarea" rows={3} placeholder="Enter Startup Description"
+                                    required
+                                    value={startupDesc}
+                                    onChange={(e) => {
+                                        setStartupDesc(e.target.value);
+                                    }} />
+                                <Form.Label className="my-1">Stage &nbsp;</Form.Label>
+                                <br />
+                                <select className={styles.selectOption} onChange={setStageTypeFunc
+                                }>
+                                    <option value="ideation">Ideation</option>
+                                    <option value="validation">Validation</option>
+                                    <option value="tracation">Early Tracation</option>
+                                    <option value="scaling">Scaling</option>
+
+                                </select>
+                                <Form.Label>Enter Your Address</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Noida, UP..."
+                                    required
+                                    value={address}
+                                    onChange={(e) => {
+                                        setAddress(e.target.value);
+                                    }}
+                                />
+                            </Form.Group> : null}
+                            {loading ? (
+                                <Loader1></Loader1>
+                            ) : (
+                                <Button
+                                    type="submit"
+                                    className={styles.btn}
+                                    disabled={loading}
+                                >
+                                    Signup
+                                </Button>
+                            )}
+                        </div> : null}
+
                     </Form>
                     <div className="mt-3">
                         <p>
@@ -230,8 +244,8 @@ function Register() {
                         </p>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }
 
