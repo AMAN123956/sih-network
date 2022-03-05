@@ -11,17 +11,18 @@ function Register() {
     const [name, setname] = useState("");
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
-    const [success, setSuccess] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [address, setAddress] = useState("");
     const [user, setuser] = useState(null);
     const [sector, setSector] = useState("");
     const [industry, setIndustry] = useState("");
-    const [startupId,setStartupId] = useState("");
+    const [startupId, setStartupId] = useState("");
     const [userType, setUserType] = useState("");
+    const [startupDesc, setStartupDesc] = useState("");
+    const [startupStage,setStartupStage] = useState("");
+    const [success, setSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [error, seterror] = useState(null);
-    // Extra Field for Startup Verification Id
-    const [startupIdInput, setStartupIdInput] = useState(false)
+
     const history = useHistory();
     console.log("hy" + userType)
     const localData = localStorage.getItem("driveUserInfo");
@@ -41,13 +42,12 @@ function Register() {
 
     const setUserTypeFunc = (e) => {
         setUserType(e.target.value)
-        if (e.target.value === 'startup') {
-            setStartupIdInput(true);
-        }
-        else {
-            setStartupIdInput(false);
-        }
     }
+
+    const setStageTypeFunc = (e) =>{
+        setStartupStage(e.target.value)
+    }
+
     const submitRegister = async (e) => {
         e.preventDefault();
         try {
@@ -181,7 +181,7 @@ function Register() {
                                 <option>Agriculture</option>
                             </select>
                         </Form.Group>
-                        {startupIdInput ? <Form.Group controlId="formBasicId">
+                        {userType === 'startup' ? <Form.Group controlId="formBasicId">
                             <Form.Label>Startup Id</Form.Label>
                             <Form.Control
                                 type="text"
@@ -192,6 +192,24 @@ function Register() {
                                     setStartupId(e.target.value);
                                 }}
                             />
+
+                            <Form.Label className="my-1">Startup Description</Form.Label>
+                            <Form.Control as="textarea" rows={3} placeholder="Enter Startup Description"
+                                required
+                                value={startupDesc}
+                                onChange={(e) => {
+                                    setStartupDesc(e.target.value);
+                                }} />
+                            <Form.Label className="my-1">Stage &nbsp;</Form.Label>
+                            <br />
+                            <select className={styles.selectOption} onChange={setStageTypeFunc
+                            }>
+                                <option value="ideation">Ideation</option>
+                                <option value="validation">Validation</option>
+                                <option value="tracation">Early Tracation</option>
+                                <option value="scaling">Scaling</option>
+                               
+                            </select>
                         </Form.Group> : null}
                         {loading ? (
                             <Loader1></Loader1>

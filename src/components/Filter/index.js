@@ -8,10 +8,11 @@ import {
     AccordionItemPanel,
 } from 'react-accessible-accordion';
 
-import { Form } from 'react-bootstrap';
+import { Form,Button } from 'react-bootstrap';
 // Demo styles, see 'Styles' section below for some notes on use.
 import 'react-accessible-accordion/dist/fancy-example.css';
 import { Country, State, City } from 'country-state-city';
+import FormCheckLabel from 'react-bootstrap/esm/FormCheckLabel';
 console.log(Country.getAllCountries())
 const states = State.getStatesOfCountry('IN')
 const cities = City.getCitiesOfCountry('IN')
@@ -19,7 +20,7 @@ const cities = City.getCitiesOfCountry('IN')
 const Filter = () => {
     let [industry, updateIndustry] = useState([]);
     let [sector, updateSector] = useState([]);
-    let [state,updateState] = useState([])
+    let [state, updateState] = useState([])
     let sectorFilterTodos = [];
     let industryFilterTodos = [];
     let stateFilterTodos = [];
@@ -62,7 +63,7 @@ const Filter = () => {
         fetchData();
     }
 
-    const stateFilter = (e)=>{
+    const stateFilter = (e) => {
         console.log(e.target.value)
         if (state.includes(e.target.value)) {
             stateFilterTodos = sector.filter((t) => t !== e.target.value);
@@ -79,7 +80,7 @@ const Filter = () => {
 
 
     return (
-        <div className={styles.container1}>
+        <div className={`${styles.container1} shadow`}>
             <div className={styles.section1}>
                 <h2 className={styles.filterHeading}>
                     Filter
@@ -139,7 +140,9 @@ const Filter = () => {
                             </AccordionItemButton>
                         </AccordionItemHeading>
                         <AccordionItemPanel>
-                              
+                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
+                                <Form.Control type="text" placeholder="" />
+                            </Form.Group>
                         </AccordionItemPanel>
                     </AccordionItem>
                     <AccordionItem>
