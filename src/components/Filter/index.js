@@ -19,7 +19,7 @@ const cities = City.getCitiesOfCountry('IN')
 const Filter = () => {
     let [industry, updateIndustry] = useState([]);
     let [sector, updateSector] = useState([]);
-    let [state,updateState] = useState([])
+    let [state, updateState] = useState([])
     let sectorFilterTodos = [];
     let industryFilterTodos = [];
     let stateFilterTodos = [];
@@ -62,7 +62,7 @@ const Filter = () => {
         fetchData();
     }
 
-    const stateFilter = (e)=>{
+    const stateFilter = (e) => {
         console.log(e.target.value)
         if (state.includes(e.target.value)) {
             stateFilterTodos = sector.filter((t) => t !== e.target.value);
@@ -79,7 +79,7 @@ const Filter = () => {
 
 
     return (
-        <div className={styles.container1}>
+        <div className={`${styles.container1} shadow`}>
             <div className={styles.section1}>
                 <h2 className={styles.filterHeading}>
                     Filter
@@ -139,7 +139,7 @@ const Filter = () => {
                             </AccordionItemButton>
                         </AccordionItemHeading>
                         <AccordionItemPanel>
-                              
+
                         </AccordionItemPanel>
                     </AccordionItem>
                     <AccordionItem>

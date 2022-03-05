@@ -5,7 +5,6 @@
     justify-content: flex-start;
     padding: 5px;
     width:18rem;
-    border:1px solid gray;
 }
 .section1{
     display: flex;
@@ -16,6 +15,7 @@
 .section1 h2{
     font-size: 2rem;
     color: black;
+    font-weight: 600;
 }
 .accordionBtn{
     width:17rem;

@@ -1,7 +1,9 @@
 import React from 'react'
-// import styles from './styles.module.css'
+import styles from './styles.module.css'
 import { Card, Button } from 'react-bootstrap'
-const StartupCard = () => {
+
+
+const MentorCard = () => {
     return (
         <Card className='mx-2 shadow' style={{ width: '18rem' }}>
             <Card.Img variant="top" src="holder.js/100px180" />
@@ -17,4 +19,5 @@ const StartupCard = () => {
     )
 }
 
-export default StartupCard
+
+export default MentorCard
