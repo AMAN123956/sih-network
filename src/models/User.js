@@ -23,6 +23,18 @@ const userSchema = new mongoose.Schema(
 				type: String,
 			},
 		],
+		industry: {
+			type: String,
+		},
+		sector: {
+			type: String,
+		},
+		stage: {
+			type: String,
+		},
+		state: {
+			type: String,
+		},
 	},
 	{
 		timestamps: true,

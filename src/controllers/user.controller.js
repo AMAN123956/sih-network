@@ -3,7 +3,17 @@ const generateToken = require("../utils/generateToken");
 
 const register = async (req, res) => {
 	try {
-		const { name, number, image, password, interest } = req.body;
+		const {
+			name,
+			number,
+			image,
+			password,
+			interest,
+			industry,
+			sector,
+			stage,
+			state,
+		} = req.body;
 		if (!name || !number || !password) {
 			return res.status(400).send({
 				success: false,
@@ -16,6 +26,10 @@ const register = async (req, res) => {
 			image,
 			password,
 			interest,
+			industry,
+			sector,
+			stage,
+			state,
 		});
 		const preUser = await User.findOne({ number });
 		if (preUser) {
@@ -30,6 +44,10 @@ const register = async (req, res) => {
 				name,
 				number,
 				image,
+				industry,
+				sector,
+				stage,
+				state,
 			},
 		});
 	} catch (e) {
@@ -98,7 +116,17 @@ const get = async (req, res, next) => {
 const update = async (req, res, next) => {
 	try {
 		const user = req.user;
-		const { name, number, image, password, interest } = req.body;
+		const {
+			name,
+			number,
+			image,
+			password,
+			interest,
+			industry,
+			sector,
+			stage,
+			state,
+		} = req.body;
 		if (user._id !== req.params.id) {
 			res.statusCode = 401;
 			throw new Error("Not authorized");
@@ -114,6 +142,10 @@ const update = async (req, res, next) => {
 		user.number = number || user.number;
 		user.image = image || user.image;
 		user.password = password || user.password;
+		user.industry = industry || user.industry;
+		user.sector = sector || user.sector;
+		user.stage = stage || user.stage;
+		user.state = state || user.state;
 		user.interest = interest || user.interest;
 
 		await user.save();
@@ -125,6 +157,10 @@ const update = async (req, res, next) => {
 				number,
 				image,
 				interest,
+				industry,
+				sector,
+				stage,
+				state,
 			},
 		});
 	} catch (e) {

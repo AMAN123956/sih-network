@@ -13,6 +13,10 @@ const register = async (req, res, next) => {
 			walletAddressArray,
 			voting,
 			password,
+			industry,
+			sector,
+			stage,
+			state,
 		} = req.body;
 
 		if (!name || !companyNumber || !about || !password) {
@@ -35,6 +39,10 @@ const register = async (req, res, next) => {
 			walletAddressArray,
 			voting,
 			password,
+			industry,
+			sector,
+			stage,
+			state,
 		});
 		res.status(200).send({
 			success: true,
@@ -48,6 +56,10 @@ const register = async (req, res, next) => {
 				walletAddressArray,
 				voting,
 				password,
+				industry,
+				sector,
+				stage,
+				state,
 			},
 		});
 	} catch (e) {
@@ -125,6 +137,10 @@ const update = async (req, res, next) => {
 			walletAddressArray,
 			voting,
 			password,
+			industry,
+			sector,
+			stage,
+			state,
 		} = req.body;
 		if (req.params.id !== company._id) {
 			res.statusCode = 401;
@@ -139,6 +155,11 @@ const update = async (req, res, next) => {
 		company.walletAddressArray =
 			walletAddressArray || company.walletAddressArray;
 		company.voting = voting || company.voting;
+		company.industry = industry || company.industry;
+		company.sector = sector || company.sector;
+		company.stage = stage || company.stage;
+		company.state = state || company.state;
+
 		await company.save();
 		res.status(200).send({
 			success: true,
@@ -150,6 +171,10 @@ const update = async (req, res, next) => {
 				coFounders,
 				walletAddressArray,
 				voting,
+				industry,
+				sector,
+				stage,
+				state,
 			},
 		});
 	} catch (e) {

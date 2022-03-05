@@ -10,6 +10,10 @@ const register = async (req, res, next) => {
 			companyInvested,
 			walletAddressArray,
 			password,
+			industry,
+			sector,
+			stage,
+			state,
 		} = req.body;
 
 		if (!name || !number || !password) {
@@ -29,7 +33,12 @@ const register = async (req, res, next) => {
 			companyInvested,
 			walletAddressArray,
 			password,
+			industry,
+			sector,
+			stage,
+			state,
 		});
+		await investor.save();
 		res.status(200).send({
 			success: true,
 			data: {
@@ -38,6 +47,10 @@ const register = async (req, res, next) => {
 				about,
 				companyInvested,
 				walletAddressArray,
+				industry,
+				sector,
+				stage,
+				state,
 			},
 		});
 	} catch (e) {
@@ -113,6 +126,10 @@ const update = async (req, res, next) => {
 			companyInvested,
 			walletAddressArray,
 			password,
+			industry,
+			sector,
+			stage,
+			state,
 		} = req.body;
 		if (req.params.id !== company._id) {
 			res.statusCode = 401;
@@ -131,6 +148,11 @@ const update = async (req, res, next) => {
 		investor.walletAddressArray =
 			walletAddressArray || investor.walletAddressArray;
 		investor.companyInvested = companyInvested || investor.companyInvested;
+		investor.industry = industry || investor.industry;
+		investor.sector = sector || investor.sector;
+		investor.stage = stage || investor.stage;
+		investor.state = state || investor.state;
+
 		await investor.save();
 		res.status(200).send({
 			success: true,
@@ -140,6 +162,10 @@ const update = async (req, res, next) => {
 				about,
 				companyInvested,
 				walletAddressArray,
+				industry,
+				sector,
+				stage,
+				state,
 			},
 		});
 	} catch (e) {

@@ -45,6 +45,18 @@ const companySchema = new mongoose.Schema({
 		type: Boolean,
 		default: false,
 	},
+	industry: {
+		type: String,
+	},
+	sector: {
+		type: String,
+	},
+	stage: {
+		type: String,
+	},
+	state: {
+		type: String,
+	},
 });
 
 companySchema.methods.matchPassword = async function (enteredPassword) {

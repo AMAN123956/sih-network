@@ -33,6 +33,18 @@ const investorSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	industry: {
+		type: String,
+	},
+	sector: {
+		type: String,
+	},
+	stage: {
+		type: String,
+	},
+	state: {
+		type: String,
+	},
 });
 
 investorSchema.methods.matchPassword = async function (enteredPassword) {
