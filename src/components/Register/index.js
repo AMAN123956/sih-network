@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Modal, ToggleButton } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import Message from "../Message/index";
 import Loader1 from "../Loader/index";
 import registerImg from "../../assets/img/register.png";
+// import audioUrl from '../../assets/img/Kalimba.mp3'
 import axios from "axios";
 import { url } from "../../utilities";
 function Register() {
@@ -28,10 +29,45 @@ function Register() {
     console.log("hy" + userType)
     const localData = localStorage.getItem("driveUserInfo");
     const userInfo = localData ? JSON.parse(localData) : null;
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const [play, changePlay] = useState(true);
+    // audio
+
+    let audioUrl = 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3'
+
+    console.log(audioUrl)
+
+    document.addEventListener('keypress', (e) => {
+        console.log('clicked')
+        if (e.keyCode === 49) {
+            //   history.push('/register-blind')
+            window.location = '/register-blind';
+        }
+        else if (e.keyCode === 50) {
+            // history.push('/register-deaf')
+            window.location = '/register-deaf';
+        }
+        else if (e.keyCode === 51) {
+            handleClose()
+        }
+    })
+
     useEffect(() => {
         if (userInfo || user) {
             history.push("/home");
         }
+        let audio = new Audio(audioUrl)
+        console.log(audio)
+        audio.play();
+        handleShow();
+
+        // changePlay(!play)
+        // if(play) audio.play()
+        // else audio.pause();
         // eslint-disable-next-line
     }, [userInfo]);
 
@@ -83,6 +119,34 @@ function Register() {
 
     return (
         <div className="container d-flex justify-content-center align-items-center" style={{ "overflowY": "auto" }}>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Are You?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Instructions</p>
+                    <p>Press. 1 For <span>Blind</span></p>
+                    <p>Press. 2 For <span>Deaf</span></p>
+                    <p>Press. 3 For <span>None of These</span></p>
+                    <div className="d-flex">
+                        <button className={`shadow ${styles.option}`}>
+                            <h2>Blind</h2>
+                        </button>
+                        <button className={`shadow ${styles.option}`}>
+                            <h2>Deaf</h2>
+                        </button>
+                    </div>
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <div className={styles.leftSection}>
                 <h2 className={styles.logoHeading}>StartUp</h2>
                 <img
@@ -109,9 +173,7 @@ function Register() {
                             <select className={styles.selectOption} onChange={setUserTypeFunc
                             } required>
                                 <option value="entrepreneur">Entrepreneur</option>
-                                <option value="mentor">Mentor</option>
                                 <option value="investor">Investor</option>
-                                <option value="incubator">Incubator</option>
                                 <option value="startup">Startup</option>
                             </select>
                         </Form.Group>
