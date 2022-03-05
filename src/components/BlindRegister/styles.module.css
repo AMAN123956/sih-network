@@ -1,0 +1,47 @@
+.container1{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.formSection{
+    width:60%;
+    margin-top: 10%;
+    border:2px solid black;
+    padding: 10px;
+}
+.leftSection{
+    margin-right: 5px;
+    padding: 5px;
+    width:70%;
+    border-right:2px dashed red;
+}
+.rightSection{
+    padding: 10px;
+}
+.formLabel{
+    color:black;
+    font-size:3rem;
+}
+.inputField{
+    width:70%;
+    height:50px;
+}
+.optionBox{
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.options{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    width:120px;
+    height:120px;
+    margin-left: 10px;
+    border:2px solid blue;
+}

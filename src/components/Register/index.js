@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
-import { Button, Form, Modal, ToggleButton } from "react-bootstrap";
+import { Button, Form, Modal} from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import Message from "../Message/index";
 import Loader1 from "../Loader/index";
 import registerImg from "../../assets/img/register.png";
-// import audioUrl from '../../assets/img/Kalimba.mp3'
+import audioUrl from '../../assets/img/Kalimba.mp3'
 import axios from "axios";
 import { url } from "../../utilities";
 function Register() {
@@ -37,7 +37,7 @@ function Register() {
     const [play, changePlay] = useState(true);
     // audio
 
-    let audioUrl = 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3'
+    // let audioUrl = 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3'
 
     console.log(audioUrl)
 
@@ -60,16 +60,15 @@ function Register() {
         if (userInfo || user) {
             history.push("/home");
         }
-        let audio = new Audio(audioUrl)
-        console.log(audio)
-        audio.play();
+       
+       
         handleShow();
 
         // changePlay(!play)
         // if(play) audio.play()
         // else audio.pause();
         // eslint-disable-next-line
-    }, [userInfo]);
+    }, []);
 
     if (error) {
         setTimeout(() => {
@@ -146,6 +145,7 @@ function Register() {
                         Save Changes
                     </Button>
                 </Modal.Footer>
+                <audio src={audioUrl} autoPlay controls />
             </Modal>
             <div className={styles.leftSection}>
                 <h2 className={styles.logoHeading}>StartUp</h2>
@@ -160,6 +160,7 @@ function Register() {
                 id="formBox"
                 style={{ minWidth: "350px" }}
             >
+                <button className="d-none" id="btn-demo">Click</button>
                 {" "}
                 {success && (
                     <Message variant={"success"}>Successfully created</Message>
