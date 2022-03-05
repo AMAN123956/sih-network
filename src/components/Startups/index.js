@@ -22,7 +22,7 @@ const Startup = () => {
     }, []);
     return (
         <div className={styles.container1}>
-            {dummyData.map(item => <StartupCard id={item.id} name={item.username} />)}
+            {dummyData.map(item => <StartupCard id={item.id} name={item.name} />)}
         </div>
     )
 }
