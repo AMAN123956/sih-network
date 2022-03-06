@@ -54,13 +54,13 @@ const fn = async function () {
 	try {
 		if (splitURL2[0] === "user") {
 			let user2ID = splitURL2[1];
-			const { data: user1 } = await axios.get(
-				`${BASEURL}/api/entrepreneur/${userID}`
-			);
+			// const { data: user1 } = await axios.get(
+			// 	`${BASEURL}/api/entrepreneur/${userID}`
+			// );
 
-			const { data: user2 } = await axios.get(
-				`${BASEURL}/api/entrepreneur/${user2ID}`
-			);
+			// const { data: user2 } = await axios.get(
+			// 	`${BASEURL}/api/entrepreneur/${user2ID}`
+			// );
 
 			const { data: roomId } = await axios.get(
 				`${BASEURL}/socket/getroomid/${userID}/${user2ID}`
