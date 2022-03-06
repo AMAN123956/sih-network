@@ -32,39 +32,12 @@ const BlindRegister = () => {
     const userInfo = localData ? JSON.parse(localData) : null;
 
     const nextStep = () => {
-        if(userType === 'startup' && step <= 8)
+        if (userType === 'startup' && step <= 8)
             updateStep(step + 1);
-            var msg = new SpeechSynthesisUtterance();
-            var voices = window.speechSynthesis.getVoices();
-            msg.voice = voices[1];
-            msg.volume = 1; // From 0 to 1
-            msg.rate = 1; // From 0.1 to 10
-            msg.pitch = 2; // From 0 to 2
-            msg.lang = "hindi";
-            speechSynthesis.cancel();
-            let helpText = document.querySelector('.helpSection')
-            console.log(helpText)
-            console.log(helpText.innerHTML)
-            msg.text = helpText.innerHTML;
-            speechSynthesis.speak(msg);
     }
     const prevStep = () => {
         if (step !== 0)
             updateStep(step - 1);
-        
-            var msg = new SpeechSynthesisUtterance();
-            var voices = window.speechSynthesis.getVoices();
-            msg.voice = voices[1];
-            msg.volume = 1; // From 0 to 1
-            msg.rate = 1; // From 0.1 to 10
-            msg.pitch = 2; // From 0 to 2
-            msg.lang = "hindi";
-            speechSynthesis.cancel();
-            let helpText = document.querySelector('.helpSection')
-            console.log(helpText)
-            console.log(helpText.innerHTML)
-            msg.text = helpText.innerHTML;
-            speechSynthesis.speak(msg);
     }
     const updateName = (e) => {
         console.log(e.target.value)
@@ -135,19 +108,6 @@ const BlindRegister = () => {
         }
 
         if (e.key === 'Control') {
-           
-            var msg = new SpeechSynthesisUtterance();
-            var voices = window.speechSynthesis.getVoices();
-            msg.voice = voices[1];
-            msg.volume = 1; // From 0 to 1
-            msg.rate = 1; // From 0.1 to 10
-            msg.pitch = 2; // From 0 to 2
-            msg.lang = "hindi";
-            speechSynthesis.cancel();
-            let helpText = document.querySelector('.helpSection')
-            console.log(helpText)
-            msg.text = helpText.innerHTML;
-            speechSynthesis.speak(msg);
             prevStep();
         }
 
