@@ -5,7 +5,6 @@ import { Link, useHistory } from "react-router-dom";
 import Message from "../Message/index";
 import Loader1 from "../Loader/index";
 import registerImg from "../../assets/img/register.png";
-import audioUrl from '../../assets/img/Kalimba.mp3'
 import axios from "axios";
 import { url } from "../../utilities";
 function Register() {
@@ -26,23 +25,29 @@ function Register() {
     const [error, seterror] = useState(null);
 
     const history = useHistory();
-    console.log("hy" + userType)
-    const localData = localStorage.getItem("driveUserInfo");
+
+    const localData = localStorage.getItem("startupUserInfo");
     const userInfo = localData ? JSON.parse(localData) : null;
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-
-    console.log(audioUrl)
-
-
-
     useEffect(() => {
-        // if (userInfo || user) {
-        //     history.push("/home");
-        // }
+        if (userInfo || user) {
+            let msg = new SpeechSynthesisUtterance();
+            let voices = window.speechSynthesis.getVoices();
+            msg.voice = voices[1];
+            msg.volume = 1; // From 0 to 1
+            msg.rate = 1; // From 0.1 to 10
+            msg.pitch = 2; // From 0 to 2
+            msg.lang = "hindi"
+            speechSynthesis.cancel();
+            msg.text = 'You are already registered, logout to register again';
+            console.log(msg.text)
+            speechSynthesis.speak(msg);
+            history.push("/");
+        }
+
         handleShow()
         function listener(e) {
             if (e.keyCode === 49) {
@@ -62,11 +67,6 @@ function Register() {
         return () => {
             document.removeEventListener('keydown', listener)
         }
-
-        // changePlay(!play)
-        // if(play) audio.play()
-        // else audio.pause();
-        // eslint-disable-next-line
     }, []);
 
     if (error) {
