@@ -14,8 +14,8 @@ import DeafRegister from "./components/DeafRegister";
 import BlindRegister from "./components/BlindRegister";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { InvestorProfile } from "./components/InvestorProfile";
 import { StartupProfile } from "./components/StartupProfile";
-
 function App() {
   return (
     <Router>
@@ -36,6 +36,9 @@ function App() {
             </Route>
             <Route path="/login">
               <Login></Login>
+            </Route>
+			<Route path="/investor/profile">
+              <InvestorProfile />
             </Route>
             <Route path="/startup/profile">
               <StartupProfile />
