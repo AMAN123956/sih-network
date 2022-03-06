@@ -8,6 +8,10 @@ import Register from "./components/Register/index";
 import Login from "./components/Login/index";
 /* Home Page */
 import Home from "./components/Home/index";
+/* Deaf Register */
+import DeafRegister from "./components/DeafRegister";
+/* Blind Register */
+import BlindRegister from "./components/BlindRegister";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { StartupProfile } from "./components/StartupProfile";
@@ -23,6 +27,12 @@ function App() {
             </Route>
             <Route path="/register">
               <Register />
+            </Route>
+            <Route path="/register-blind">
+              <BlindRegister />
+            </Route>
+            <Route path="/register-deaf">
+              <DeafRegister />
             </Route>
             <Route path="/login">
               <Login></Login>
