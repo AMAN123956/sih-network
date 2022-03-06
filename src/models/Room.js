@@ -13,6 +13,9 @@ const roomSchema = new mongoose.Schema({
 		},
 		chat: [
 			{
+				name: {
+					type: String,
+				},
 				direction: {
 					type: String,
 				},
@@ -32,6 +35,9 @@ const roomSchema = new mongoose.Schema({
 		},
 		chat: [
 			{
+				name: {
+					type: String,
+				},
 				direction: {
 					type: String,
 				},

@@ -51,6 +51,13 @@ const fn = async function () {
 	try {
 		if (splitURL2[0] === "user") {
 			let user2ID = splitURL2[1];
+			const { data: user1 } = await axios.get(
+				`http://localhost:5000/api/entrepreneur/${userID}`
+			);
+
+			const { data: user2 } = await axios.get(
+				`http://localhost:5000/api/entrepreneur/${user2ID}`
+			);
 
 			const { data: roomId } = await axios.get(
 				`http://localhost:5000/socket/getroomid/${userID}/${user2ID}`
@@ -59,8 +66,6 @@ const fn = async function () {
 			const { data } = await axios.get(
 				`http://localhost:5000/socket/getChat/${userID}/${roomId}`
 			);
-
-			// data.sort()
 
 			data.forEach((chat) => {
 				createChatDiv(chat.message, `${chat.direction}`);

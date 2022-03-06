@@ -28,7 +28,7 @@ const getRoom = async (req, res, next) => {
 
 const addChat = async (req, res) => {
 	try {
-		const { message, direction, dateTime } = req.body;
+		const { message, direction, dateTime, name } = req.body;
 		const { selfUser, secondUser, roomid } = req.params;
 		// console.log(message, direction, dateTime, selfUser, secondUser);
 		const room = await Room.findById(roomid).select(["-__v"]);
@@ -36,6 +36,7 @@ const addChat = async (req, res) => {
 			if (room.user1Chat.user === selfUser) {
 				const chat = room.user1Chat.chat;
 				chat.push({
+					name,
 					message,
 					direction,
 					dateTime,
@@ -45,6 +46,7 @@ const addChat = async (req, res) => {
 			if (room.user2Chat.user === selfUser) {
 				const chat = room.user2Chat.chat;
 				chat.push({
+					name,
 					message,
 					direction,
 					dateTime,
