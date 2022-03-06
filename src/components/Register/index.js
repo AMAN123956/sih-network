@@ -47,6 +47,20 @@ function Register() {
             speechSynthesis.speak(msg);
             history.push("/");
         }
+        else {
+            document.querySelector('button').click();
+            let msg = new SpeechSynthesisUtterance();
+            let voices = window.speechSynthesis.getVoices();
+            msg.voice = voices[1];
+            msg.volume = 1; // From 0 to 1
+            msg.rate = 1; // From 0.1 to 10
+            msg.pitch = 2; // From 0 to 2
+            msg.lang = "hindi"
+            speechSynthesis.cancel();
+            msg.text = 'Welcome to the Register Page, Press 1 If U are Blind Press 2 If You are Deaf Press 3 to Stop Audio';
+            console.log(msg.text)
+            speechSynthesis.speak(msg);
+        }
 
         handleShow()
         function listener(e) {
@@ -59,6 +73,7 @@ function Register() {
                 window.location = '/register-deaf';
             }
             else if (e.keyCode === 51) {
+                document.removeEventListener('keydown', listener)
                 handleClose()
             }
         }
@@ -283,6 +298,7 @@ function Register() {
                                         setAddress(e.target.value);
                                     }}
                                 />
+                                <button style={{ display: 'none' }}>Click</button>
                             </Form.Group> : null}
                             {loading ? (
                                 <Loader1></Loader1>
