@@ -1,4 +1,7 @@
-var io = io("http://localhost:5000");
+const BASEURL = `https://internal-sih.herokuapp.com`;
+// const BASEURL = `http://localhost:5000`;
+
+var io = io(`${BASEURL}`);
 const URL = document.URL;
 
 const splitURL1 = URL.split("/");
@@ -52,19 +55,19 @@ const fn = async function () {
 		if (splitURL2[0] === "user") {
 			let user2ID = splitURL2[1];
 			const { data: user1 } = await axios.get(
-				`http://localhost:5000/api/entrepreneur/${userID}`
+				`${BASEURL}/api/entrepreneur/${userID}`
 			);
 
 			const { data: user2 } = await axios.get(
-				`http://localhost:5000/api/entrepreneur/${user2ID}`
+				`${BASEURL}/api/entrepreneur/${user2ID}`
 			);
 
 			const { data: roomId } = await axios.get(
-				`http://localhost:5000/socket/getroomid/${userID}/${user2ID}`
+				`${BASEURL}/socket/getroomid/${userID}/${user2ID}`
 			);
 
 			const { data } = await axios.get(
-				`http://localhost:5000/socket/getChat/${userID}/${roomId}`
+				`${BASEURL}/socket/getChat/${userID}/${roomId}`
 			);
 
 			data.forEach((chat) => {
@@ -81,7 +84,7 @@ const fn = async function () {
 						inputBox.value = " ";
 
 						await axios.post(
-							`http://localhost:5000/socket/addChat/${userID}/${user2ID}/${roomId}`,
+							`${BASEURL}/socket/addChat/${userID}/${user2ID}/${roomId}`,
 							{
 								message,
 								direction: "outgoing",
@@ -102,7 +105,7 @@ const fn = async function () {
 					inputBox.value = " ";
 
 					await axios.post(
-						`http://localhost:5000/socket/addChat/${userID}/${user2ID}/${roomId}`,
+						`${BASEURL}/socket/addChat/${userID}/${user2ID}/${roomId}`,
 						{
 							message,
 							direction: "outgoing",
@@ -117,7 +120,7 @@ const fn = async function () {
 				if (msz.trim().length > 0) {
 					createChatDiv(msz, "incomming");
 					await axios.post(
-						`http://localhost:5000/socket/addChat/${userID}/${user2ID}/${roomId}`,
+						`${BASEURL}/socket/addChat/${userID}/${user2ID}/${roomId}`,
 						{
 							message: msz,
 							direction: "incomming",
