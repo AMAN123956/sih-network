@@ -12,9 +12,12 @@ import Home from "./components/Home/index";
 import DeafRegister from "./components/DeafRegister";
 /* Blind Register */
 import BlindRegister from "./components/BlindRegister";
+/* Profile */
+import Profile from './components/Profile/index'
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+import BlindLogin from "./components/BlindLogin";
+import DeafLogin from './components/DeafLogin'
 
 function App() {
 	return (
@@ -37,6 +40,17 @@ function App() {
 						<Route path="/login">
 							<Login></Login>
 						</Route>
+						<Route path="/login-blind">
+							<BlindLogin />
+						</Route>
+						<Route path="/login-deaf">
+							<DeafLogin />
+						</Route>
+						<Route path='/myprofile'>
+							<Profile />
+						</Route>
+
+
 					</Switch>
 				</Router>
 			</div>

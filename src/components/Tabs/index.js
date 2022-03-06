@@ -23,6 +23,7 @@ const NetworkTab = () => {
             <Tab eventKey="investors" title="Investors">
                 Investors
             </Tab>
+            
         </Tabs>
     )
 }
