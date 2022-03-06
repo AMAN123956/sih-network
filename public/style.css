@@ -1,0 +1,80 @@
+* {
+	margin: 0;
+}
+.fullscreen {
+	height: 99.5vh;
+	display: flex;
+}
+.left-half {
+	height: 100%;
+	width: 20%;
+	background-color: rgb(184, 86, 86);
+}
+.right-half {
+	height: 100%;
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+}
+.messagebox {
+	height: 94%;
+	overflow-y: scroll;
+	width: 100%;
+}
+.message-container {
+	margin: 10px 0;
+	background-color: rgba(231, 227, 227, 0.395);
+	display: block;
+}
+.message {
+	margin: 10px 10px;
+	border-radius: 100px;
+	padding: 10px;
+	color: #fff;
+	font-size: 20px;
+	width: fit-content;
+	max-width: 500px;
+	background-color: rgb(187, 100, 100);
+}
+
+.outgoing {
+	margin-left: auto;
+}
+
+.inputsend {
+	height: 7%;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	/* height: 45px; */
+	background-color: rgb(187, 61, 61);
+}
+.inputsend input {
+	margin: 0 10px;
+	padding: 0 10px;
+	font-size: large;
+	border: 0;
+	height: 70%;
+	width: 90%;
+	border-radius: 3px;
+}
+.inputsend input:focus {
+	outline: none;
+}
+.inputsend button {
+	margin: 0 10px;
+	height: max-content;
+	border-radius: 3px;
+	height: 74%;
+	border: 0;
+	width: 9%;
+	transition: all 0.2s;
+}
+.inputsend button:hover {
+	transform: translateY(-1px);
+}
+.inputsend button :focus {
+	outline: none;
+}

@@ -35,6 +35,12 @@ const userSchema = new mongoose.Schema(
 		state: {
 			type: String,
 		},
+		channels: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Channel",
+			},
+		],
 	},
 	{
 		timestamps: true,

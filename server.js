@@ -1,17 +1,37 @@
 const express = require("express");
 const morgan = require("morgan");
+const http = require("http");
 require("colors");
 require("dotenv").config({ path: "./config/dev.env" });
 const connectDB = require("./src/db/db");
 const cors = require("cors");
-const { router } = require("./src/routers/User.router");
+const { Server } = require("socket.io");
 const { activateAPI } = require("./src/api/api");
 const { errorHandler } = require("./src/middleware/errorHandler");
+const Room = require("./src/models/Room");
+const { activateSocketAPI } = require("./src/api/socketapi");
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static("public"));
+
 const PORT = process.env.PORT || 5000;
+
+const server = http.createServer(app);
+const io = new Server(server);
+
+app.use(activateSocketAPI());
+
+io.on("connection", (socket) => {
+	socket.on("u2u", ({ room }) => {
+		socket.join(room);
+
+		socket.on("chat", ({ msz }) => {
+			socket.to(room).emit("rechat", { msz });
+		});
+	});
+});
 
 app.use(morgan("dev"));
 connectDB()
@@ -20,15 +40,11 @@ connectDB()
 			`Database connected on port ${conn?.connection?.port}`.cyan.bold
 		);
 
-		app.get("/", (req, res) => {
-			res.send({
-				message: `Server running on port ${PORT}`,
-			});
-		});
+		app.use("/socket/user/:id", express.static("public"));
 
 		app.use("/api", activateAPI());
 		app.use(errorHandler);
-		app.listen(PORT, () => {
+		server.listen(PORT, () => {
 			console.log(`Server running on port ${PORT}`.yellow.bold);
 		});
 	})

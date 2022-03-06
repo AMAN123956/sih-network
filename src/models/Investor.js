@@ -45,6 +45,12 @@ const investorSchema = new mongoose.Schema({
 	state: {
 		type: String,
 	},
+	channels: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Channel",
+		},
+	],
 });
 
 investorSchema.methods.matchPassword = async function (enteredPassword) {
