@@ -117,7 +117,7 @@ const recent = async (req, res) => {
 		const recent2 = await Room.find({ user2: userId });
 		const recentDetails2 = [];
 		for (let i = 0; i < recent2.length; i++) {
-			const investor = await Investor.findById(recent2[i].user2);
+			const investor = await Investor.findById(recent2[i].user1);
 			if (investor) {
 				recentDetails2.push({
 					name: investor.name,
@@ -126,7 +126,7 @@ const recent = async (req, res) => {
 					roomId: recent1[i]._id,
 				});
 			}
-			const user = await User.findById(recent2[i].user2);
+			const user = await User.findById(recent2[i].user1);
 			if (user) {
 				recentDetails2.push({
 					name: user.name,
