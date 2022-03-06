@@ -5,9 +5,9 @@ const investorRouter = require("../routers/investor.router");
 const userRouter = require("../routers/user.router");
 
 const activateAPI = () => {
-	router.use("/company", companyRouter);
+	router.use("/startup", companyRouter);
 	router.use("/investor", investorRouter);
-	router.use("/user", userRouter);
+	router.use("/entrepreneur", userRouter);
 	return router;
 };
 
