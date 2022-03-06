@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
-import { Button, Form, Modal} from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import Message from "../Message/index";
 import Loader1 from "../Loader/index";
@@ -34,35 +34,34 @@ function Register() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const [play, changePlay] = useState(true);
-    // audio
-
-    // let audioUrl = 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3'
 
     console.log(audioUrl)
 
-    document.addEventListener('keypress', (e) => {
-        console.log('clicked')
-        if (e.keyCode === 49) {
-            //   history.push('/register-blind')
-            window.location = '/register-blind';
-        }
-        else if (e.keyCode === 50) {
-            // history.push('/register-deaf')
-            window.location = '/register-deaf';
-        }
-        else if (e.keyCode === 51) {
-            handleClose()
-        }
-    })
+
 
     useEffect(() => {
-        if (userInfo || user) {
-            history.push("/home");
+        // if (userInfo || user) {
+        //     history.push("/home");
+        // }
+        handleShow()
+        function listener(e) {
+            if (e.keyCode === 49) {
+                //   history.push('/register-blind')
+                window.location = '/register-blind';
+            }
+            else if (e.keyCode === 50) {
+                // history.push('/register-deaf')
+                window.location = '/register-deaf';
+            }
+            else if (e.keyCode === 51) {
+                handleClose()
+            }
         }
-       
-       
-        handleShow();
+        document.addEventListener('keydown', listener)
+
+        return () => {
+            document.removeEventListener('keydown', listener)
+        }
 
         // changePlay(!play)
         // if(play) audio.play()
@@ -145,7 +144,6 @@ function Register() {
                         Save Changes
                     </Button>
                 </Modal.Footer>
-                <audio src={audioUrl} autoPlay controls />
             </Modal>
             <div className={styles.leftSection}>
                 <h2 className={styles.logoHeading}>StartUp</h2>

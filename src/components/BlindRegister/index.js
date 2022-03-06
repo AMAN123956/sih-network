@@ -31,13 +31,59 @@ const BlindRegister = () => {
     const localData = localStorage.getItem("driveUserInfo");
     const userInfo = localData ? JSON.parse(localData) : null;
 
+    useEffect(() => {
+        var msg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+        msg.voice = voices[1];
+        msg.volume = 1; // From 0 to 1
+        msg.rate = 1; // From 0.1 to 10
+        msg.pitch = 2; // From 0 to 2
+        msg.lang = "hindi";
+
+        speechSynthesis.cancel();
+        msg.text = 'Press E for Entrepreneur';
+        console.log(msg.text)
+        speechSynthesis.speak(msg);
+    }, [])
+
     const nextStep = () => {
-        if (userType === 'startup' && step <= 8)
+        if (userType === 'startup' && step <= 9)
             updateStep(step + 1);
+
+        else if (userType === 'entrepreneur' && step <= 6) updateStep(step + 1)
+        else if (userType === 'investor' && step <= 6) updateStep(step + 1)
+
+        var msg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+        msg.voice = voices[1];
+        msg.volume = 1; // From 0 to 1
+        msg.rate = 1; // From 0.1 to 10
+        msg.pitch = 2; // From 0 to 2
+        msg.lang = "hindi";
+        let helpSection = document.querySelector(".helpSection");
+        console.log(helpSection.innerHTML)
+        speechSynthesis.cancel();
+        msg.text = helpSection.innerHTML;
+        console.log(msg.text)
+        speechSynthesis.speak(msg);
     }
     const prevStep = () => {
         if (step !== 0)
             updateStep(step - 1);
+
+        var msg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+        msg.voice = voices[1];
+        msg.volume = 1; // From 0 to 1
+        msg.rate = 1; // From 0.1 to 10
+        msg.pitch = 2; // From 0 to 2
+        msg.lang = "hindi";
+        let helpSection = document.querySelector(".helpSection");
+        console.log(helpSection.innerHTML)
+        speechSynthesis.cancel();
+        msg.text = helpSection.innerHTML;
+        console.log(msg.text)
+        speechSynthesis.speak(msg);
     }
     const updateName = (e) => {
         console.log(e.target.value)
@@ -51,39 +97,30 @@ const BlindRegister = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-
             console.log(name)
+            setLoading(true);
+            const { data } = await axios.post(`${url}/api/users`, {
+                name: name,
+                email,
+                password,
+            });
 
-            if (name !== '' || name !== 'Undefined' || name !== null) {
-                handleShow();
-            }
-            else if (!email) {
-                handleShow()
-            }
-            else {
-                setLoading(true);
-                const { data } = await axios.post(`${url}/api/users`, {
-                    name: name,
-                    email,
-                    password,
-                });
-
-                setLoading(false);
-                if (data && data.success) {
-                    localStorage.setItem(
-                        "driveUserInfo",
-                        JSON.stringify(data.data)
-                    );
-                    setSuccess(true);
-                    setuser(data.data);
+            setLoading(false);
+            if (data && data.success) {
+                localStorage.setItem(
+                    "driveUserInfo",
+                    JSON.stringify(data.data)
+                );
+                setSuccess(true);
+                setuser(data.data);
+            } else {
+                if (data) {
+                    seterror(data.message);
                 } else {
-                    if (data) {
-                        seterror(data.message);
-                    } else {
-                        seterror("Network error");
-                    }
+                    seterror("Network error");
                 }
             }
+
         } catch (e) {
             setLoading(false);
             seterror("Network Error");
@@ -91,27 +128,22 @@ const BlindRegister = () => {
 
     }
 
-    document.addEventListener('keydown', (e) => {
-        // if (e.key === 's') {
-        //     setUserType('startup')
-        // }
-        // if (e.key === 'e') {
-        //     setUserType('entrepreneur')
-        // }
-        // if (e.key === 'i') {
-        //     setUserType('investor')
-        // }
-        console.log(e.key)
-        if (e.key === 'Shift') {
-            nextStep();
+    useEffect(() => {
+        function listener(event) {
+            console.log(event.code)
+            if (event.code === 'KeyS') setUserType('startup')
+            else if (event.code === 'KeyE') setUserType('entrepreneur')
+            else if (event.code === 'KeyI') setUserType('Investor')
+            if (event.code === 'ControlRight') nextStep()
+            else if (event.code === 'ControlLeft') prevStep()
+        }
+        document.addEventListener('keydown', listener)
 
+        return () => {
+            document.removeEventListener('keydown', listener)
         }
 
-        if (e.key === 'Control') {
-            prevStep();
-        }
-
-    })
+    }, [step, name])
 
     return (
         <div className={styles.container1}>
@@ -188,7 +220,7 @@ const BlindRegister = () => {
                             </div>
                             <div className={styles.rightSection}>
                                 <div className='helpSection'>
-                                    <p>Enter Username</p>
+                                    <p>Please Enter Your Username</p>
 
                                 </div>
                                 <button className="prev btn btn-primary" onClick={prevStep}>Prev</button>
@@ -215,7 +247,7 @@ const BlindRegister = () => {
                             </div>
                             <div className={styles.rightSection}>
                                 <div className="helpSection">
-                                    <p>Enter Email lorem10Enter Email lorem10Enter Email lorem10
+                                    <p>Please Enter Your Email Address
                                     </p>
                                 </div>
                                 <button className="prev btn btn-primary" onClick={prevStep}>Prev</button>
@@ -243,7 +275,7 @@ const BlindRegister = () => {
                         </div>
                         <div className={styles.rightSection}>
                             <div className="helpSection">
-                                <p>Enter Password Details</p>
+                                <p>Please Enter Your Password</p>
                             </div>
                             <button className="prev btn btn-primary" onClick={prevStep}>Prev</button>
                             &nbsp;&nbsp;
@@ -269,7 +301,7 @@ const BlindRegister = () => {
                         </div>
                         <div className={styles.rightSection}>
                             <div className="helpSection">
-                                <p>Enter Your Mobile Number</p>
+                                <p>Please Enter Your Mobile Number</p>
                             </div>
                             <button className="prev btn btn-primary" onClick={prevStep}>Prev</button>
                             &nbsp;&nbsp;
@@ -295,7 +327,7 @@ const BlindRegister = () => {
                         </div>
                         <div className={styles.rightSection}>
                             <div className="helpSection">
-                                <p>Enter Your Industry</p>
+                                <p>Please Enter Your Industry</p>
                             </div>
                             <button className="prev btn btn-primary" onClick={prevStep}>Prev</button>
                             &nbsp;&nbsp;
@@ -329,6 +361,19 @@ const BlindRegister = () => {
                         </div>
                     </div> : null}
                     {userType}
+                    {(userType !== 'startup' && step === 7) ? <div className="d-flex">
+                        <div className={styles.leftSection}>
+                            <h3 className={styles.formLabel}>Submit Form Details</h3>
+                            <button className="btn btn-primary" onClick={submitHandler}> Submit</button>
+                        </div>
+                        <div className={styles.rightSection}>
+                            <div className="helpSection">
+                                <p>Press F to Submit the Form</p>
+                            </div>
+
+                        </div>
+                    </div>
+                        : null}
                     {(userType === 'startup' && step === 7) ? <div className="d-flex">
                         <div className={styles.leftSection}>
                             <Form.Group controlId="formBasicText">
@@ -406,6 +451,17 @@ const BlindRegister = () => {
                             <button className="prev btn btn-primary" onClick={prevStep}>Prev</button>
                             &nbsp;&nbsp;
                             <button className="next btn btn-primary">Register</button>
+                        </div>
+                    </div> : null}
+                    {userType === 'startup' && step === 10 ? <div className="d-flex">
+                        <div className={styles.leftSection}>
+                            <button className="btn btn-primary" onClick={submitHandler}> Submit</button>
+                        </div>
+                        <div className={styles.rightSection}>
+                            <div className="helpSection">
+                                <p>Press F to Submit the Form</p>
+                            </div>
+
                         </div>
                     </div> : null}
                 </form>
