@@ -1,10 +1,20 @@
+const Investor = require("../models/Investor");
 const Room = require("../models/Room");
+const User = require("../models/User");
 
 const getRoom = async (req, res, next) => {
 	try {
 		const { user1: userID, user2: user2ID } = req.params;
 		const preData1 = await Room.findOne({ user1: userID, user2: user2ID });
 		const preData2 = await Room.findOne({ user2: userID, user1: user2ID });
+		const user1 = await User.findById(userID);
+		const investor1 = await Investor.findById(userID);
+		let name1 = user1?.name || investor1?.name;
+
+		const user2 = await User.findById(user2ID);
+		const investor2 = await Investor.findById(user2ID);
+		let name2 = user2?.name || investor2?.name;
+
 		let roomId;
 		if (preData1) {
 			roomId = preData1._id;
@@ -14,8 +24,8 @@ const getRoom = async (req, res, next) => {
 			const data = new Room({
 				user1: userID,
 				user2: user2ID,
-				user1Chat: { user: userID },
-				user2Chat: { user: user2ID },
+				user1Chat: { user: userID, name: name1 },
+				user2Chat: { user: user2ID, name: name2 },
 			});
 			const savedData = await data.save();
 			roomId = savedData._id;
@@ -83,8 +93,50 @@ const recent = async (req, res) => {
 	try {
 		const { userId } = req.params;
 		const recent1 = await Room.find({ user1: userId });
+		const recentDetails1 = [];
+		for (let i = 0; i < recent1.length; i++) {
+			const investor = await Investor.findById(recent1[i].user2);
+			if (investor) {
+				recentDetails1.push({
+					name: investor.name,
+					_id: investor._id,
+					type: "investor",
+					roomId: recent1[i]._id,
+				});
+			}
+			const user = await User.findById(recent1[i].user2);
+			if (user) {
+				recentDetails1.push({
+					name: user.name,
+					_id: user._id,
+					type: "user",
+					roomId: recent1[i]._id,
+				});
+			}
+		}
 		const recent2 = await Room.find({ user2: userId });
-		const recent = [...recent1, ...recent2];
+		const recentDetails2 = [];
+		for (let i = 0; i < recent2.length; i++) {
+			const investor = await Investor.findById(recent2[i].user2);
+			if (investor) {
+				recentDetails2.push({
+					name: investor.name,
+					_id: investor._id,
+					type: "investor",
+					roomId: recent1[i]._id,
+				});
+			}
+			const user = await User.findById(recent2[i].user2);
+			if (user) {
+				recentDetails2.push({
+					name: user.name,
+					_id: user._id,
+					type: "user",
+					roomId: recent2[i]._id,
+				});
+			}
+		}
+		const recent = [...recentDetails1, ...recentDetails2];
 		res.send(recent);
 	} catch (e) {
 		console.log(e);

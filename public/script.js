@@ -1,5 +1,5 @@
-// const BASEURL = `https://internal-sih.herokuapp.com`;
-const BASEURL = `http://localhost:5000`;
+const BASEURL = `https://internal-sih.herokuapp.com`;
+// const BASEURL = `http://localhost:5000`;
 
 var io = io(`${BASEURL}`);
 const URL = document.URL;
@@ -13,7 +13,7 @@ const inputBox = document.getElementById("input-box");
 const sendButton = document.getElementById("send-button");
 const messageBox = document.querySelector(".messagebox");
 
-const createChatDiv = (message, direction) => {
+const createChatDiv = (message, direction, name, time) => {
 	if (direction === "outgoing") {
 		const messageDiv = document.createElement("div");
 		const messageAtt = document.createAttribute("class");
@@ -21,14 +21,20 @@ const createChatDiv = (message, direction) => {
 		messageDiv.setAttributeNode(messageAtt);
 		messageDiv.innerText = message;
 
+		const senderDiv = document.createElement("div");
+		const senderAtt = document.createAttribute("class");
+		senderAtt.value = "sender";
+		senderDiv.setAttributeNode(senderAtt);
+		senderDiv.innerText = `${moment(time).format("DD-MM-YYYY | hh:mm")}`;
+
 		const div = document.createElement("div");
 		const att = document.createAttribute("class");
 		att.value = "message-container";
 		div.setAttributeNode(att);
+		div.appendChild(senderDiv);
 		div.appendChild(messageDiv);
 
 		messageBox.appendChild(div);
-		// messageBox.scrollTo(0, 1000);
 	}
 	if (direction === "incomming") {
 		const messageDiv = document.createElement("div");
@@ -37,14 +43,23 @@ const createChatDiv = (message, direction) => {
 		messageDiv.setAttributeNode(messageAtt);
 		messageDiv.innerText = message;
 
+		const senderDiv = document.createElement("div");
+		const senderAtt = document.createAttribute("class");
+		senderAtt.value = "sender";
+		senderDiv.setAttributeNode(senderAtt);
+		senderDiv.innerText = `${name} ${moment(time).format(
+			"DD-MM-YYYY | hh:mm"
+		)}`;
+
 		const div = document.createElement("div");
 		const att = document.createAttribute("class");
 		att.value = "message-container";
 		div.setAttributeNode(att);
+		div.appendChild(senderDiv);
+
 		div.appendChild(messageDiv);
 
 		messageBox.appendChild(div);
-		// messageBox.scrollTo(0, messageBox.clientHeight);
 	}
 	messageBox.scrollTo(0, messageBox.scrollHeight);
 };
@@ -60,14 +75,11 @@ const fn = async function () {
 				`${BASEURL}/api/entrepreneur/${user2ID}`
 			);
 
-			// console.log(user1);
-			// console.log(user2);
-
 			const { data: roomId } = await axios.get(
 				`${BASEURL}/socket/getroomid/${userID}/${user2ID}`
 			);
 
-			const { data } = await axios.get(
+			const { data: chats } = await axios.get(
 				`${BASEURL}/socket/getChat/${userID}/${roomId}`
 			);
 
@@ -76,8 +88,13 @@ const fn = async function () {
 			);
 			console.log(recentChats);
 
-			data.forEach((chat) => {
-				createChatDiv(chat.message, `${chat.direction}`);
+			chats.forEach((chat) => {
+				createChatDiv(
+					chat.message,
+					`${chat.direction}`,
+					chat.name,
+					chat.dateTime
+				);
 			});
 
 			inputBox.addEventListener("keydown", async (e) => {
@@ -86,13 +103,19 @@ const fn = async function () {
 					const message = inputBox.value;
 					if (message.trim().length > 0) {
 						io.emit("chat", { msz: message });
-						createChatDiv(message, "outgoing");
+						createChatDiv(
+							message,
+							"outgoing",
+							user1?.data?.name,
+							new Date()
+						);
 						inputBox.value = " ";
 
 						await axios.post(
 							`${BASEURL}/socket/addChat/${userID}/${user2ID}/${roomId}`,
 							{
 								message,
+								name: user1?.data.name,
 								direction: "outgoing",
 								dateTime: new Date(),
 							}
@@ -107,13 +130,19 @@ const fn = async function () {
 				if (message.trim().length > 0) {
 					io.emit("chat", { msz: message });
 
-					createChatDiv(message, "outgoing");
+					createChatDiv(
+						message,
+						"outgoing",
+						user1?.data?.name,
+						new Date()
+					);
 					inputBox.value = " ";
 
 					await axios.post(
 						`${BASEURL}/socket/addChat/${userID}/${user2ID}/${roomId}`,
 						{
 							message,
+							name: user1?.data.name,
 							direction: "outgoing",
 							dateTime: new Date(),
 						}
@@ -124,11 +153,17 @@ const fn = async function () {
 			io.emit("u2u", { room: roomId });
 			io.on("rechat", async ({ msz }) => {
 				if (msz.trim().length > 0) {
-					createChatDiv(msz, "incomming");
+					createChatDiv(
+						msz,
+						"incomming",
+						user2?.data.name,
+						new Date()
+					);
 					await axios.post(
 						`${BASEURL}/socket/addChat/${userID}/${user2ID}/${roomId}`,
 						{
 							message: msz,
+							name: user2?.data.name,
 							direction: "incomming",
 							dateTime: new Date(),
 						}

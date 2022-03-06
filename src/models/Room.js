@@ -11,6 +11,9 @@ const roomSchema = new mongoose.Schema({
 		user: {
 			type: String,
 		},
+		name: {
+			type: String,
+		},
 		chat: [
 			{
 				name: {
@@ -31,6 +34,9 @@ const roomSchema = new mongoose.Schema({
 	},
 	user2Chat: {
 		user: {
+			type: String,
+		},
+		name: {
 			type: String,
 		},
 		chat: [
