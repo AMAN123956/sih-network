@@ -66,10 +66,10 @@ const getChat = async (req, res) => {
 		const { userId, roomid } = req.params;
 		const room = await Room.findById(roomid).select(["-__v"]);
 		let chat;
-		if (room.user1Chat.user === userId) {
-			chat = room.user1Chat.chat;
-		} else if (room.user2Chat.user === userId) {
-			chat = room.user2Chat.chat;
+		if (room?.user1Chat?.user === userId) {
+			chat = room?.user1Chat?.chat;
+		} else if (room?.user2Chat?.user === userId) {
+			chat = room?.user2Chat?.chat;
 		} else {
 			chat = [];
 		}
@@ -79,4 +79,16 @@ const getChat = async (req, res) => {
 	}
 };
 
-module.exports = { getRoom, addChat, getChat };
+const recent = async (req, res) => {
+	try {
+		const { userId } = req.params;
+		const recent1 = await Room.find({ user1: userId });
+		const recent2 = await Room.find({ user2: userId });
+		const recent = [...recent1, ...recent2];
+		res.send(recent);
+	} catch (e) {
+		console.log(e);
+	}
+};
+
+module.exports = { getRoom, addChat, getChat, recent };

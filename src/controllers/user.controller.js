@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const { generateToken } = require("../utils/generateToken");
 
-const register = async (req, res) => {
+const register = async (req, res, next) => {
 	try {
 		const {
 			name,

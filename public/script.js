@@ -1,5 +1,5 @@
-const BASEURL = `https://internal-sih.herokuapp.com`;
-// const BASEURL = `http://localhost:5000`;
+// const BASEURL = `https://internal-sih.herokuapp.com`;
+const BASEURL = `http://localhost:5000`;
 
 var io = io(`${BASEURL}`);
 const URL = document.URL;
@@ -28,7 +28,6 @@ const createChatDiv = (message, direction) => {
 		div.appendChild(messageDiv);
 
 		messageBox.appendChild(div);
-		console.log(messageBox.clientHeight);
 		// messageBox.scrollTo(0, 1000);
 	}
 	if (direction === "incomming") {
@@ -52,15 +51,17 @@ const createChatDiv = (message, direction) => {
 
 const fn = async function () {
 	try {
-		if (splitURL2[0] === "user") {
+		if (splitURL2[0] === "user" || splitURL2[0] === "investor") {
 			let user2ID = splitURL2[1];
-			// const { data: user1 } = await axios.get(
-			// 	`${BASEURL}/api/entrepreneur/${userID}`
-			// );
+			const { data: user1 } = await axios.get(
+				`${BASEURL}/api/entrepreneur/${userID}`
+			);
+			const { data: user2 } = await axios.get(
+				`${BASEURL}/api/entrepreneur/${user2ID}`
+			);
 
-			// const { data: user2 } = await axios.get(
-			// 	`${BASEURL}/api/entrepreneur/${user2ID}`
-			// );
+			// console.log(user1);
+			// console.log(user2);
 
 			const { data: roomId } = await axios.get(
 				`${BASEURL}/socket/getroomid/${userID}/${user2ID}`
@@ -69,6 +70,11 @@ const fn = async function () {
 			const { data } = await axios.get(
 				`${BASEURL}/socket/getChat/${userID}/${roomId}`
 			);
+
+			const { data: recentChats } = await axios.get(
+				`${BASEURL}/socket/getrecent/${userID}`
+			);
+			console.log(recentChats);
 
 			data.forEach((chat) => {
 				createChatDiv(chat.message, `${chat.direction}`);
