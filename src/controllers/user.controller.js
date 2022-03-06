@@ -43,6 +43,8 @@ const register = async (req, res, next) => {
 		res.status(200).send({
 			success: true,
 			data: {
+				id: savedUser._id,
+				userType: 'entrepreneur',
 				name,
 				number,
 				image,
