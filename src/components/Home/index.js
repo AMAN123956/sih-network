@@ -1,9 +1,18 @@
-import React from 'react'
+import React,{useEffect} from 'react'
+import { useHistory } from "react-router-dom";
 import styles from './styles.module.css'
 import Filter from '../Filter/index'
 import NetworkTab from '../Tabs/index'
 
 function Home() {
+    const history = useHistory();
+    const localData = localStorage.getItem("startupUserInfo");
+    const userInfo = localData ? JSON.parse(localData) : null;
+    useEffect(() => {
+        if (!userInfo) {
+            history.push("/register");
+        }
+    }, [])
     return (
         <div className={styles.container1}>
             <div className={styles.section1}>
