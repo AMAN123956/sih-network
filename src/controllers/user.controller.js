@@ -55,9 +55,10 @@ const register = async (req, res) => {
 	}
 };
 
-const login = async (req, res) => {
+const login = async (req, res,next) => {
 	try {
 		const { number, password } = req.body;
+		console.log(req.body)
 		if (!number || !password) {
 			return res.status(400).send({
 				success: false,
@@ -67,6 +68,7 @@ const login = async (req, res) => {
 		const user = await User.findOne({ number }).select("-__v");
 		if (!user || !(await user.matchPassword(password))) {
 			res.statusCode = 400;
+			console.log('thet===')
 			throw new Error("Wrong number or password");
 		}
 		const token = generateToken(user._id);
