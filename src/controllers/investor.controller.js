@@ -38,7 +38,9 @@ const register = async (req, res, next) => {
 			stage,
 			state,
 		});
-		await investor.save();
+		const savedInvestor = await investor.save();
+		const token = generateToken(savedInvestor._id);
+
 		res.status(200).send({
 			success: true,
 			data: {
@@ -51,6 +53,7 @@ const register = async (req, res, next) => {
 				sector,
 				stage,
 				state,
+				token,
 			},
 		});
 	} catch (e) {

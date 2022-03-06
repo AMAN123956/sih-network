@@ -44,6 +44,10 @@ const register = async (req, res, next) => {
 			stage,
 			state,
 		});
+
+		const savedCompany = await company.save();
+		const token = generateToken(savedCompany._id);
+
 		res.status(200).send({
 			success: true,
 			data: {
@@ -60,6 +64,7 @@ const register = async (req, res, next) => {
 				sector,
 				stage,
 				state,
+				token,
 			},
 		});
 	} catch (e) {

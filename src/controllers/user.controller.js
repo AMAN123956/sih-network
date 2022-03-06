@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const generateToken = require("../utils/generateToken");
+const { generateToken } = require("../utils/generateToken");
 
 const register = async (req, res) => {
 	try {
@@ -38,6 +38,8 @@ const register = async (req, res) => {
 		}
 
 		const savedUser = await user.save();
+		const token = generateToken(savedUser._id);
+
 		res.status(200).send({
 			success: true,
 			data: {
@@ -48,6 +50,7 @@ const register = async (req, res) => {
 				sector,
 				stage,
 				state,
+				token,
 			},
 		});
 	} catch (e) {
@@ -55,10 +58,10 @@ const register = async (req, res) => {
 	}
 };
 
-const login = async (req, res,next) => {
+const login = async (req, res, next) => {
 	try {
 		const { number, password } = req.body;
-		console.log(req.body)
+		console.log(req.body);
 		if (!number || !password) {
 			return res.status(400).send({
 				success: false,
@@ -68,7 +71,7 @@ const login = async (req, res,next) => {
 		const user = await User.findOne({ number }).select("-__v");
 		if (!user || !(await user.matchPassword(password))) {
 			res.statusCode = 400;
-			console.log('thet===')
+			console.log("thet===");
 			throw new Error("Wrong number or password");
 		}
 		const token = generateToken(user._id);
