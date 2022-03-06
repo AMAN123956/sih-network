@@ -51,6 +51,7 @@ const register = async (req, res, next) => {
 		res.status(200).send({
 			success: true,
 			data: {
+				id: savedCompany._id,
 				name,
 				companyNumber,
 				about,
@@ -65,6 +66,7 @@ const register = async (req, res, next) => {
 				stage,
 				state,
 				token,
+				userType: 'startup',
 			},
 		});
 	} catch (e) {
@@ -93,6 +95,7 @@ const login = async (req, res, next) => {
 				companyNumber,
 				_id: company._id,
 				token,
+				userType: 'startup',
 			},
 		});
 	} catch (e) {
@@ -111,6 +114,7 @@ const getOne = async (req, res, next) => {
 		res.send({
 			success: true,
 			data: company,
+			userType: 'startup',
 		});
 	} catch (e) {
 		next(e);
@@ -120,10 +124,12 @@ const getOne = async (req, res, next) => {
 const get = async (req, res, next) => {
 	try {
 		const QRY = req.query;
-		const companies = await Company.find(QRY).select("-password");
+		const companies = await Company.find().select("-password");
+		console.log(companies)
 		res.send({
 			success: true,
 			data: companies,
+			userType: 'startup',
 		});
 	} catch (e) {
 		next(e);
