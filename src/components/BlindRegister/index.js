@@ -32,12 +32,39 @@ const BlindRegister = () => {
     const userInfo = localData ? JSON.parse(localData) : null;
 
     const nextStep = () => {
-        if (userType === 'startup' && step <= 8)
+        if(userType === 'startup' && step <= 8)
             updateStep(step + 1);
+            var msg = new SpeechSynthesisUtterance();
+            var voices = window.speechSynthesis.getVoices();
+            msg.voice = voices[1];
+            msg.volume = 1; // From 0 to 1
+            msg.rate = 1; // From 0.1 to 10
+            msg.pitch = 2; // From 0 to 2
+            msg.lang = "hindi";
+            speechSynthesis.cancel();
+            let helpText = document.querySelector('.helpSection')
+            console.log(helpText)
+            console.log(helpText.innerHTML)
+            msg.text = helpText.innerHTML;
+            speechSynthesis.speak(msg);
     }
     const prevStep = () => {
         if (step !== 0)
             updateStep(step - 1);
+        
+            var msg = new SpeechSynthesisUtterance();
+            var voices = window.speechSynthesis.getVoices();
+            msg.voice = voices[1];
+            msg.volume = 1; // From 0 to 1
+            msg.rate = 1; // From 0.1 to 10
+            msg.pitch = 2; // From 0 to 2
+            msg.lang = "hindi";
+            speechSynthesis.cancel();
+            let helpText = document.querySelector('.helpSection')
+            console.log(helpText)
+            console.log(helpText.innerHTML)
+            msg.text = helpText.innerHTML;
+            speechSynthesis.speak(msg);
     }
     const updateName = (e) => {
         console.log(e.target.value)
@@ -46,6 +73,7 @@ const BlindRegister = () => {
     const updateEmail = (e) => {
         setemail(e.target.value)
     }
+
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -102,11 +130,24 @@ const BlindRegister = () => {
         // }
         console.log(e.key)
         if (e.key === 'Shift') {
-            console.log('called')
             nextStep();
+
         }
 
         if (e.key === 'Control') {
+           
+            var msg = new SpeechSynthesisUtterance();
+            var voices = window.speechSynthesis.getVoices();
+            msg.voice = voices[1];
+            msg.volume = 1; // From 0 to 1
+            msg.rate = 1; // From 0.1 to 10
+            msg.pitch = 2; // From 0 to 2
+            msg.lang = "hindi";
+            speechSynthesis.cancel();
+            let helpText = document.querySelector('.helpSection')
+            console.log(helpText)
+            msg.text = helpText.innerHTML;
+            speechSynthesis.speak(msg);
             prevStep();
         }
 
@@ -158,9 +199,11 @@ const BlindRegister = () => {
                                 </Form.Group>
                             </div>
                             <div className={styles.rightSection}>
-                                <p>Press. E for Entrepreneur</p>
-                                <p>Press. S for StartUp</p>
-                                <p>Press. I for Investor</p>
+                                <div className='helpSection'>
+                                    <p>Press. E for Entrepreneur</p>
+                                    <p>Press. S for StartUp</p>
+                                    <p>Press. I for Investor</p>
+                                </div>
                                 <button className="next btn btn-primary" onClick={nextStep}>Next</button>
                             </div>
                         </div>
@@ -184,9 +227,10 @@ const BlindRegister = () => {
                                 </Form.Group>
                             </div>
                             <div className={styles.rightSection}>
-                                <p>Press. E for Entrepreneur</p>
-                                <p>Press. S for StartUp</p>
-                                <p>Press. I for Investor</p>
+                                <div className='helpSection'>
+                                    <p>Enter Username</p>
+
+                                </div>
                                 <button className="prev btn btn-primary" onClick={prevStep}>Prev</button>
                                 &nbsp;&nbsp;
                                 <button className="next btn btn-primary" onClick={nextStep}>Next</button>
@@ -210,6 +254,10 @@ const BlindRegister = () => {
                                 </Form.Group>
                             </div>
                             <div className={styles.rightSection}>
+                                <div className="helpSection">
+                                    <p>Enter Email lorem10Enter Email lorem10Enter Email lorem10
+                                    </p>
+                                </div>
                                 <button className="prev btn btn-primary" onClick={prevStep}>Prev</button>
                                 &nbsp;&nbsp;
                                 <button className="next btn btn-primary" onClick={nextStep}>Next</button>
@@ -234,6 +282,9 @@ const BlindRegister = () => {
                             </Form.Group>
                         </div>
                         <div className={styles.rightSection}>
+                            <div className="helpSection">
+                                <p>Enter Password Details</p>
+                            </div>
                             <button className="prev btn btn-primary" onClick={prevStep}>Prev</button>
                             &nbsp;&nbsp;
                             <button className="next btn btn-primary" onClick={nextStep}>Next</button>
@@ -257,6 +308,9 @@ const BlindRegister = () => {
                             </Form.Group>
                         </div>
                         <div className={styles.rightSection}>
+                            <div className="helpSection">
+                                <p>Enter Your Mobile Number</p>
+                            </div>
                             <button className="prev btn btn-primary" onClick={prevStep}>Prev</button>
                             &nbsp;&nbsp;
                             <button className="next btn btn-primary" onClick={nextStep}>Next</button>
@@ -280,6 +334,9 @@ const BlindRegister = () => {
                             </Form.Group>
                         </div>
                         <div className={styles.rightSection}>
+                            <div className="helpSection">
+                                <p>Enter Your Industry</p>
+                            </div>
                             <button className="prev btn btn-primary" onClick={prevStep}>Prev</button>
                             &nbsp;&nbsp;
                             <button className="next btn btn-primary" onClick={nextStep}>Next</button>
@@ -303,6 +360,9 @@ const BlindRegister = () => {
                             </Form.Group>
                         </div>
                         <div className={styles.rightSection}>
+                            <div className="helpSection">
+                                <p>Enter Sector Details</p>
+                            </div>
                             <button className="prev btn btn-primary" onClick={prevStep}>Prev</button>
                             &nbsp;&nbsp;
                             <button className="next btn btn-primary" onClick={nextStep}>Next</button>
@@ -327,6 +387,9 @@ const BlindRegister = () => {
                             </Form.Group>
                         </div>
                         <div className={styles.rightSection}>
+                            <div className="helpSection">
+                                <p>Enter Startup Id</p>
+                            </div>
                             <button className="prev btn btn-primary" onClick={prevStep}>Prev</button>
                             &nbsp;&nbsp;
                             <button className="next btn btn-primary" onClick={nextStep}>Next</button>
@@ -350,6 +413,9 @@ const BlindRegister = () => {
                             </Form.Group>
                         </div>
                         <div className={styles.rightSection}>
+                            <div className="helpSection">
+                                <p>Enter Startup Description</p>
+                            </div>
                             <button className="prev btn btn-primary" onClick={prevStep}>Prev</button>
                             &nbsp;&nbsp;
                             <button className="next btn btn-primary" onClick={nextStep}>Next</button>
@@ -374,6 +440,9 @@ const BlindRegister = () => {
                             </Form.Group>
                         </div>
                         <div className={styles.rightSection}>
+                            <div className="helpSection">
+                                <p>Enter Your Address</p>
+                            </div>
                             <button className="prev btn btn-primary" onClick={prevStep}>Prev</button>
                             &nbsp;&nbsp;
                             <button className="next btn btn-primary">Register</button>
