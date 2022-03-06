@@ -81,10 +81,33 @@ const BlindLogin = () => {
                     JSON.stringify(data.data)
                 );
                 setSuccess(true);
-                setuser(data.data);
+                setuser(data.data)
+                let msg = new SpeechSynthesisUtterance();
+                let voices = window.speechSynthesis.getVoices();
+                msg.voice = voices[1];
+                msg.volume = 1; // From 0 to 1
+                msg.rate = 1; // From 0.1 to 10
+                msg.pitch = 2; // From 0 to 2
+                speechSynthesis.cancel();
+                msg.lang = "english";
+                msg.text = 'You have been successfully logged in';
+                console.log(msg.text)
+                speechSynthesis.speak(msg);
+                history.push('/')
             } else {
                 if (data) {
                     seterror(data.message);
+                    let msg = new SpeechSynthesisUtterance();
+                    let voices = window.speechSynthesis.getVoices();
+                    msg.voice = voices[1];
+                    msg.volume = 1; // From 0 to 1
+                    msg.rate = 1; // From 0.1 to 10
+                    msg.pitch = 2; // From 0 to 2
+                    speechSynthesis.cancel();
+                    msg.lang = "english";
+                    msg.text = `Login Failed due to ${data.message}`;
+                    console.log(msg.text)
+                    speechSynthesis.speak(msg);
                 } else {
                     seterror("Network error");
                 }

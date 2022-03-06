@@ -3,17 +3,16 @@ import styles from './styles.module.css'
 import { Card, Button } from 'react-bootstrap'
 
 
-const MentorCard = () => {
+const MentorCard = ({name,id}) => {
     return (
-        <Card className='mx-2 shadow' style={{ width: '18rem' }}>
-            <Card.Img variant="top" src="holder.js/100px180" />
+        <Card className='mx-2 shadow' style={{ width: '16rem', padding: '0px' }}>
             <Card.Body>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Text>
-                    Some quick example text to build on the card title and make up the bulk of
-                    the card's content.
-                </Card.Text>
-                <Button variant="primary">Go somewhere</Button>
+                <div className={styles.section1}>
+                    <img className={styles.logo} src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png" alt="startup_img" />
+                    <Card.Title className='mx-3'>{name}</Card.Title>
+                </div>
+
+                <Button variant="primary">Get Details</Button>
             </Card.Body>
         </Card>
     )

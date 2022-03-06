@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styles from './styles.module.css'
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import { url } from '../../utilities';
 const Profile = () => {
     const [name, setname] = useState(null)
@@ -9,12 +10,14 @@ const Profile = () => {
     const [imgurl, setimgurl] = useState(null)
     const [industry,setindustry] = useState(null)
     // const [message, setmessage] = useState(null);
+    const history = useHistory();
     useEffect(() => {
         const userInfoFromStorage = localStorage.getItem("startupUserInfo")
             ? JSON.parse(localStorage.getItem("startupUserInfo"))
             : null;
         console.log('userInfo')
         console.log(userInfoFromStorage)
+        if(userInfoFromStorage){
         const userType = userInfoFromStorage.userType
         const id = userInfoFromStorage.id
         const config = {
@@ -24,6 +27,7 @@ const Profile = () => {
             },
         };
         const getData = async () => {
+            console.log('request made')
             const { data } = await axios.get(`${url}/api/${userType}/${id}`, config);
 
             console.log(data);
@@ -40,6 +44,10 @@ const Profile = () => {
             }
         };
         getData();
+    }
+    else{
+        history.push('/login')
+    }
     }, [])
     return (
         <div className={`shadow ${styles.container1}`}>

@@ -1,28 +1,33 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './styles.module.css'
 import axios from 'axios'
 import StartupCard from './UI/StartupCard/index'
+import { url } from '../../utilities'
 
 const Startup = () => {
-    const dummyData = [{
-        'name': "Zomato",
-        'id': '123456'
-    },
-    {
-        'name': "Swiggy",
-        'id': '234567'
-    }]
-    localStorage.setItem('networkData',JSON.stringify(dummyData))
-    const fetchStartupList = async () => {
-        const data = await axios.get(`{$url}/api/users`, { userType: 'startup' });
+    const [error, seterror] = useState(null);
+    const [record, setrecord] = useState([{}])
 
-    }
+    // localStorage.setItem('networkData',JSON.stringify(dummyData))
+        
+   
     useEffect(() => {
-        fetchStartupList()
+        const fetchStartupList = async () => {
+            console.log('request')
+            const data = await axios.get(`${url}/api/startup`);
+            console.log(data)
+            if (data.data.success) {
+               console.log(data.data.data)
+                setrecord(data.data.data)
+            } else {
+                seterror(`${data.error}`);
+            }
+        }
+        fetchStartupList();
     }, []);
     return (
-        <div className={styles.container1}>
-            {dummyData.map(item => <StartupCard id={item.id} name={item.name} />)}
+        <div id="container" className={styles.container1}>
+            {record.map(item => <StartupCard id={item.id} name={item.name} />)}
         </div>
     )
 }
