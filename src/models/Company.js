@@ -12,7 +12,6 @@ const companySchema = new mongoose.Schema({
 	},
 	about: {
 		type: String,
-		required: true,
 	},
 	documents: [
 		{
