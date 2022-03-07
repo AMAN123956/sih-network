@@ -99,6 +99,7 @@ const recent = async (req, res) => {
 			if (investor) {
 				recentDetails1.push({
 					name: investor.name,
+					image: investor.image,
 					_id: investor._id,
 					type: "investor",
 					roomId: recent1[i]._id,
@@ -108,6 +109,8 @@ const recent = async (req, res) => {
 			if (user) {
 				recentDetails1.push({
 					name: user.name,
+					image: user.image,
+
 					_id: user._id,
 					type: "entrepreneur",
 					roomId: recent1[i]._id,
@@ -121,6 +124,7 @@ const recent = async (req, res) => {
 			if (investor) {
 				recentDetails2.push({
 					name: investor.name,
+					image: investor.image,
 					_id: investor._id,
 					type: "investor",
 					roomId: recent1[i]._id,
@@ -129,6 +133,7 @@ const recent = async (req, res) => {
 			const user = await User.findById(recent2[i].user1);
 			if (user) {
 				recentDetails2.push({
+					image: user.image,
 					name: user.name,
 					_id: user._id,
 					type: "entrepreneur",

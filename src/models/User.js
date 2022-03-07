@@ -13,6 +13,8 @@ const userSchema = new mongoose.Schema(
 		},
 		image: {
 			type: String,
+			default:
+				"https://res.cloudinary.com/abhistrike/image/upload/v1626953029/avatar-370-456322_wdwimj.png",
 		},
 		password: {
 			type: String,
@@ -41,6 +43,9 @@ const userSchema = new mongoose.Schema(
 				ref: "Channel",
 			},
 		],
+		about: {
+			type: String,
+		},
 	},
 	{
 		timestamps: true,

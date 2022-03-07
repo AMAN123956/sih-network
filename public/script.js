@@ -24,9 +24,9 @@ const createChatDiv = (message, direction, name, time) => {
 
 		const senderDiv = document.createElement("div");
 		const senderAtt = document.createAttribute("class");
-		senderAtt.value = "sender";
+		senderAtt.value = "receiver";
 		senderDiv.setAttributeNode(senderAtt);
-		senderDiv.innerText = `${moment(time).format("DD-MM-YYYY | hh:mm")}`;
+		senderDiv.innerText = `${moment(time).format("DD-MM-YYYY | hh:mm:A")}`;
 
 		const div = document.createElement("div");
 		const att = document.createAttribute("class");
@@ -70,8 +70,6 @@ const loadHistoryMessage = async (senderID, roomId) => {
 			`${BASEURL}/socket/getChat/${senderID}/${roomId}`
 		);
 
-		console.log(chats);
-
 		chats.forEach((chat) => {
 			createChatDiv(
 				chat.message,
@@ -105,33 +103,30 @@ const loadHistoryMessageChannel = async (senderID, receiverID) => {
 
 const loadRecentChats = async (senderID, user1) => {
 	try {
-
 		const { data: recentChats } = await axios.get(
 			`${BASEURL}/socket/getrecent/${senderID}`
 		);
 		const recentChatContainer = document.querySelector(".recentChat");
-		recentChatContainer.innerHTML = ''
-
+		recentChatContainer.innerHTML = "";
+		recentChatContainer.innerHTML = "";
 
 		recentChats.map((chat) => {
-			console.log(chat)
 			recentChatContainer.innerHTML += `<a  href='${BASEURL}/socket/${chat.type}/${senderID}/?entrepreneur=${chat._id}'>
 			<div class='userChat'>
-			<img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png" alt="user_img" />
+			<img src=${chat.image} alt="user_img" />
 			    <h2>${chat.name}</h2>
 			</div>
-			</a>`
-
+			</a>`;
 		});
-		// dummy for now 
+		// dummy for now
 		user1.data.channels.map((channel) => {
 			recentChatContainer.innerHTML += `<a  href='${BASEURL}/socket/hello/${senderID}/?entrepreneur=bye'>
 			<div class='userChat'>
 			<img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png" alt="user_img" />
 			    <h2>${channel.name}</h2>
 			</div>
-			</a>`
-		})
+			</a>`;
+		});
 	} catch (e) {
 		console.log(e);
 	}
@@ -158,16 +153,14 @@ const fn = async function () {
 			const { data: user1 } = await axios.get(
 				`${BASEURL}/api/${senderType}/${senderID}`
 			);
-			console.log('user1')
-			console.log(user1)
+			console.log("user1");
+			console.log(user1);
 			const { data: user2 } = await axios.get(
 				`${BASEURL}/api/${receiverType}/${receiverID}`
 			);
-			console.log('user2')
-			console.log(user2)
+			console.log("user2");
+			console.log(user2);
 			const roomId = await getRoomId(senderID, receiverID);
-
-			console.log(roomId);
 
 			loadHistoryMessage(senderID, roomId);
 			loadRecentChats(senderID, user1);
@@ -255,6 +248,8 @@ const fn = async function () {
 			const { data: channel } = await axios.get(
 				`${BASEURL}/api/channel/${receiverID}`
 			);
+
+			console.log(channel.data);
 
 			loadHistoryMessageChannel(senderID, receiverID);
 
