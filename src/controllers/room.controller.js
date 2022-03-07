@@ -109,7 +109,7 @@ const recent = async (req, res) => {
 				recentDetails1.push({
 					name: user.name,
 					_id: user._id,
-					type: "user",
+					type: "entrepreneur",
 					roomId: recent1[i]._id,
 				});
 			}
@@ -131,7 +131,7 @@ const recent = async (req, res) => {
 				recentDetails2.push({
 					name: user.name,
 					_id: user._id,
-					type: "user",
+					type: "entrepreneur",
 					roomId: recent2[i]._id,
 				});
 			}
