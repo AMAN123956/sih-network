@@ -4,8 +4,8 @@ const User = require("../models/User");
 
 const addChannel = async (req, res, next) => {
 	try {
-		const { name } = req.body;
-		const channel = new Channel({ name });
+		const { name, users, investors } = req.body;
+		const channel = new Channel({ name, users, investors });
 		const savedChannel = await channel.save();
 		res.send({
 			success: true,
@@ -46,4 +46,17 @@ const joinChannel = async (req, res, next) => {
 	}
 };
 
-module.exports = { addChannel, joinChannel };
+const getChannel = async (req, res, next) => {
+	try {
+		const { channelId } = req.params;
+		const channel = await Channel.findById(channelId);
+		res.send({
+			success: true,
+			data: channel,
+		});
+	} catch (e) {
+		next(e);
+	}
+};
+
+module.exports = { addChannel, joinChannel, getChannel };
