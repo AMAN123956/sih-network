@@ -63,7 +63,6 @@ const getChat = async (req, res, next) => {
 	try {
 		const { userID, channelId } = req.params;
 		const channel = await Channel.findById(channelId);
-		console.log(channel.conversations);
 
 		const chats = channel.conversations.filter((con) => {
 			return String(con.id) === String(userID);
