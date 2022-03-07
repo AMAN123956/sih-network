@@ -111,6 +111,7 @@ const getOne = async (req, res, next) => {
 const get = async (req, res, next) => {
 	try {
 		const QRY = req.query;
+		console.log(QRY)
 		const users = await User.find(QRY).select("-password");
 		res.send({
 			success: true,

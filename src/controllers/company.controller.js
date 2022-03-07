@@ -124,7 +124,7 @@ const getOne = async (req, res, next) => {
 const get = async (req, res, next) => {
 	try {
 		const QRY = req.query;
-		const companies = await Company.find().select("-password");
+		const companies = await Company.find(QRY).select("-password");
 		console.log(companies)
 		res.send({
 			success: true,
