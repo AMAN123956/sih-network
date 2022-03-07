@@ -110,7 +110,7 @@ const loadRecentChats = async (senderID, user1) => {
 		const { data: recentChats } = await axios.get(
 			`${BASEURL}/socket/getrecent/${senderID}`
 		);
-		console.log(recentChats)
+		console.log(recentChats);
 		const recentChatContainer = document.querySelector(".recentChat");
 		recentChatContainer.innerHTML = "";
 		recentChatContainer.innerHTML = "";
@@ -124,13 +124,13 @@ const loadRecentChats = async (senderID, user1) => {
 			</a>`;
 		});
 		// dummy for now
-		console.log('channel info')
-		console.log(user1.data.channels)
+		console.log("channel info");
+		console.log(user1.data.channels);
 		user1.data.channels.map((channel) => {
 			recentChatContainer.innerHTML += `<a  href='${BASEURL}/socket/${senderType}/${senderID}/?channel=${channel._id}'>
 			<div class='userChat'>
 			<img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png" alt="user_img" />
-			    <h2>${channel.name}</h2>
+			    <h2>#${channel.name}</h2>
 			</div>
 			</a>`;
 		});
@@ -153,10 +153,10 @@ const getRoomId = (senderID, receiverID) => {
 };
 
 const loadProfile = async (userData) => {
-	console.log('userData')
-	console.log(userData)
-	let userImage = document.getElementById('userImage')
-	userImage.src=userData.image
+	console.log("userData");
+	console.log(userData);
+	let userImage = document.getElementById("userImage");
+	userImage.src = userData.image;
 	number.innerText = `${userData.number}`;
 	Name.innerText = `${userData.name}`;
 	aboutProfile.innerText = userData.about ? `${userData.about}` : "";
@@ -269,7 +269,7 @@ const fn = async function () {
 			);
 
 			console.log(channel.data);
-             
+
 			loadHistoryMessageChannel(senderID, receiverID);
 
 			io.emit("u2c", { room: channel.data._id });

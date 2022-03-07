@@ -97,7 +97,9 @@ const login = async (req, res, next) => {
 const getOne = async (req, res, next) => {
 	try {
 		const { id } = req.params;
-		const user = await User.findById(id).select("-password");
+		const user = await User.findById(id)
+			.select("-password")
+			.populate(["channels"]);
 		if (!user) {
 			res.statusCode = 400;
 			throw new Error("No such user");
@@ -114,7 +116,7 @@ const getOne = async (req, res, next) => {
 const get = async (req, res, next) => {
 	try {
 		const QRY = req.query;
-		console.log(QRY)
+		console.log(QRY);
 		const users = await User.find(QRY).select("-password");
 		res.send({
 			success: true,
