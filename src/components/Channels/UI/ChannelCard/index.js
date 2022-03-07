@@ -22,6 +22,9 @@ const ChannelCard = ({ name, address, sector, image, id }) => {
                 setLoading(true);
                 const { data } = await axios.get(`${url}/api/channel/joinChannel/${id}/${userInfo.id}`)
                 setLoading(false);
+                console.log('channel Data ====')
+                console.log(data)
+                window.location = `${url}/socket/${userInfo.userType}/${userInfo.id}/?channel=${id}`
                 if (data && data.success) {
                     setSuccess(true);
                 } else {
