@@ -140,3 +140,24 @@ body {
   padding-left: 0;
   padding-right: 0;
 }
+/* Common Styles */
+.formInput{
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  outline: none;
+}
+.active-fund{
+  width: 20px;
+  height: 20px;
+  background: lightgreen;
+  border-radius: 50%;
+  margin-left: 8px;
+}
+.inactive-fund{
+  width: 20px;
+  height: 20px;
+  background: red;
+  border-radius: 50%;
+  margin-left: 8px;
+}
