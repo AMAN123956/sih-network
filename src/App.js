@@ -20,10 +20,12 @@ import BlindLogin from "./components/BlindLogin";
 import DeafLogin from "./components/DeafLogin";
 import { InvestorProfile } from "./components/InvestorProfile";
 import { StartupProfile } from "./components/StartupProfile";
+import NavbarComponent from "./components/sidebar";
 
 function App() {
   return (
     <Router>
+      <NavbarComponent />
       <div className="App">
         <Router>
           <Switch>
