@@ -18,11 +18,23 @@ const channelSchema = new mongoose.Schema(
 				ref: "Investor",
 			},
 		],
-		conversations: {
-			id: {
-				type: String,
+		conversations: [
+			{
+				id: {
+					type: String,
+				},
+				chats: [
+					{
+						name: { type: String },
+						message: { type: String },
+						direction: { type: String },
+						dateTime: { type: Date },
+					},
+				],
+
+				default: [],
 			},
-		},
+		],
 	},
 	{
 		timestamps: true,

@@ -40,7 +40,7 @@ io.on("connection", (socket) => {
 	});
 });
 
-// app.use(morgan("dev"));
+app.use(morgan("dev"));
 connectDB()
 	.then((conn) => {
 		console.log(

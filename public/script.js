@@ -1,5 +1,5 @@
-// const BASEURL = `https://internal-sih.herokuapp.com`;
-const BASEURL = `http://localhost:5000`;
+const BASEURL = `https://internal-sih.herokuapp.com`;
+// const BASEURL = `http://localhost:5000`;
 
 var io = io(`${BASEURL}`);
 const URL = document.URL;
@@ -85,26 +85,46 @@ const loadHistoryMessage = async (senderID, roomId) => {
 	}
 };
 
+const loadHistoryMessageChannel = async (senderID, receiverID) => {
+	try {
+		const { data: chats } = await axios.get(
+			`${BASEURL}/api/channel/chat/${senderID}/${receiverID}`
+		);
+		chats.forEach((chat) => {
+			createChatDiv(
+				chat.message,
+				`${chat.direction}`,
+				chat.name,
+				chat.dateTime
+			);
+		});
+	} catch (e) {
+		console.log(e);
+	}
+};
+
 const loadRecentChats = async (senderID) => {
 	try {
+		
 		const { data: recentChats } = await axios.get(
 			`${BASEURL}/socket/getrecent/${senderID}`
 		);
 		console.log(recentChats);
-		const recentChatContainer = document.querySelector('.recentChat')
-		console.log(recentChatContainer)
-		let data = '';
-		recentChats.map(chat => {
-			data += `<a target="_blank" href='${BASEURL}/socket/${chat.type}/${senderID}/?entrepreneur=${chat._id}'>
+		console.log(BASEURL)
+		const recentChatContainer = document.querySelector(".recentChat");
+		recentChatContainer.innerHTML = ''
+		console.log(recentChatContainer);
+	     
+		recentChats.map((chat) => {
+			console.log(chat)
+			recentChatContainer.innerHTML += `<a  href='${BASEURL}/socket/${chat.type}/${senderID}/?entrepreneur=${chat._id}'>
 			<div class='userChat'>
 			<img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png" alt="user_img" />
 			    <h2>${chat.name}</h2>
 			</div>
 			</a>`
-			console.log(data)
-			recentChatContainer.innerHTML += data;
-
-		})
+			
+		});
 	} catch (e) {
 		console.log(e);
 	}
@@ -226,6 +246,8 @@ const fn = async function () {
 				`${BASEURL}/api/channel/${receiverID}`
 			);
 
+			loadHistoryMessageChannel(senderID, receiverID);
+
 			io.emit("u2c", { room: channel.data._id });
 
 			inputBox.addEventListener("keydown", async (e) => {
@@ -243,6 +265,16 @@ const fn = async function () {
 							new Date()
 						);
 						inputBox.value = " ";
+
+						await axios.post(
+							`${BASEURL}/api/channel/add/${senderID}/${receiverID}`,
+							{
+								name: user1?.data.name,
+								message,
+								dateTime: new Date(),
+								direction: "outgoing",
+							}
+						);
 					}
 				}
 			});
@@ -263,11 +295,29 @@ const fn = async function () {
 						new Date()
 					);
 					inputBox.value = " ";
+					await axios.post(
+						`${BASEURL}/api/channel/add/${senderID}/${receiverID}`,
+						{
+							name: user1?.data.name,
+							message,
+							dateTime: new Date(),
+							direction: "outgoing",
+						}
+					);
 				}
 			});
 
-			io.on("grouprechat", ({ msz, name }) => {
+			io.on("grouprechat", async ({ msz, name }) => {
 				createChatDiv(msz, "incomming", name, new Date());
+				await axios.post(
+					`${BASEURL}/api/channel/add/${senderID}/${receiverID}`,
+					{
+						name,
+						message: msz,
+						dateTime: new Date(),
+						direction: "incomming",
+					}
+				);
 			});
 		}
 		messageBox.scrollTo(0, messageBox.scrollHeight);

@@ -63,11 +63,13 @@ const getChat = async (req, res, next) => {
 	try {
 		const { userID, channelId } = req.params;
 		const channel = await Channel.findById(channelId);
-		let chats = channel.conversations[userID];
-		if (!chats || !chats.length) {
-			chats = [];
-		}
-		res.send(chats);
+
+		const chats = channel.conversations.filter((con) => {
+			return String(con.id) === String(userID);
+		});
+		const requiredChat = chats[0]?.chats || [];
+
+		res.send(requiredChat);
 	} catch (e) {
 		console.log(e);
 	}
@@ -76,9 +78,36 @@ const getChat = async (req, res, next) => {
 const addChats = async (req, res, next) => {
 	try {
 		const { userID, channelId } = req.params;
+		const { name, message, dateTime, direction } = req.body;
+		const channel = await Channel.findById(channelId);
+
+		const conversations = channel.conversations;
+
+		let flag = false;
+		for (let i = 0; i < conversations.length; i++) {
+			if (String(conversations[i].id) === String(userID)) {
+				conversations[i].chats.push({
+					name,
+					message,
+					dateTime,
+					direction,
+				});
+				flag = true;
+			}
+		}
+		if (!flag) {
+			conversations.push({
+				id: userID,
+				chats: [{ name, message, dateTime, direction }],
+			});
+		}
+
+		channel.conversations = conversations;
+		const savedChannel = await channel.save();
+		res.send({});
 	} catch (e) {
 		console.log(e);
 	}
 };
 
-module.exports = { addChannel, joinChannel, getChannel, getChat };
+module.exports = { addChannel, joinChannel, getChannel, getChat, addChats };
