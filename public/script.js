@@ -106,11 +106,13 @@ const loadRecentChats = async (senderID, user1) => {
 		const { data: recentChats } = await axios.get(
 			`${BASEURL}/socket/getrecent/${senderID}`
 		);
+		console.log(recentChats)
 		const recentChatContainer = document.querySelector(".recentChat");
 		recentChatContainer.innerHTML = "";
 		recentChatContainer.innerHTML = "";
 
 		recentChats.map((chat) => {
+			
 			recentChatContainer.innerHTML += `<a  href='${BASEURL}/socket/${chat.type}/${senderID}/?entrepreneur=${chat._id}'>
 			<div class='userChat'>
 			<img src=${chat.image} alt="user_img" />
