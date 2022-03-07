@@ -59,4 +59,26 @@ const getChannel = async (req, res, next) => {
 	}
 };
 
-module.exports = { addChannel, joinChannel, getChannel };
+const getChat = async (req, res, next) => {
+	try {
+		const { userID, channelId } = req.params;
+		const channel = await Channel.findById(channelId);
+		let chats = channel.conversations[userID];
+		if (!chats || !chats.length) {
+			chats = [];
+		}
+		res.send(chats);
+	} catch (e) {
+		console.log(e);
+	}
+};
+
+const addChats = async (req, res, next) => {
+	try {
+		const { userID, channelId } = req.params;
+	} catch (e) {
+		console.log(e);
+	}
+};
+
+module.exports = { addChannel, joinChannel, getChannel, getChat };
