@@ -87,7 +87,7 @@ export const StartupProfile = () => {
       <div className={styles.startupInfo}>
         <img src="/test.png" alt="" />
         <div className={styles.name}>
-          <h2>ABC Inc.</h2>
+          <h2>Testing Company Inc.</h2>
           <h4>Fintech</h4>
         </div>
       </div>

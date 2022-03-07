@@ -1,5 +1,7 @@
 .container {
   padding: 70px 40px;
+  max-width: 1200px;
+  margin: auto;
 }
 .startupInfo {
   display: flex;
@@ -12,7 +14,7 @@
 }
 .teamCard {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 .wrapper {
@@ -29,11 +31,11 @@
 }
 
 /* Fund raise Modal */
-.fundForm{
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
+.fundForm {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
 }
-.recentFundingCard{
-    padding: 30px;
+.recentFundingCard {
+  padding: 30px;
 }
