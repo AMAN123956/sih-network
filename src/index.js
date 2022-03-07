@@ -3,11 +3,14 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
+import { TransactionsProvider } from "./context/TransactionContext";
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <TransactionsProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </TransactionsProvider>,
 
   document.getElementById("root")
 );

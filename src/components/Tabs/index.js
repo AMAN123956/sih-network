@@ -3,7 +3,7 @@ import { Tabs,Tab } from "react-bootstrap"
 
 import Startup from '../Startups/index';
 import Mentors from '../Mentors/index';
-
+import Entrepreneur from '../Entrepreneurs/index';
 const NetworkTab = () => {
     const [key, setKey] = useState('startups');
 
@@ -21,7 +21,7 @@ const NetworkTab = () => {
                 <Mentors />
             </Tab>
             <Tab eventKey="entrepreneurs" title="Entrepreneurs">
-                Entrepreneurs
+                <Entrepreneur />
             </Tab>
             
         </Tabs>
