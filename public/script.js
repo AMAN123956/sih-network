@@ -116,7 +116,7 @@ const loadRecentChats = async (senderID, user1) => {
 		recentChatContainer.innerHTML = "";
 
 		recentChats.map((chat) => {
-			recentChatContainer.innerHTML += `<a  href='${BASEURL}/socket/${senderType}/${senderID}/?entrepreneur=${chat._id}'>
+			recentChatContainer.innerHTML += `<a  href='${BASEURL}/socket/${senderType}/${senderID}/?${chat.type}=${chat._id}'>
 			<div class='userChat'>
 			<img src=${chat.image} alt="user_img" />
 			    <h2>${chat.name}</h2>
@@ -124,6 +124,8 @@ const loadRecentChats = async (senderID, user1) => {
 			</a>`;
 		});
 		// dummy for now
+		console.log('channel info')
+		console.log(user1.data.channels)
 		user1.data.channels.map((channel) => {
 			recentChatContainer.innerHTML += `<a  href='${BASEURL}/socket/${senderType}/${senderID}/?channel=${channel._id}'>
 			<div class='userChat'>
@@ -151,6 +153,8 @@ const getRoomId = (senderID, receiverID) => {
 };
 
 const loadProfile = async (userData) => {
+	console.log('userData')
+	console.log(userData)
 	let userImage = document.getElementById('userImage')
 	userImage.src=userData.image
 	number.innerText = `${userData.number}`;
@@ -265,7 +269,7 @@ const fn = async function () {
 			);
 
 			console.log(channel.data);
-
+             
 			loadHistoryMessageChannel(senderID, receiverID);
 
 			io.emit("u2c", { room: channel.data._id });
