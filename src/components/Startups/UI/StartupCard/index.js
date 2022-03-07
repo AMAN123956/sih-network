@@ -11,7 +11,7 @@ const StartupCard = ({ name, address, sector,imgUrl,id }) => {
                     <Card.Title className='mx-3'>{name} <br /> <p className='text-secondary'>{sector}</p></Card.Title>
                    </div>
 
-                <Button variant="primary" className={styles.detailBtn}>View Details</Button>
+                <Button  className={styles.detailBtn}>View Details</Button>
             </Card.Body>
         </Card>
     )

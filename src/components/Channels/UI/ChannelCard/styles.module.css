@@ -17,3 +17,12 @@
   height: 6rem;
   border-radius: 100%;
 }
+
+.joinChannelBtn{
+  display:block;
+  width:100%;
+  margin:2px auto;
+  background: #8B6E4A;
+  outline: none;
+  border: none;
+}

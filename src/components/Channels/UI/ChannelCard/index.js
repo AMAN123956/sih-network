@@ -55,7 +55,7 @@ const ChannelCard = ({ name, address, sector, image, id }) => {
                 {loading ? (
                     <Loader1></Loader1>
                 ) :
-                    <Button variant="primary" onClick={joinChannelHandler}>Join Channel</Button>
+                    <Button className={styles.joinChannelBtn}  onClick={joinChannelHandler}>Join Channel</Button>
                 }
             </Card.Body>
         </Card>
