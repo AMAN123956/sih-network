@@ -72,7 +72,7 @@ const getAllChannel = async (req, res, next) => {
 
 		const channels = await Channel.find(QRY);
 		const filterChannel = [];
-
+        
 		channels.forEach((channel) => {
 			const total = [...channel.users, ...channel.investors];
 			let flag = true;

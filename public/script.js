@@ -181,9 +181,6 @@ const loadProfile = async (userData) => {
 			<p>${user.name}</p></div></a>`
 		})
 	}
-
-
-
 };
 
 const fn = async function () {
