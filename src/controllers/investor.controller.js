@@ -44,6 +44,7 @@ const register = async (req, res, next) => {
 		res.status(200).send({
 			success: true,
 			data: {
+				id: savedInvestor._id,
 				name,
 				number,
 				about,
@@ -54,6 +55,7 @@ const register = async (req, res, next) => {
 				stage,
 				state,
 				token,
+				userType: 'investor'
 			},
 		});
 	} catch (e) {
@@ -82,6 +84,7 @@ const login = async (req, res, next) => {
 				number,
 				_id: investor._id,
 				token,
+				userType: 'investor'
 			},
 		});
 	} catch (e) {

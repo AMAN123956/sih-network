@@ -84,6 +84,7 @@ const login = async (req, res, next) => {
 		res.send({
 			success: true,
 			data,
+			userType: 'entrepreneur',
 		});
 	} catch (e) {
 		next(e);
