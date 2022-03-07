@@ -196,31 +196,81 @@ const update = async (req, res, next) => {
 
 const raiseFund = async (req, res, next) => {
 	try {
-		const {
-			companyID,
-			investorID,
+		const { companyID } = req.params;
+
+		const { round, amount, equity, companyWallet, about } = req.body;
+
+		const company = await Company.findById(companyID);
+
+		company.walletAddressArray = companyWallet;
+		const recentFunding = company.recentFunding || [];
+		const recentFund = {
 			round,
 			amount,
+			about,
 			equity,
-			companyWallet,
-			investorWallet,
-		} = req.params;
+			active: true,
+		};
+		recentFunding.push(recentFund);
+
+		company.recentFunding = recentFunding;
+		const savedCompany = await company.save();
+		res.send(savedCompany);
+	} catch (e) {
+		next(e);
+	}
+};
+
+const fundExecute = async (req, res, next) => {
+	try {
+		const { companyID, investorID } = req.params;
+		const { round, amount, equity, companyWallet, investorWallet } =
+			req.body;
 
 		const company = await Company.findById(companyID);
 		const investor = await Investor.findById(investorID);
 
-		company.walletAddressArray = [
-			...company.walletAddressArray,
-			companyWallet,
-		];
-		const recentFunding = company.recentFunding;
-		const recentFund = {
-			round,
+		company.walletAddressArray = companyWallet;
+
+		const funding = company.recentFunding || [];
+		const newFunding = [];
+		funding.forEach((fund) => {
+			let obj = { ...fund };
+			if (fund.round === round) {
+				obj.investor = investorID;
+				obj.active = false;
+			}
+			newFunding.push(obj);
+		});
+		company.recentFunding = newFunding;
+
+		const savedCompany = await company.save();
+
+		const companyInvest = {
+			company: companyID,
 			amount,
 			equity,
-			investor: investorID,
+			round,
 		};
-	} catch (e) {}
+
+		const companyInvested = investor.companyInvested || [];
+		companyInvested.push(companyInvest);
+		investor.companyInvested = companyInvested;
+
+		const savedInvestor = await investor.save();
+
+		res.send(savedCompany);
+	} catch (e) {
+		next(e);
+	}
 };
 
-module.exports = { register, login, get, update, getOne };
+module.exports = {
+	register,
+	login,
+	get,
+	update,
+	getOne,
+	raiseFund,
+	fundExecute,
+};
