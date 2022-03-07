@@ -50,7 +50,10 @@ const joinChannel = async (req, res, next) => {
 const getChannel = async (req, res, next) => {
 	try {
 		const { channelId } = req.params;
-		const channel = await Channel.findById(channelId);
+		const channel = await Channel.findById(channelId).populate([
+			"users",
+			"investors",
+		]);
 		res.send({
 			success: true,
 			data: channel,
