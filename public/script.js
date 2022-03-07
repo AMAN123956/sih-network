@@ -157,9 +157,22 @@ const loadProfile = async (userData) => {
 	console.log(userData);
 	let userImage = document.getElementById("userImage");
 	userImage.src = userData.image;
+	if(userData.number)
 	number.innerText = `${userData.number}`;
 	Name.innerText = `${userData.name}`;
 	aboutProfile.innerText = userData.about ? `${userData.about}` : "";
+	let userList = document.getElementById('usersList')
+	usersList.innerHTML = '';
+	console.log('usersList')
+	console.log(userList)
+    userList.innerHTML = '<p class="participantsText">Participants</p>'
+	userData.users.map(user => {
+		console.log(user)
+		userList.innerHTML += `<a href='#'><div class="userBox"><img src=${user.image} />
+		<p>${user.name}</p></div></a>`
+	})
+
+
 };
 
 const fn = async function () {
@@ -272,7 +285,7 @@ const fn = async function () {
 
 			loadRecentChats(senderID, user1);
 			loadHistoryMessageChannel(senderID, receiverID);
-            loadProfile(channel.data)
+			loadProfile(channel.data)
 			io.emit("u2c", { room: channel.data._id });
 
 			inputBox.addEventListener("keydown", async (e) => {
