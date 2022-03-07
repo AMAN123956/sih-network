@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
+const { Decimal128 } = require("mongodb");
 
 const companySchema = new mongoose.Schema({
 	name: {
@@ -32,6 +33,7 @@ const companySchema = new mongoose.Schema({
 			type: String,
 		},
 	],
+
 	voting: [
 		{
 			type: String,
@@ -57,6 +59,28 @@ const companySchema = new mongoose.Schema({
 	state: {
 		type: String,
 	},
+	recentFunding: [
+		{
+			round: {
+				type: String,
+			},
+			amount: {
+				type: Number,
+			},
+			equity: {
+				type: String,
+			},
+			active: {
+				type: Boolean,
+				default: true,
+			},
+			investor: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Investor",
+			},
+			default: [],
+		},
+	],
 });
 
 companySchema.methods.matchPassword = async function (enteredPassword) {

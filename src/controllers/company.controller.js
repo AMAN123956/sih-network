@@ -1,4 +1,5 @@
 const Company = require("../models/Company");
+const Investor = require("../models/Investor");
 const { generateToken } = require("../utils/generateToken");
 
 const register = async (req, res, next) => {
@@ -66,7 +67,7 @@ const register = async (req, res, next) => {
 				stage,
 				state,
 				token,
-				userType: 'startup',
+				userType: "startup",
 			},
 		});
 	} catch (e) {
@@ -95,7 +96,7 @@ const login = async (req, res, next) => {
 				companyNumber,
 				_id: company._id,
 				token,
-				userType: 'startup',
+				userType: "startup",
 			},
 		});
 	} catch (e) {
@@ -114,7 +115,7 @@ const getOne = async (req, res, next) => {
 		res.send({
 			success: true,
 			data: company,
-			userType: 'startup',
+			userType: "startup",
 		});
 	} catch (e) {
 		next(e);
@@ -125,11 +126,11 @@ const get = async (req, res, next) => {
 	try {
 		const QRY = req.query;
 		const companies = await Company.find(QRY).select("-password");
-		console.log(companies)
+		console.log(companies);
 		res.send({
 			success: true,
 			data: companies,
-			userType: 'startup',
+			userType: "startup",
 		});
 	} catch (e) {
 		next(e);
@@ -191,6 +192,35 @@ const update = async (req, res, next) => {
 	} catch (e) {
 		next(e);
 	}
+};
+
+const raiseFund = async (req, res, next) => {
+	try {
+		const {
+			companyID,
+			investorID,
+			round,
+			amount,
+			equity,
+			companyWallet,
+			investorWallet,
+		} = req.params;
+
+		const company = await Company.findById(companyID);
+		const investor = await Investor.findById(investorID);
+
+		company.walletAddressArray = [
+			...company.walletAddressArray,
+			companyWallet,
+		];
+		const recentFunding = company.recentFunding;
+		const recentFund = {
+			round,
+			amount,
+			equity,
+			investor: investorID,
+		};
+	} catch (e) {}
 };
 
 module.exports = { register, login, get, update, getOne };
