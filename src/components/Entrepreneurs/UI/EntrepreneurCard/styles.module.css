@@ -16,7 +16,9 @@
     height:5rem;
     border-radius: 100%;
 }
-
+.detailBtn{
+    float: right;
+}
 .chatBtn{
     float: left;
     width: 100px;

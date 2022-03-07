@@ -29,7 +29,7 @@ const Channel = () => {
     }, []);
     return (
         <div id="container" className={styles.container1}>
-            {record.map(item => <ChannelCard id={item._id} name={item.name} sector={item.sector} />)}
+            {record.map(item => <ChannelCard id={item._id} name={item.name} image={item.image} />)}
         </div>
     )
 }

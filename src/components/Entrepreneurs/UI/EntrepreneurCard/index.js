@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './styles.module.css'
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap'
 
 const EntrepreneurCard = ({ name, address, sector, imgUrl, id }) => {
@@ -31,7 +31,7 @@ const EntrepreneurCard = ({ name, address, sector, imgUrl, id }) => {
                     <Card.Title className='mx-3'>{name}<br /> <p className='text-secondary'>{sector}</p></Card.Title>
                 </div>
                 <Button className={styles.chatBtn} variant="dark" onClick={textMsgHandler}>Message</Button>
-                <Button variant="primary">View Details</Button>
+                <Button variant="primary" className={styles.detailBtn}>View Details</Button>
             </Card.Body>
         </Card>
     )

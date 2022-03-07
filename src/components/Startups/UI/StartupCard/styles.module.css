@@ -11,6 +11,9 @@
     justify-content: flex-start;
     margin-bottom: 10px;
 }
+.detailBtn{
+    float:right;
+}
 .logo{
     width:5rem;
     height:5rem;

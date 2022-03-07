@@ -102,8 +102,13 @@ function Register() {
       setLoading(true);
       const { data } = await axios.post(`${url}/api/users`, {
         name: name,
+        number: number,
+        industry: industry,
+        sector: sector,
         email,
         password,
+        companyNumber: startupId,
+        about: startupDesc,
       });
 
       setLoading(false);
