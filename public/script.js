@@ -116,7 +116,6 @@ const loadRecentChats = async (senderID, user1) => {
 		recentChatContainer.innerHTML = "";
 
 		recentChats.map((chat) => {
-			
 			recentChatContainer.innerHTML += `<a  href='${BASEURL}/socket/${chat.type}/${senderID}/?entrepreneur=${chat._id}'>
 			<div class='userChat'>
 			<img src=${chat.image} alt="user_img" />
@@ -152,6 +151,8 @@ const getRoomId = (senderID, receiverID) => {
 };
 
 const loadProfile = async (userData) => {
+	let userImage = document.getElementById('userImage')
+	userImage.src=userData.image
 	number.innerText = `${userData.number}`;
 	Name.innerText = `${userData.name}`;
 	aboutProfile.innerText = userData.about ? `${userData.about}` : "";
