@@ -15,8 +15,19 @@ const investorSchema = new mongoose.Schema({
 	},
 	companyInvested: [
 		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Company",
+			company: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Company",
+			},
+			amount: {
+				type: Number,
+			},
+			equity: {
+				type: String,
+			},
+			round: {
+				type: String,
+			},
 		},
 	],
 	walletAddressArray: [
@@ -24,6 +35,7 @@ const investorSchema = new mongoose.Schema({
 			type: String,
 		},
 	],
+
 	mentor: {
 		type: Boolean,
 		default: false,

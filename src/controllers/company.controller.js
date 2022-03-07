@@ -1,4 +1,5 @@
 const Company = require("../models/Company");
+const Investor = require("../models/Investor");
 const { generateToken } = require("../utils/generateToken");
 
 const register = async (req, res, next) => {
@@ -66,7 +67,7 @@ const register = async (req, res, next) => {
 				stage,
 				state,
 				token,
-				userType: 'startup',
+				userType: "startup",
 			},
 		});
 	} catch (e) {
@@ -95,7 +96,7 @@ const login = async (req, res, next) => {
 				companyNumber,
 				_id: company._id,
 				token,
-				userType: 'startup',
+				userType: "startup",
 			},
 		});
 	} catch (e) {
@@ -114,7 +115,7 @@ const getOne = async (req, res, next) => {
 		res.send({
 			success: true,
 			data: company,
-			userType: 'startup',
+			userType: "startup",
 		});
 	} catch (e) {
 		next(e);
@@ -125,11 +126,11 @@ const get = async (req, res, next) => {
 	try {
 		const QRY = req.query;
 		const companies = await Company.find(QRY).select("-password");
-		console.log(companies)
+		console.log(companies);
 		res.send({
 			success: true,
 			data: companies,
-			userType: 'startup',
+			userType: "startup",
 		});
 	} catch (e) {
 		next(e);
@@ -193,4 +194,83 @@ const update = async (req, res, next) => {
 	}
 };
 
-module.exports = { register, login, get, update, getOne };
+const raiseFund = async (req, res, next) => {
+	try {
+		const { companyID } = req.params;
+
+		const { round, amount, equity, companyWallet, about } = req.body;
+
+		const company = await Company.findById(companyID);
+
+		company.walletAddressArray = companyWallet;
+		const recentFunding = company.recentFunding || [];
+		const recentFund = {
+			round,
+			amount,
+			about,
+			equity,
+			active: true,
+		};
+		recentFunding.push(recentFund);
+
+		company.recentFunding = recentFunding;
+		const savedCompany = await company.save();
+		res.send(savedCompany);
+	} catch (e) {
+		next(e);
+	}
+};
+
+const fundExecute = async (req, res, next) => {
+	try {
+		const { companyID, investorID } = req.params;
+		const { round, amount, equity, companyWallet, investorWallet } =
+			req.body;
+
+		const company = await Company.findById(companyID);
+		const investor = await Investor.findById(investorID);
+
+		company.walletAddressArray = companyWallet;
+
+		const funding = company.recentFunding || [];
+		const newFunding = [];
+		funding.forEach((fund) => {
+			let obj = { ...fund };
+			if (fund.round === round) {
+				obj.investor = investorID;
+				obj.active = false;
+			}
+			newFunding.push(obj);
+		});
+		company.recentFunding = newFunding;
+
+		const savedCompany = await company.save();
+
+		const companyInvest = {
+			company: companyID,
+			amount,
+			equity,
+			round,
+		};
+
+		const companyInvested = investor.companyInvested || [];
+		companyInvested.push(companyInvest);
+		investor.companyInvested = companyInvested;
+
+		const savedInvestor = await investor.save();
+
+		res.send(savedCompany);
+	} catch (e) {
+		next(e);
+	}
+};
+
+module.exports = {
+	register,
+	login,
+	get,
+	update,
+	getOne,
+	raiseFund,
+	fundExecute,
+};

@@ -14,6 +14,7 @@
 .left-half {
 	height: 100%;
 	width: 17%;
+	overflow-y: scroll;
 	background-color: rgb(18, 19, 25);
 }
 .right-half {
@@ -190,31 +191,31 @@ a {
 	font-size: 18px;
 	color: #fff;
 }
-#usersList{
+#usersList {
 	display: block;
-	width:100%;
+	width: 100%;
 	margin: 0px 15px;
-	height:200px;
-   overflow-y:scroll;
+	height: 200px;
+	overflow-y: scroll;
 }
-.userBox{
+.userBox {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	justify-content:flex-start;
-	width:80%;
-	border:1px solid #E3DDCA;
-	height:30px;
-	padding:5px 10px;
-	color:#E3DDCA;
+	justify-content: flex-start;
+	width: 80%;
+	border: 1px solid #e3ddca;
+	height: 30px;
+	padding: 5px 10px;
+	color: #e3ddca;
 	margin-top: 5px;
 }
-.userBox img{
-	width:40px;
-	height:40px;
-	margin-right:15px;
+.userBox img {
+	width: 40px;
+	height: 40px;
+	margin-right: 15px;
 	border-radius: 100%;
 }
-.participantsText{
-	color:white;
+.participantsText {
+	color: white;
 }

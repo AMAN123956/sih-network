@@ -130,7 +130,7 @@ const loadRecentChats = async (senderID, user1) => {
 			recentChatContainer.innerHTML += `<a  href='${BASEURL}/socket/${senderType}/${senderID}/?channel=${channel._id}'>
 			<div class='userChat'>
 			<img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png" alt="user_img" />
-			    <h2>#${channel.name}</h2>
+			    <h2>#  ${channel.name}</h2>
 			</div>
 			</a>`;
 		});
@@ -157,29 +157,28 @@ const loadProfile = async (userData) => {
 	console.log(userData);
 	let userImage = document.getElementById("userImage");
 	userImage.src = userData.image;
-	if (userData.number)
-		number.innerText = `${userData.number}`;
+	if (userData.number) number.innerText = `${userData.number}`;
 	Name.innerText = `${userData.name}`;
 	aboutProfile.innerText = userData.about ? `${userData.about}` : "";
-	let userList = document.getElementById('usersList')
-	usersList.innerHTML = '';
-	console.log('usersList')
-	console.log(userList)
+	let userList = document.getElementById("usersList");
+	usersList.innerHTML = "";
+	console.log("usersList");
+	console.log(userList);
 	if (userData.users || userData.investors) {
-		userList.innerHTML = '<p class="participantsText">Participants</p>'
+		userList.innerHTML = '<p class="participantsText">Participants</p>';
 	}
 	if (userData.users) {
-		userData.users.map(user => {
-			console.log(user)
+		userData.users.map((user) => {
+			console.log(user);
 			userList.innerHTML += `<a href='${BASEURL}/socket/${senderType}/${senderID}/?entrepreneur=${user._id}'><div class="userBox"><img src=${user.image} />
-		<p>${user.name}</p></div></a>`
-		})
+		<p>${user.name}</p></div></a>`;
+		});
 	}
 	if (userData.investors) {
-		userData.investors.map(user => {
+		userData.investors.map((user) => {
 			userList.innerHTML += `<a href='${BASEURL}/socket/${senderType}/${senderID}/?investor=${user._id}'><div class="userBox"><img src=${user.image} />
-			<p>${user.name}</p></div></a>`
-		})
+			<p>${user.name}</p></div></a>`;
+		});
 	}
 };
 
@@ -293,7 +292,7 @@ const fn = async function () {
 
 			loadRecentChats(senderID, user1);
 			loadHistoryMessageChannel(senderID, receiverID);
-			loadProfile(channel.data)
+			loadProfile(channel.data);
 			io.emit("u2c", { room: channel.data._id });
 
 			inputBox.addEventListener("keydown", async (e) => {
