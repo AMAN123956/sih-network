@@ -1,0 +1,14 @@
+.loadMoreBtn{
+    outline: none;
+    border: none;
+    background-color: #E3DDCA;
+    padding: 10px;
+}
+
+.addPostBtn{
+    outline: none;
+    border: none;
+    background-color: #E3DDCA;
+    padding: 10px;
+    margin: 10px 10px;
+}

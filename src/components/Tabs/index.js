@@ -6,6 +6,8 @@ import Mentors from '../Mentors/index';
 import Entrepreneur from '../Entrepreneurs/index';
 import Channel from '../Channels';
 import MyChannel from '../MyChannels';
+import Feeds from '../Feeds';
+
 const NetworkTab = () => {
     const [key, setKey] = useState('startups');
 
@@ -29,6 +31,9 @@ const NetworkTab = () => {
             </Tab>
             <Tab eventKey="channels" title="Channels">
                 <Channel />
+            </Tab>
+            <Tab eventKey="feeds" title="Feeds">
+                <Feeds />
             </Tab>
             {userInfo && <Tab eventKey="mychannels" title="MyChannels">
                 <MyChannel />
