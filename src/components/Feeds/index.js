@@ -9,7 +9,7 @@ const Feeds = () => {
     useEffect(() => {
         async function fetchFeeds() {
             try {
-                const { data } = await axios.find({})
+                const { data } = await axios.find(`${url}/api/feed/`)
                 if (data && data.success) {
                     console.log('feed')
                     console.log(data.data)

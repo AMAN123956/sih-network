@@ -96,11 +96,12 @@ function Login() {
             setLoading(false);
             if (data && data.success) {
                 localStorage.setItem(
-                    "driveUserInfo",
+                    "startupUserInfo",
                     JSON.stringify(data.data)
                 );
                 setSuccess(true);
                 setuser(data.data);
+                history.push('/home')
             } else {
                 if (data) {
                     seterror(data.message);
