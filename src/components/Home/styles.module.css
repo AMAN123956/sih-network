@@ -7,12 +7,13 @@
 }
 
 .section1{
-    padding: 10px;
-    width: 100%;
+    padding: 10px 20px;
+    width:100vw;
     height:10rem;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
     background-color: navy;
     color: white;
 }
@@ -31,4 +32,19 @@
 .section2 .rightSection{
     margin-left: 5%;
     width: 80vw;
+}
+
+.profileBtn{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width:7rem;
+    padding:8px;
+    border-radius: 3px;
+    border:1px solid black;
+}
+.profileBtn img{
+    width:30px;
+    height:30px;
+    border-radius: 100%;
 }

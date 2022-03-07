@@ -1,28 +1,30 @@
-import React, { useEffect } from 'react'
+import React, { useState,useEffect } from 'react'
 import styles from './styles.module.css'
 import axios from 'axios'
 import MentorCard from './UI/MentorCard/index'
-
+import { url } from '../../utilities'
 const Mentors = () => {
-    const dummyData = [{
-        'name': "Zomato",
-        'id': '123456'
-    },
-    {
-        'name': "Swiggy",
-        'id': '234567'
-    }]
-    localStorage.setItem('networkData', JSON.stringify(dummyData))
-    const fetchStartupList = async () => {
-        const data = await axios.get(`{$url}/api/users`, { userType: 'startup' });
+    const [error, seterror] = useState(null);
+    const [record, setrecord] = useState([{}])
+    // localStorage.setItem('networkData', JSON.stringify(dummyData))
 
-    }
     useEffect(() => {
-        fetchStartupList()
+        const fetchInvestorList = async () => {
+            console.log('request')
+            const data = await axios.get(`${url}/api/investor`);
+            console.log(data)
+            if (data.data.success) {
+               console.log(data.data.data)
+                setrecord(data.data.data)
+            } else {
+                seterror(`${data.error}`);
+            }
+        }
+        fetchInvestorList();
     }, []);
     return (
         <div className={styles.container1}>
-            {dummyData.map(item => <MentorCard id={item.id} name={item.username} />)}
+            {record.map(item => <MentorCard id={item.id} name={item.name} />)}
         </div>
     )
 }

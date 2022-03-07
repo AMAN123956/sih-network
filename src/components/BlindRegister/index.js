@@ -442,7 +442,8 @@ const BlindRegister = () => {
                     </div> : null}
                     {userType === 'startup' && step === 10 ? <div className="d-flex">
                         <div className={styles.leftSection}>
-                            <button className="btn btn-primary" onClick={submitHandler}> Submit</button>
+                        <h3 className={styles.formLabel}>Submit Form Details</h3>
+                            <button className="btn btn-primary"> Submit</button>
                         </div>
                         <div className={styles.rightSection}>
                             <div className="helpSection">

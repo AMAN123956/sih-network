@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import styles from "./styles.module.css";
-import { Button, Form, Modal } from "react-bootstrap";
+import React, { useState, useEffect } from 'react'
+import styles from './styles.module.css'
+import { Button, Form } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import Message from "../Message/index";
 import Loader1 from "../Loader/index";
 import registerImg from "../../assets/img/register.png";
 import axios from "axios";
 import { url } from "../../utilities";
-function Login() {
+
+const DeafLogin = () => {
     const [number, setnumber] = useState("");
     const [userType, setUserType] = useState('entrepreneur')
     const [password, setpassword] = useState("");
@@ -16,17 +17,13 @@ function Login() {
     const [loading, setLoading] = useState(false);
     const [user, setuser] = useState(null);
 
-    const history = useHistory();
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    const localData = localStorage.getItem("startupUserInfo");
-    const userInfo = localData ? JSON.parse(localData) : null;
-
     const setUserTypeFunc = (e) => {
         setUserType(e.target.value)
     }
 
+    const history = useHistory();
+    const localData = localStorage.getItem("startupUserInfo");
+    const userInfo = localData ? JSON.parse(localData) : null;
     useEffect(() => {
         if (userInfo || user) {
             let msg = new SpeechSynthesisUtterance();
@@ -41,49 +38,9 @@ function Login() {
             console.log(msg.text)
             speechSynthesis.speak(msg);
             history.push("/");
-        } else {
-            document.querySelector('button').click();
-            let msg = new SpeechSynthesisUtterance();
-            let voices = window.speechSynthesis.getVoices();
-            msg.voice = voices[1];
-            msg.volume = 1; // From 0 to 1
-            msg.rate = 1; // From 0.1 to 10
-            msg.pitch = 2; // From 0 to 2
-            msg.lang = "hindi"
-            speechSynthesis.cancel();
-            msg.text = 'Welcome to the Login Page, Press 1 If You are Blind Press 2 If You are Deaf Press 3 to Stop Audio';
-            console.log(msg.text)
-            speechSynthesis.speak(msg);
-        }
-        handleShow()
-        function listener(e) {
-            if (e.keyCode === 49) {
-                //   history.push('/register-blind')
-                window.location = '/login-blind';
-            }
-            else if (e.keyCode === 50) {
-                // history.push('/register-deaf')
-                window.location = '/login-deaf';
-            }
-            else if (e.keyCode === 51) {
-                document.removeEventListener('keydown', listener)
-                handleClose()
-            }
-        }
-        document.addEventListener('keydown', listener)
-
-        return () => {
-            document.removeEventListener('keydown', listener)
         }
         // eslint-disable-next-line
     }, [userInfo]);
-
-    if (error) {
-        setTimeout(() => {
-            seterror(null);
-        }, 3000);
-    }
-
     const submitLogin = async (e) => {
         e.preventDefault();
         try {
@@ -115,34 +72,6 @@ function Login() {
     };
     return (
         <div className="container my-5 d-flex justify-content-center align-items-center ">
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Are You?</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p>Instructions</p>
-                    <p>Press. 1 For <span>Blind</span></p>
-                    <p>Press. 2 For <span>Deaf</span></p>
-                    <p>Press. 3 For <span>None of These</span></p>
-                    <div className="d-flex">
-                        <button className={`shadow ${styles.option}`}>
-                            <h2>Blind</h2>
-                        </button>
-                        <button className={`shadow ${styles.option}`}>
-                            <h2>Deaf</h2>
-                        </button>
-                    </div>
-
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
-            </Modal>
             <div className={styles.leftSection}>
                 <h2 className={styles.logoHeading}>Startup</h2>
                 <img
@@ -212,7 +141,8 @@ function Login() {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-export default Login;
+
+export default DeafLogin

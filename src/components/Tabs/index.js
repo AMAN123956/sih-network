@@ -17,12 +17,13 @@ const NetworkTab = () => {
             <Tab eventKey="startups" title="Startups">
                 <Startup />
             </Tab>
-            <Tab eventKey="mentors" title="Mentors">
+            <Tab eventKey="investors" title="Investors">
                 <Mentors />
             </Tab>
-            <Tab eventKey="investors" title="Investors">
-                Investors
+            <Tab eventKey="entrepreneurs" title="Entrepreneurs">
+                Entrepreneurs
             </Tab>
+            
         </Tabs>
     )
 }
