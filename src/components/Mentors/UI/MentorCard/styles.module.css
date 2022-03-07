@@ -19,3 +19,8 @@
 Button{
     float:right;
 }
+
+.chatBtn{
+    float: left;
+    width: 100px;
+}

@@ -4,6 +4,7 @@ import { Tabs,Tab } from "react-bootstrap"
 import Startup from '../Startups/index';
 import Mentors from '../Mentors/index';
 import Entrepreneur from '../Entrepreneurs/index';
+import Channel from '../Channels';
 const NetworkTab = () => {
     const [key, setKey] = useState('startups');
 
@@ -22,6 +23,9 @@ const NetworkTab = () => {
             </Tab>
             <Tab eventKey="entrepreneurs" title="Entrepreneurs">
                 <Entrepreneur />
+            </Tab>
+            <Tab eventKey="channels" title="Channels">
+                <Channel />
             </Tab>
             
         </Tabs>

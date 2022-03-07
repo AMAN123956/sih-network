@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './styles.module.css'
 import {
     Accordion,
@@ -8,11 +8,12 @@ import {
     AccordionItemPanel,
 } from 'react-accessible-accordion';
 
-import { Form,Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 // Demo styles, see 'Styles' section below for some notes on use.
 import 'react-accessible-accordion/dist/fancy-example.css';
 import { Country, State, City } from 'country-state-city';
-import FormCheckLabel from 'react-bootstrap/esm/FormCheckLabel';
+import axios from 'axios';
+import { url } from '../../utilities'
 console.log(Country.getAllCountries())
 const states = State.getStatesOfCountry('IN')
 const cities = City.getCitiesOfCountry('IN')
@@ -21,6 +22,8 @@ const Filter = () => {
     let [industry, updateIndustry] = useState([]);
     let [sector, updateSector] = useState([]);
     let [state, updateState] = useState([])
+    const [userType,setUserType] = useState('entrepreneur')
+    const [searchQuery, setQuery] = useState(null)
     let sectorFilterTodos = [];
     let industryFilterTodos = [];
     let stateFilterTodos = [];
@@ -78,6 +81,83 @@ const Filter = () => {
         }
     }
 
+    function speakMsg(info) {
+        let msg = new SpeechSynthesisUtterance();
+        let voices = window.speechSynthesis.getVoices();
+        msg.voice = voices[1];
+        msg.volume = 1; // From 0 to 1
+        msg.rate = 0.8; // From 0.1 to 10
+        msg.pitch = 1; // From 0 to 2
+        speechSynthesis.cancel();
+        msg.lang = "english";
+        msg.text = info
+        speechSynthesis.speak(msg)
+    }
+
+    useEffect(() => {
+        speakMsg('Press 1 To Search for an Entrepreneur Details, Press 2 To Search For a Startup Details, Press 3 To Search For Investor Details , Press 4 To Cancel The Audio')
+    }, [])
+
+    useEffect(() => {
+        async function listener(event) {
+            console.log(event.code)
+            console.log(event.target.nodeName)
+            console.log(event.which)
+            const searchField = document.getElementById('searchField')
+            if (searchField.value === '') {
+                if (event.code === 'Digit1') {
+                    setUserType('entrepreneur')
+                    speakMsg('Enter Name of Entrepreneur , you want to search for');
+                    setTimeout(() => {
+                        searchField.value = ''
+                        searchField.focus()
+                    }, 1000)
+                    document.removeEventListener('keydown', listener)
+                }
+                if (event.code === 'Digit2') {
+                    setUserType('startup')
+                    speakMsg('Enter Name of Startup , you want to search for');
+                    setTimeout(() => {
+                        searchField.value = ''
+                        searchField.focus()
+                    }, 1000)
+                    document.removeEventListener('keydown', listener)
+                }
+                if (event.code === 'Digit3') {
+                    setUserType('investor')
+                    speakMsg('Enter Name of Investor , you want to search for');
+                    setTimeout(() => {
+                        searchField.value = ''
+                        searchField.focus()
+                    }, 1000)
+                    document.removeEventListener('keydown', listener)
+                }
+                if (event.code === 'Digit4') {
+                    speakMsg('');
+                    localStorage.setItem('homeAudio',false);
+                    document.removeEventListener('keydown', listener)
+                }
+               
+            }
+            
+            if(event.code === 'ControlLeft'){
+                console.log("hello")
+                console.log(searchField.value)
+                const data = await axios.get(`${url}/api/${userType}/?name=${searchField.value}`)
+                console.log(data)
+            }
+
+             
+           
+        }
+        document.addEventListener('keydown', listener)
+
+        return () => {
+            document.removeEventListener('keydown', listener)
+        }
+
+    }, [searchQuery])
+
 
     return (
         <div className={`${styles.container1} shadow`}>
@@ -87,6 +167,9 @@ const Filter = () => {
                 </h2>
             </div>
             <div className={styles.section2}>
+                <form>
+                    <input type='text' id='searchField' className={styles.searchField} value={searchQuery} onChange={(e) => setQuery(e.target.value)} />
+                </form>
                 <Accordion>
                     <AccordionItem>
                         <AccordionItemHeading>

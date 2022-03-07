@@ -24,7 +24,7 @@ const Mentors = () => {
     }, []);
     return (
         <div className={styles.container1}>
-            {record.map(item => <MentorCard id={item.id} name={item.name} />)}
+            {record.map(item => <MentorCard id={item._id} name={item.name} sector={item.sector} />)}
         </div>
     )
 }

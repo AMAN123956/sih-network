@@ -17,7 +17,8 @@ const Startup = () => {
             const data = await axios.get(`${url}/api/startup`);
             console.log(data)
             if (data.data.success) {
-               console.log(data.data.data)
+                console.log('startup')
+                console.log(data.data.data)
                 setrecord(data.data.data)
             } else {
                 seterror(`${data.error}`);
@@ -27,7 +28,7 @@ const Startup = () => {
     }, []);
     return (
         <div id="container" className={styles.container1}>
-            {record.map(item => <StartupCard id={item.id} name={item.name} />)}
+            {record.map(item => <StartupCard id={item._id} name={item.name} sector={item.sector} />)}
         </div>
     )
 }

@@ -29,7 +29,6 @@ const Profile = () => {
         const getData = async () => {
             console.log('request made')
             const { data } = await axios.get(`${url}/api/${userType}/${id}`, config);
-
             console.log(data);
 
             if (data.success) {

@@ -108,7 +108,7 @@ function Register() {
 
       setLoading(false);
       if (data && data.success) {
-        localStorage.setItem("driveUserInfo", JSON.stringify(data.data));
+        localStorage.setItem("startupUserInfo", JSON.stringify(data.data));
         setSuccess(true);
         setuser(data.data);
       } else {
