@@ -3,25 +3,28 @@ import styles from './styles.module.css'
 import axios from 'axios'
 import ChannelCard from './UI/ChannelCard/index'
 import { url } from '../../utilities'
-
-const Channel = () => {
+import { useHistory } from 'react-router-dom'
+const MyChannel = () => {
     const [error, seterror] = useState(null);
     const [record, setrecord] = useState([{}])
 
     // localStorage.setItem('networkData',JSON.stringify(dummyData))
-        
+
     const localData = localStorage.getItem("startupUserInfo");
     const userInfo = localData ? JSON.parse(localData) : null;
-
+    const history = useHistory()
     useEffect(() => {
         const fetchChannelList = async () => {
             console.log('request')
             let data;
-            if(userInfo && userInfo.id){
-             data = await axios.get(`${url}/api/channel/?userId=${userInfo.id}`);
+            if (userInfo && userInfo.id && userInfo.userType === 'entrepreneur') {
+                data = await axios.get(`${url}/api/channel/?users=${userInfo.id}`);
             }
-            else{
-                data = await axios.get(`${url}/api/channel`);
+            else if(userInfo && userInfo.id && userInfo.userType === 'investor'){
+                data = await axios.get(`${url}/api/channel/?investors=${userInfo.id}`);
+            }
+            else {
+                history.push('/login')
             }
             console.log('channels data')
             console.log(data)
@@ -41,4 +44,4 @@ const Channel = () => {
         </div>
     )
 }
-export default Channel
+export default MyChannel

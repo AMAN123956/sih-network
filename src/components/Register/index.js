@@ -17,7 +17,7 @@ function Register() {
   const [sector, setSector] = useState("");
   const [industry, setIndustry] = useState("");
   const [startupId, setStartupId] = useState("");
-  const [userType, setUserType] = useState("home");
+  const [userType, setUserType] = useState("entrepreneur");
   const [startupDesc, setStartupDesc] = useState("");
   const [startupStage, setStartupStage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -100,7 +100,7 @@ function Register() {
     e.preventDefault();
     try {
       setLoading(true);
-      const { data } = await axios.post(`${url}/api/users`, {
+      const { data } = await axios.post(`${url}/api/${userType}`, {
         name: name,
         number: number,
         industry: industry,
@@ -116,6 +116,7 @@ function Register() {
         localStorage.setItem("startupUserInfo", JSON.stringify(data.data));
         setSuccess(true);
         setuser(data.data);
+        history.push('/')
       } else {
         if (data) {
           seterror(data.message);

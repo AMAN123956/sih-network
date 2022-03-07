@@ -5,23 +5,28 @@ import StartupCard from "./UI/StartupCard/index";
 import { url } from "../../utilities";
 
 const Startup = () => {
-  const [error, seterror] = useState(null);
-  const [record, setrecord] = useState([{}]);
+    const [error, seterror] = useState(null);
+    const [record, setrecord] = useState([{}]);
 
     // localStorage.setItem('networkData',JSON.stringify(dummyData))
-        
-   
+
+
     useEffect(() => {
         const fetchStartupList = async () => {
-            console.log('request')
-            const data = await axios.get(`${url}/api/startup`);
-            console.log(data)
-            if (data.data.success) {
-                console.log('startup')
-                console.log(data.data.data)
-                setrecord(data.data.data)
-            } else {
-                seterror(`${data.error}`);
+            try {
+                console.log('request')
+                const data = await axios.get(`${url}/api/startup`);
+                console.log(data)
+                if (data.data.success) {
+                    console.log('startup')
+                    console.log(data.data.data)
+                    setrecord(data.data.data)
+                } else {
+                    seterror(`${data.error}`);
+                }
+            }
+            catch (e) {
+                seterror(`${e.error}`);
             }
         }
         fetchStartupList();

@@ -1,13 +1,16 @@
-import React,{useState} from 'react'
-import { Tabs,Tab } from "react-bootstrap"
+import React, { useState } from 'react'
+import { Tabs, Tab } from "react-bootstrap"
 
 import Startup from '../Startups/index';
 import Mentors from '../Mentors/index';
 import Entrepreneur from '../Entrepreneurs/index';
 import Channel from '../Channels';
+import MyChannel from '../MyChannels';
 const NetworkTab = () => {
     const [key, setKey] = useState('startups');
 
+    const localData = localStorage.getItem("startupUserInfo");
+    const userInfo = localData ? JSON.parse(localData) : null;
     return (
         <Tabs
             id="controlled-tab-example"
@@ -27,7 +30,10 @@ const NetworkTab = () => {
             <Tab eventKey="channels" title="Channels">
                 <Channel />
             </Tab>
-            
+            {userInfo && <Tab eventKey="mychannels" title="MyChannels">
+                <MyChannel />
+            </Tab>}
+
         </Tabs>
     )
 }
