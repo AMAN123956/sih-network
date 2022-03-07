@@ -101,6 +101,7 @@ const loadRecentChats = async (senderID) => {
 			    <h2>${chat.name}</h2>
 			</div>
 			</a>`
+			console.log(data)
 			recentChatContainer.innerHTML += data;
 
 		})
