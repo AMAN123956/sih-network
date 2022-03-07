@@ -14,6 +14,10 @@ const inputBox = document.getElementById("input-box");
 const sendButton = document.getElementById("send-button");
 const messageBox = document.querySelector(".messagebox");
 
+const number = document.querySelector(".number");
+const Name = document.querySelector(".name");
+const aboutProfile = document.querySelector(".about-profile");
+
 const createChatDiv = (message, direction, name, time) => {
 	if (direction === "outgoing") {
 		const messageDiv = document.createElement("div");
@@ -147,6 +151,12 @@ const getRoomId = (senderID, receiverID) => {
 	});
 };
 
+const loadProfile = async (userData) => {
+	number.innerText = `${userData.number}`;
+	Name.innerText = `${userData.name}`;
+	aboutProfile.innerText = userData.about ? `${userData.about}` : "";
+};
+
 const fn = async function () {
 	try {
 		if (splitURL2[0] === "entrepreneur" || splitURL2[0] === "investor") {
@@ -163,6 +173,8 @@ const fn = async function () {
 			console.log("user2");
 			console.log(user2);
 			const roomId = await getRoomId(senderID, receiverID);
+
+			loadProfile(user2.data);
 
 			loadHistoryMessage(senderID, roomId);
 			loadRecentChats(senderID, user1);
