@@ -32,7 +32,7 @@ export const StartupProfile = () => {
   };
 
   return (
-    <div className={styles.container}>  
+    <div className='container'>  
       {/* {!currentAccount && (
         <button type="button" onClick={connectWallet}>
           <p>Connect Wallet</p>
