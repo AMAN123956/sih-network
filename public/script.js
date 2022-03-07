@@ -116,7 +116,7 @@ const loadRecentChats = async (senderID, user1) => {
 		recentChatContainer.innerHTML = "";
 
 		recentChats.map((chat) => {
-			recentChatContainer.innerHTML += `<a  href='${BASEURL}/socket/${chat.type}/${senderID}/?entrepreneur=${chat._id}'>
+			recentChatContainer.innerHTML += `<a  href='${BASEURL}/socket/${senderType}/${senderID}/?entrepreneur=${chat._id}'>
 			<div class='userChat'>
 			<img src=${chat.image} alt="user_img" />
 			    <h2>${chat.name}</h2>
@@ -125,7 +125,7 @@ const loadRecentChats = async (senderID, user1) => {
 		});
 		// dummy for now
 		user1.data.channels.map((channel) => {
-			recentChatContainer.innerHTML += `<a  href='${BASEURL}/socket/hello/${senderID}/?entrepreneur=bye'>
+			recentChatContainer.innerHTML += `<a  href='${BASEURL}/socket/${senderType}/${senderID}/?channel=${channel._id}'>
 			<div class='userChat'>
 			<img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png" alt="user_img" />
 			    <h2>${channel.name}</h2>
