@@ -1,5 +1,5 @@
-// const BASEURL = `https://internal-sih.herokuapp.com`;
-const BASEURL = `http://localhost:5000`;
+const BASEURL = `https://internal-sih.herokuapp.com`;
+// const BASEURL = `http://localhost:5000`;
 
 var io = io(`${BASEURL}`);
 const URL = document.URL;
