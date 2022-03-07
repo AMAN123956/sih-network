@@ -14,7 +14,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(express.static("public"));
+// app.use(express.static("public"));
 
 const PORT = process.env.PORT || 5000;
 
