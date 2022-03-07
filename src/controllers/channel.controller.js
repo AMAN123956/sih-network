@@ -41,6 +41,7 @@ const joinChannel = async (req, res, next) => {
 			res.statusCode = 400;
 			throw new Error("No such investor or users");
 		}
+		res.send({});
 	} catch (e) {
 		next(e);
 	}
