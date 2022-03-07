@@ -33,7 +33,6 @@ const createChatDiv = (message, direction, name, time) => {
 		div.setAttributeNode(att);
 		div.appendChild(senderDiv);
 		div.appendChild(messageDiv);
-
 		messageBox.appendChild(div);
 	}
 	if (direction === "incomming") {
@@ -87,7 +86,14 @@ const fn = async function () {
 				`${BASEURL}/socket/getrecent/${userID}`
 			);
 			console.log(recentChats);
-
+            let data = '';
+			const recentChatContainer = document.getElementsByClassName('recentChat')
+			recentChats.map(chat => {
+				data+= `<div className='chatUser'>
+				        ${chat.name}
+				</div>`
+				recentChatContainer.innerHTML+=data;
+			} )
 			chats.forEach((chat) => {
 				createChatDiv(
 					chat.message,
