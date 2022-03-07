@@ -31,16 +31,23 @@ io.on("connection", (socket) => {
 			socket.to(room).emit("rechat", { msz });
 		});
 	});
+	socket.on("u2c", ({ room }) => {
+		socket.join(room);
+
+		socket.on("groupchat", ({ msz, name }) => {
+			socket.broadcast.to(room).emit("grouprechat", { msz, name });
+		});
+	});
 });
 
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 connectDB()
 	.then((conn) => {
 		console.log(
 			`Database connected on port ${conn?.connection?.port}`.cyan.bold
 		);
 
-		app.use("/socket/user/:id", express.static("public"));
+		app.use("/socket/:type/:id", express.static("public"));
 
 		app.use("/api", activateAPI());
 		app.use(errorHandler);
