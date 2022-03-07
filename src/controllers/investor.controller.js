@@ -12,6 +12,7 @@ const register = async (req, res, next) => {
 			password,
 			industry,
 			sector,
+			image,
 			stage,
 			state,
 		} = req.body;
@@ -35,6 +36,8 @@ const register = async (req, res, next) => {
 			password,
 			industry,
 			sector,
+			image,
+			about,
 			stage,
 			state,
 		});
@@ -53,9 +56,11 @@ const register = async (req, res, next) => {
 				industry,
 				sector,
 				stage,
+				about,
+				image,
 				state,
 				token,
-				userType: 'investor'
+				userType: "investor",
 			},
 		});
 	} catch (e) {
@@ -84,7 +89,7 @@ const login = async (req, res, next) => {
 				number,
 				_id: investor._id,
 				token,
-				userType: 'investor'
+				userType: "investor",
 			},
 		});
 	} catch (e) {

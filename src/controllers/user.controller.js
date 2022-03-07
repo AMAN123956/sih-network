@@ -11,6 +11,7 @@ const register = async (req, res, next) => {
 			interest,
 			industry,
 			sector,
+			about,
 			stage,
 			state,
 		} = req.body;
@@ -26,6 +27,7 @@ const register = async (req, res, next) => {
 			image,
 			password,
 			interest,
+			about,
 			industry,
 			sector,
 			stage,
@@ -44,12 +46,13 @@ const register = async (req, res, next) => {
 			success: true,
 			data: {
 				id: savedUser._id,
-				userType: 'entrepreneur',
+				userType: "entrepreneur",
 				name,
 				number,
 				image,
 				industry,
 				sector,
+				about,
 				stage,
 				state,
 				token,
@@ -84,7 +87,7 @@ const login = async (req, res, next) => {
 		res.send({
 			success: true,
 			data,
-			userType: 'entrepreneur',
+			userType: "entrepreneur",
 		});
 	} catch (e) {
 		next(e);
@@ -131,6 +134,7 @@ const update = async (req, res, next) => {
 			password,
 			interest,
 			industry,
+			about,
 			sector,
 			stage,
 			state,
@@ -155,6 +159,7 @@ const update = async (req, res, next) => {
 		user.stage = stage || user.stage;
 		user.state = state || user.state;
 		user.interest = interest || user.interest;
+		user.about = about || user.about;
 
 		await user.save();
 
@@ -167,6 +172,7 @@ const update = async (req, res, next) => {
 				interest,
 				industry,
 				sector,
+				about,
 				stage,
 				state,
 			},

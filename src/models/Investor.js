@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
 const investorSchema = new mongoose.Schema({
 	name: {
 		type: String,
@@ -12,7 +12,6 @@ const investorSchema = new mongoose.Schema({
 	},
 	about: {
 		type: String,
-
 	},
 	companyInvested: [
 		{
@@ -51,6 +50,14 @@ const investorSchema = new mongoose.Schema({
 			ref: "Channel",
 		},
 	],
+	image: {
+		type: String,
+		default:
+			"https://res.cloudinary.com/abhistrike/image/upload/v1646652644/248-2488953_cartoon-businessman-hd-png-download_zly65g.png",
+	},
+	about: {
+		type: String,
+	},
 });
 
 investorSchema.methods.matchPassword = async function (enteredPassword) {
