@@ -270,6 +270,7 @@ const fn = async function () {
 
 			console.log(channel.data);
 
+			loadRecentChats(senderID, user1);
 			loadHistoryMessageChannel(senderID, receiverID);
 
 			io.emit("u2c", { room: channel.data._id });
