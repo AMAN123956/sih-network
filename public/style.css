@@ -99,7 +99,9 @@
 	padding:20px 10x;
 	width:95%;
 }
-
+a{
+	text-decoration: none;
+}
 .userChat img{
 	margin-right: 30px;
 	width:50px;
