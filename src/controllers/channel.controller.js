@@ -62,10 +62,28 @@ const getChannel = async (req, res, next) => {
 
 const getAllChannel = async (req, res, next) => {
 	try {
-		const channels = await Channel.find(req.query);
+		const { userId } = req.query;
+		let QRY = { ...req.query };
+		delete QRY.userId;
+		delete QRY.userType;
+
+		const channels = await Channel.find(QRY);
+		const filterChannel = [];
+
+		channels.forEach((channel) => {
+			const total = [...channel.users, ...channel.investors];
+			let flag = true;
+			total.forEach((ttl) => {
+				if (String(ttl._id) === String(userId)) {
+					flag = false;
+				}
+			});
+			if (flag) filterChannel.push(channel);
+		});
+
 		res.send({
 			success: true,
-			data: channels,
+			data: filterChannel,
 		});
 	} catch (e) {
 		next(e);
