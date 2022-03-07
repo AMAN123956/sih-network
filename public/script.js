@@ -272,7 +272,7 @@ const fn = async function () {
 
 			loadRecentChats(senderID, user1);
 			loadHistoryMessageChannel(senderID, receiverID);
-
+            loadProfile(channel.data)
 			io.emit("u2c", { room: channel.data._id });
 
 			inputBox.addEventListener("keydown", async (e) => {
