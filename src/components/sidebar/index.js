@@ -16,7 +16,9 @@ const NavbarComponent = () => {
     <Navbar className={styles.navbar} expand={false}>
       <Container fluid>
         <Navbar.Toggle aria-controls="offcanvasNavbar" />
-        <Navbar.Brand href="#">Navbar Offcanvas</Navbar.Brand>
+        <Navbar.Brand href="#">
+          <span className={styles.navLogo}>elevate</span>
+        </Navbar.Brand>
         <Navbar.Offcanvas
           id="offcanvasNavbar"
           aria-labelledby="offcanvasNavbarLabel"
