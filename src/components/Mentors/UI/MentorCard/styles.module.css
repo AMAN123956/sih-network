@@ -1,7 +1,9 @@
 .container1 {
   display: flex;
+  max-width: 1200px;
   flex-direction: row;
-  flex-wrap: auto;
+  justify-content: space-between;
+  flex-wrap: wrap !important;
 }
 .section1 {
   margin-top: 0px;
