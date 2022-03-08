@@ -14,12 +14,11 @@ function Home() {
         console.log('profile data')
         // history.push('/myprofile')
     }
+    console.log(userInfo)
 
-    useEffect(() => {
-      if (!userInfo) {
-            history.push("/login");
-        }
-    }, [])
+    // useEffect(() => {
+  
+    // }, [])
     return (
         <div className={styles.container1}>
             <div className={styles.section1}>

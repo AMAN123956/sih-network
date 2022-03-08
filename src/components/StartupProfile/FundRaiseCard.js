@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./styles.module.css";
-export const FundRaiseCard = ({ round, amount, equity, isActive }) => {
+export const FundRaiseCard = ({ round, amount, equity, isActive,handleFundRaise }) => {
   return (
     <div className={styles.recentFundingCard}>
       <h4>Round:- {round}</h4>
