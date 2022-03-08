@@ -202,6 +202,11 @@ const raiseFund = async (req, res, next) => {
 
 		const company = await Company.findById(companyID);
 
+		if (company) {
+			res.statusCode = 400;
+			throw new Error("No such company");
+		}
+
 		company.walletAddressArray = companyWallet;
 		const recentFunding = company.recentFunding || [];
 		const recentFund = {
