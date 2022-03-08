@@ -30,7 +30,8 @@ const createChatDiv = (message, direction, name, time) => {
 		const senderAtt = document.createAttribute("class");
 		senderAtt.value = "receiver";
 		senderDiv.setAttributeNode(senderAtt);
-		senderDiv.innerText = `${moment(time).format("DD-MM-YYYY | hh:mm:A")}`;
+		// senderDiv.innerText = `${moment(time).format("DD-MM-YYYY | hh:mm:A")}`;
+		senderDiv.innerText = `${moment(time).format("hh:mm  a")}`;
 
 		const div = document.createElement("div");
 		const att = document.createAttribute("class");
@@ -51,9 +52,10 @@ const createChatDiv = (message, direction, name, time) => {
 		const senderAtt = document.createAttribute("class");
 		senderAtt.value = "sender";
 		senderDiv.setAttributeNode(senderAtt);
-		senderDiv.innerText = `${name} ${moment(time).format(
-			"DD-MM-YYYY | hh:mm"
-		)}`;
+		// senderDiv.innerText = `${name} ${moment(time).format(
+		// 	"DD-MM-YYYY | hh:mm"
+		// )}`;
+		senderDiv.innerText = `${name}   ${moment(time).format(" hh:mm  a")}`;
 
 		const div = document.createElement("div");
 		const att = document.createAttribute("class");

@@ -64,13 +64,13 @@
 }
 
 .sender {
-	font-size: 10;
+	font-size: 11px;
 	text-align: left;
 	color: #fff;
 }
 
 .receiver {
-	font-size: 10;
+	font-size: 11px;
 	text-align: right;
 	color: #fff;
 }
