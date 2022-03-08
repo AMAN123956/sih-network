@@ -1,26 +1,38 @@
-.container1{
-    display:flex;
-    flex-direction: row;
-    flex-wrap: auto;
+.container1 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: auto;
 }
-.section1{
-    margin-top: 0px;
-    display: flex;
-    padding:0px;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 10px;
+.section1 {
+  margin-top: 0px;
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  min-height: 300px;
 }
-.logo{
-    width:5rem;
-    height:5rem;
-    border-radius: 100%;
+.logo {
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
 }
-.detailBtn{
-    float:right;
+.detailBtn {
+  float: right;
 }
 
-.chatBtn{
-    float: left;
-    width: 100px;
+.chatBtn {
+  float: left;
+  width: 100px;
+}
+
+.mentorCard {
+  width: 300px;
+  height: 450px;
+}
+.investorName {
+  margin: 10px !important;
+  font-size: 24px;
+  font-weight: bold;
 }
