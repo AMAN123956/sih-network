@@ -9,12 +9,11 @@
 .section1 {
   padding: 10px 20px;
   width: 100vw;
-  height: 10rem;
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  background: #e3ddca;
+  background: #5d5bc1;
   color: white;
 }
 .section1 h2 {
@@ -39,11 +38,14 @@
   align-items: center;
   justify-content: space-evenly;
   padding: 8px;
-  border-radius: 3px;
+  border-radius: 5px;
   border: 1px solid black;
 }
 .profileBtn img {
   width: 30px;
   height: 30px;
   border-radius: 100%;
+}
+.profileImgUrl {
+  padding: 5px;
 }

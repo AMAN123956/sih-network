@@ -5,4 +5,10 @@
   font-size: 28px !important;
   font-weight: bold !important;
   color: #437bea !important;
+  padding: 10px;
+}
+.navLogoImg {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
 }

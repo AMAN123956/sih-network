@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import styles from "./styles.module.css";
+import logo from "../../assets/img/logo.png";
 import {
   Offcanvas,
   Container,
@@ -17,7 +18,10 @@ const NavbarComponent = () => {
       <Container fluid>
         <Navbar.Toggle aria-controls="offcanvasNavbar" />
         <Navbar.Brand href="#">
-          <span className={styles.navLogo}>elevate</span>
+          <span className={styles.navLogo}>
+            <img className={styles.navLogoImg} src={logo} alt="logo" />
+            elevate
+          </span>
         </Navbar.Brand>
         <Navbar.Offcanvas
           id="offcanvasNavbar"
