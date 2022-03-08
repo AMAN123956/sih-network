@@ -95,6 +95,7 @@ const login = async (req, res, next) => {
 				name: company.name,
 				companyNumber,
 				_id: company._id,
+				id: company._id,
 				token,
 				userType: "startup",
 			},

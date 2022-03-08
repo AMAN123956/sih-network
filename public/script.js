@@ -1,7 +1,7 @@
-const BASEURL = `https://internal-sih.herokuapp.com`;
-const CALLURL = "https://video-call-strike.herokuapp.com";
-// const BASEURL = `http://localhost:5000`;
-// const CALLURL = `http://localhost:3000`;
+// const BASEURL = `https://internal-sih.herokuapp.com`;
+// const CALLURL = "https://video-call-strike.herokuapp.com";
+const BASEURL = `http://localhost:5000`;
+const CALLURL = `http://localhost:3000`;
 
 var io = io(`${BASEURL}`);
 const URL = document.URL;

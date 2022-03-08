@@ -87,6 +87,7 @@ const login = async (req, res, next) => {
 			data: {
 				name: investor.name,
 				number,
+				id: investor._id,
 				_id: investor._id,
 				token,
 				userType: "investor",
