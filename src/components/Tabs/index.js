@@ -29,15 +29,16 @@ const NetworkTab = () => {
             <Tab eventKey="entrepreneurs" title="Entrepreneurs">
                 <Entrepreneur />
             </Tab>
-            <Tab eventKey="channels" title="Channels">
-                <Channel />
-            </Tab>
+            {userInfo && userInfo.id && userInfo.userType !== 'startup' &&
+                (<Tab eventKey="channels" title="Channels">
+                    <Channel />
+                </Tab>)}
             <Tab eventKey="feeds" title="Feeds">
                 <Feeds />
             </Tab>
-            {userInfo && <Tab eventKey="mychannels" title="MyChannels">
+            {userInfo && userInfo.userType !== 'startup' && (<Tab eventKey="mychannels" title="MyChannels">
                 <MyChannel />
-            </Tab>}
+            </Tab>)}
 
         </Tabs>
     )
