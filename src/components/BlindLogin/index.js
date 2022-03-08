@@ -93,7 +93,7 @@ const BlindLogin = () => {
                 msg.text = 'You have been successfully logged in';
                 console.log(msg.text)
                 speechSynthesis.speak(msg);
-                history.push('/')
+                window.location = '/'
             } else {
                 if (data) {
                     seterror(data.message);

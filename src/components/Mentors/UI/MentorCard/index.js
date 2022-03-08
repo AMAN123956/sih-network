@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./styles.module.css";
 import { Card, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-
+import { url } from "../../../../utilities";
 const MentorCard = ({ name, id, image, sector }) => {
   if (!image)
     image =
@@ -19,7 +19,7 @@ const MentorCard = ({ name, id, image, sector }) => {
       console.log(id);
       console.log("senderId");
       console.log(userInfo.id);
-      window.location = `http://localhost:5000/socket/${userInfo.userType}/${userInfo.id}/?investor=${id}`;
+      window.location = `${url}/socket/${userInfo.userType}/${userInfo.id}/?investor=${id}`;
     } else {
       history.push("/login");
     }

@@ -92,7 +92,7 @@ const DeafRegister = () => {
                 msg.text = 'You have been successfully registered';
                 console.log(msg.text)
                 speechSynthesis.speak(msg);
-                history.push('/')
+                window.location = '/'
             } else {
                 if (data) {
                     seterror(data.message);

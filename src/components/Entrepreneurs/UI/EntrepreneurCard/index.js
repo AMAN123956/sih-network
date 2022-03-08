@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './styles.module.css'
 import { useHistory } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap'
+import { url } from '../../../../utilities';
 
 const EntrepreneurCard = ({ name, address, sector, imgUrl, id }) => {
     if (!imgUrl) imgUrl = 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png'
@@ -17,7 +18,7 @@ const EntrepreneurCard = ({ name, address, sector, imgUrl, id }) => {
             console.log(id)
             console.log('senderId')
             console.log(userInfo.id)
-            window.location = `http://localhost:5000/socket/${userInfo.userType}/${userInfo.id}/?entrepreneur=${id}`
+            window.location = `${url}/socket/${userInfo.userType}/${userInfo.id}/?entrepreneur=${id}`
         }
         else{
             history.push('/login')

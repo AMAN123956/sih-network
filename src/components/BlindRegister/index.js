@@ -145,7 +145,7 @@ const BlindRegister = () => {
                 msg.text = 'You have been successfully registered';
                 console.log(msg.text)
                 speechSynthesis.speak(msg);
-                history.push('/')
+                window.location = '/'
 
             } else {
                 if (data) {
@@ -442,7 +442,7 @@ const BlindRegister = () => {
                     </div> : null}
                     {userType === 'startup' && step === 10 ? <div className="d-flex">
                         <div className={styles.leftSection}>
-                        <h3 className={styles.formLabel}>Submit Form Details</h3>
+                            <h3 className={styles.formLabel}>Submit Form Details</h3>
                             <button className="btn btn-primary"> Submit</button>
                         </div>
                         <div className={styles.rightSection}>

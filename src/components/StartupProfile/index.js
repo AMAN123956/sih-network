@@ -124,7 +124,7 @@ export const StartupProfile = () => {
                 <h5>{startup?.industry}</h5>
               </div>
               {!currentAccount ? (
-                <button variant="primary" onClick={connectWallet}>
+                <button className={styles.makePaymentBtn} variant="primary" onClick={connectWallet}>
                   Connect Wallet
                 </button>
               ) : (
@@ -142,7 +142,7 @@ export const StartupProfile = () => {
               <div className={styles.team}>
                 <div className={styles.teamCard}>
                   {startup?.coFounders?.map((co) => (
-                    <TeamCard />
+                    <TeamCard name={co}/>
                   ))}
                   {startup?.coFounders?.length === 0 ? (
                     <h4>Team Not Added</h4>

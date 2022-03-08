@@ -102,7 +102,7 @@ function Login() {
                 localStorage.setItem("startupUserInfo", JSON.stringify(data.data.data));
                 setSuccess(true);
                 // setuser(data.data);
-                history.push('/')
+                window.location = '/'
             } else {
                 if (data) {
                     seterror(data.message);

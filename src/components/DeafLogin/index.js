@@ -58,6 +58,7 @@ const DeafLogin = () => {
                 );
                 setSuccess(true);
                 setuser(data.data);
+                window.location = '/'
             } else {
                 if (data) {
                     seterror(data.message);
