@@ -202,7 +202,7 @@ const raiseFund = async (req, res, next) => {
 
 		const company = await Company.findById(companyID);
 
-		if (company) {
+		if (!company) {
 			res.statusCode = 400;
 			throw new Error("No such company");
 		}
