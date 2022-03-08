@@ -12,7 +12,7 @@ const reducer=combineReducers({
     config:configReducer
 })
 
-const userInfoFromStorage=localStorage.getItem('driveUserInfo')?JSON.parse(localStorage.getItem('driveUserInfo')):null
+const userInfoFromStorage=localStorage.getItem('startupUserInfo')?JSON.parse(localStorage.getItem('startupUserInfo')):null
 
 
 const initialState={userLogin:{userInfo:userInfoFromStorage}}
