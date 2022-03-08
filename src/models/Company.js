@@ -28,11 +28,9 @@ const companySchema = new mongoose.Schema({
 			type: String,
 		},
 	],
-	walletAddressArray: [
-		{
-			type: String,
-		},
-	],
+	walletAddressArray: {
+		type: String,
+	},
 
 	voting: [
 		{

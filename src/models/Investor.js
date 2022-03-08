@@ -30,11 +30,9 @@ const investorSchema = new mongoose.Schema({
 			},
 		},
 	],
-	walletAddressArray: [
-		{
-			type: String,
-		},
-	],
+	walletAddressArray: {
+		type: String,
+	},
 
 	mentor: {
 		type: Boolean,
