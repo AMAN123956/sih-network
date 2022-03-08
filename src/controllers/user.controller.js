@@ -83,11 +83,11 @@ const login = async (req, res, next) => {
 		const data = JSON.parse(JSON.stringify(user));
 		delete data.password;
 		data["token"] = token;
+		data["userType"] = "entrepreneur";
 
 		res.send({
 			success: true,
 			data,
-			userType: "entrepreneur",
 		});
 	} catch (e) {
 		next(e);
