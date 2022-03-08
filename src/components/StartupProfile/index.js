@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { TransactionContext } from "../../context/TransactionContext";
 import styles from "./styles.module.css";
 import { TeamCard } from "../TeamCard";
-import { Button } from "react-bootstrap";
+// import { button } from "react-bootstrap";
 import FundingModal from "./FundingModal";
 import { FundRaiseCard } from "./FundRaiseCard";
 import { GetStartup, PostFundRaise } from "../../services/FundServices";
@@ -35,8 +35,8 @@ export const StartupProfile = () => {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    console.log(id)
-    GetStartup(id).then((data) => setStartup(data.data.data));
+    console.log(id);
+    GetStartup(id).then(res=>setStartup(res.data.data));
   }, []);
   const handleSubmit = (e) => {
     const { addressTo, amount, keyword, message } = formData;
@@ -116,9 +116,9 @@ export const StartupProfile = () => {
               <h6>{startup?.companyNumber}</h6>
             </div>
             {!currentAccount ? (
-              <Button variant="primary" onClick={connectWallet}>
+              <button variant="primary" onClick={connectWallet}>
                 Connect Wallet
-              </Button>
+              </button>
             ) : (
               ""
             )}
@@ -158,13 +158,13 @@ export const StartupProfile = () => {
                 repellendus! Dolorum deserunt consequuntur voluptatem rerum
               </p>
             </div>
-            <Button
+            <button
               variant="primary"
               onClick={handleShow}
               style={{ marginTop: "20px" }}
             >
               Raise Funds
-            </Button>
+            </button>
           </div>
           <div className={styles.wrapper}>
             <h2>Recent Fund raises</h2>
@@ -175,6 +175,7 @@ export const StartupProfile = () => {
                   amount={fund.amount}
                   equity={fund.equity}
                   isActive={true}
+                  id={id}
                 />
               ))}
               {startup?.recentFunding?.length === 0 ? (
