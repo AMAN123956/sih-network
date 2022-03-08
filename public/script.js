@@ -1,5 +1,7 @@
-const BASEURL = `https://internal-sih.herokuapp.com`;
-// const BASEURL = `http://localhost:5000`;
+// const BASEURL = `https://internal-sih.herokuapp.com`;
+// const CALLURL = "https://video-call-strike.herokuapp.com";
+const BASEURL = `http://localhost:5000`;
+const CALLURL = `http://localhost:3000`;
 
 var io = io(`${BASEURL}`);
 const URL = document.URL;
@@ -12,6 +14,7 @@ const senderType = splitURL1[splitURL1.indexOf("socket") + 1];
 
 const inputBox = document.getElementById("input-box");
 const sendButton = document.getElementById("send-button");
+const callButton = document.getElementById("call-button");
 const messageBox = document.querySelector(".messagebox");
 
 const number = document.querySelector(".number");
@@ -190,6 +193,11 @@ const fn = async function () {
 
 			loadProfile(user2.data);
 
+			callButton.addEventListener("click", (e) => {
+				e.preventDefault();
+				window.location.replace(`${CALLURL}/${roomId}`);
+			});
+
 			loadHistoryMessage(senderID, roomId);
 			loadRecentChats(senderID, user1);
 
@@ -276,6 +284,11 @@ const fn = async function () {
 			const { data: channel } = await axios.get(
 				`${BASEURL}/api/channel/${receiverID}`
 			);
+
+			callButton.addEventListener("click", (e) => {
+				e.preventDefault();
+				window.location.replace(`${CALLURL}/${receiverID}`);
+			});
 
 			loadRecentChats(senderID, user1);
 			loadHistoryMessageChannel(senderID, receiverID);
