@@ -204,11 +204,11 @@ a {
 	align-items: center;
 	justify-content: flex-start;
 	width: 80%;
-	border: 1px solid #e3ddca;
-	height: 30px;
-	padding: 5px 10px;
+	padding: 4px 0 4px 4px;
+	border-radius: 100px;
+	background-color: rgb(66, 66, 86);
 	color: #e3ddca;
-	margin-top: 5px;
+	margin: 10px 0;
 }
 .userBox img {
 	width: 40px;

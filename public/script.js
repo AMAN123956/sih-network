@@ -110,7 +110,6 @@ const loadRecentChats = async (senderID, user1) => {
 		const { data: recentChats } = await axios.get(
 			`${BASEURL}/socket/getrecent/${senderID}`
 		);
-		console.log(recentChats);
 		const recentChatContainer = document.querySelector(".recentChat");
 		recentChatContainer.innerHTML = "";
 		recentChatContainer.innerHTML = "";
@@ -123,13 +122,10 @@ const loadRecentChats = async (senderID, user1) => {
 			</div>
 			</a>`;
 		});
-		// dummy for now
-		console.log("channel info");
-		console.log(user1.data.channels);
 		user1.data.channels.map((channel) => {
 			recentChatContainer.innerHTML += `<a  href='${BASEURL}/socket/${senderType}/${senderID}/?channel=${channel._id}'>
 			<div class='userChat'>
-			<img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png" alt="user_img" />
+			<img src="${channel.image}" alt="user_img" />
 			    <h2>#  ${channel.name}</h2>
 			</div>
 			</a>`;
@@ -153,8 +149,6 @@ const getRoomId = (senderID, receiverID) => {
 };
 
 const loadProfile = async (userData) => {
-	console.log("userData");
-	console.log(userData);
 	let userImage = document.getElementById("userImage");
 	userImage.src = userData.image;
 	if (userData.number) number.innerText = `${userData.number}`;
@@ -162,14 +156,11 @@ const loadProfile = async (userData) => {
 	aboutProfile.innerText = userData.about ? `${userData.about}` : "";
 	let userList = document.getElementById("usersList");
 	usersList.innerHTML = "";
-	console.log("usersList");
-	console.log(userList);
 	if (userData.users || userData.investors) {
 		userList.innerHTML = '<p class="participantsText">Participants</p>';
 	}
 	if (userData.users) {
 		userData.users.map((user) => {
-			console.log(user);
 			userList.innerHTML += `<a href='${BASEURL}/socket/${senderType}/${senderID}/?entrepreneur=${user._id}'><div class="userBox"><img src=${user.image} />
 		<p>${user.name}</p></div></a>`;
 		});
@@ -190,13 +181,9 @@ const fn = async function () {
 			const { data: user1 } = await axios.get(
 				`${BASEURL}/api/${senderType}/${senderID}`
 			);
-			console.log("user1");
-			console.log(user1);
 			const { data: user2 } = await axios.get(
 				`${BASEURL}/api/${receiverType}/${receiverID}`
 			);
-			console.log("user2");
-			console.log(user2);
 			const roomId = await getRoomId(senderID, receiverID);
 
 			loadProfile(user2.data);
@@ -283,12 +270,10 @@ const fn = async function () {
 			const { data: user1 } = await axios.get(
 				`${BASEURL}/api/${senderType}/${senderID}`
 			);
-			// console.log(user1);
+			console.log(user1);
 			const { data: channel } = await axios.get(
 				`${BASEURL}/api/channel/${receiverID}`
 			);
-
-			console.log(channel.data);
 
 			loadRecentChats(senderID, user1);
 			loadHistoryMessageChannel(senderID, receiverID);

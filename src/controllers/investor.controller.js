@@ -100,7 +100,9 @@ const login = async (req, res, next) => {
 const getOne = async (req, res, next) => {
 	try {
 		const { id } = req.params;
-		const investor = await Investor.findById(id).select("-password");
+		const investor = await Investor.findById(id)
+			.select("-password")
+			.populate(["channels"]);
 		if (!investor) {
 			res.statusCode = 400;
 			throw new Error("No such investor");
