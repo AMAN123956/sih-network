@@ -1,3 +1,8 @@
 .navbar {
-  background-color: #8b6e4a;
+  background-color: #ffffff;
+}
+.navLogo {
+  font-size: 28px !important;
+  font-weight: bold !important;
+  color: #437bea !important;
 }
