@@ -15,28 +15,30 @@ const MyChannel = () => {
     const history = useHistory()
     useEffect(() => {
         const fetchChannelList = async () => {
-            console.log('request')
-            let data;
-            if (userInfo && userInfo.id && userInfo.userType === 'entrepreneur') {
-                data = await axios.get(`${url}/api/channel/?users=${userInfo.id}`);
+            try {
+                let data;
+                if (userInfo && userInfo.id && userInfo.userType === 'entrepreneur') {
+                    console.log('Hello')
+                    data = await axios.get(`${url}/api/channel/?users=${userInfo.id}`);
+                    console.log('channels data')
+                    console.log(data)
+                }
+                else if (userInfo && userInfo.id && userInfo.userType === 'investor') {
+                    data = await axios.get(`${url}/api/channel/?investors=${userInfo.id}`);
+                }
+
+                if (data.data.success) {
+                    setrecord(data.data.data)
+                } else {
+                    seterror(`${data.error}`);
+                }
             }
-            else if(userInfo && userInfo.id && userInfo.userType === 'investor'){
-                data = await axios.get(`${url}/api/channel/?investors=${userInfo.id}`);
-            }
-            else {
-                history.push('/login')
-            }
-            console.log('channels data')
-            console.log(data)
-            if (data.data.success) {
-                console.log('startup')
-                console.log(data.data.data)
-                setrecord(data.data.data)
-            } else {
-                seterror(`${data.error}`);
+            catch (e) {
+                seterror(`${e.error}`);
             }
         }
         fetchChannelList();
+        
     }, []);
     return (
         <div id="container" className={styles.container1}>

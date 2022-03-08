@@ -12,10 +12,8 @@ const Feeds = () => {
         async function fetchFeeds() {
             try {
                 const { data } = await axios.get(`${url}/api/feed/`)
-                console.log(data)
+                // console.log(data)
                 if (data && data.success) {
-                    console.log('feed')
-                    console.log(data.data)
                     setrecord(data.data)
                 }
             }

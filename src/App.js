@@ -50,9 +50,6 @@ function App() {
             <Route path="/login-deaf">
               <DeafLogin />
             </Route>
-            <Route path="/myprofile">
-              <Profile />
-            </Route>
             <Route path="/investor/profile">
               <InvestorProfile />
             </Route>

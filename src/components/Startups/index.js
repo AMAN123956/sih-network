@@ -14,12 +14,8 @@ const Startup = () => {
     useEffect(() => {
         const fetchStartupList = async () => {
             try {
-                console.log('request')
                 const data = await axios.get(`${url}/api/startup`);
-                console.log(data)
                 if (data.data.success) {
-                    console.log('startup')
-                    console.log(data.data.data)
                     setrecord(data.data.data)
                 } else {
                     seterror(`${data.error}`);
