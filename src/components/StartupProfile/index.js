@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { TransactionContext } from "../../context/TransactionContext";
 import styles from "./styles.module.css";
 import { TeamCard } from "../TeamCard";
-import { Button } from "react-bootstrap";
+// import { button } from "react-bootstrap";
 import FundingModal from "./FundingModal";
 import { FundRaiseCard } from "./FundRaiseCard";
 import { GetStartup, PostFundRaise } from "../../services/FundServices";
@@ -29,14 +29,14 @@ export const StartupProfile = () => {
   let companyId = "62250862f714a055d865f59b";
   const [show, setShow] = useState(false);
   const [startup, setStartup] = useState(null);
-  let { id } = useParams();
+  const { id } = useParams();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   useEffect(() => {
     console.log(id);
-    GetStartup(id).then((data) => setStartup(data.data.data));
+    GetStartup(id).then((res) => setStartup(res.data.data));
   }, []);
   const handleSubmit = (e) => {
     const { addressTo, amount, keyword, message } = formData;
@@ -124,15 +124,15 @@ export const StartupProfile = () => {
                 <h5>{startup?.industry}</h5>
               </div>
               {!currentAccount ? (
-                <Button variant="primary" onClick={connectWallet}>
+                <button variant="primary" onClick={connectWallet}>
                   Connect Wallet
-                </Button>
+                </button>
               ) : (
                 ""
               )}
             </div>
             <div className={styles.wrapper}>
-              <h3 className="my-2">About Us</h3>
+              <h2>About Us</h2>
               <div className={styles.wrapperContent}>
                 <p>{startup?.about}</p>
               </div>
@@ -166,13 +166,18 @@ export const StartupProfile = () => {
                   repellendus! Dolorum deserunt consequuntur voluptatem rerum
                 </p>
               </div>
-              <Button
-                variant="primary"
-                onClick={handleShow}
-                style={{ marginTop: "20px" }}
-              >
-                Raise Funds
-              </Button>
+              {JSON.parse(localStorage.getItem("startupUserInfo"))?.id ===
+              startup?.id ? (
+                <button
+                  variant="primary"
+                  onClick={handleShow}
+                  style={{ marginTop: "20px" }}
+                >
+                  Raise Funds
+                </button>
+              ) : (
+                ""
+              )}
             </div>
             <div className={styles.wrapper}>
               <h2>Recent Fund raises</h2>
@@ -183,6 +188,7 @@ export const StartupProfile = () => {
                     amount={fund.amount}
                     equity={fund.equity}
                     isActive={true}
+                    id={id}
                   />
                 ))}
                 {startup?.recentFunding?.length === 0 ? (
