@@ -23,18 +23,20 @@ function Home() {
   }, []);
   return (
     <div className={styles.container1}>
-      <div className={styles.section1}>
-        <h4>Network</h4>
-        {userInfo ? (
-          <button className={styles.profileBtn} onClick={handleProfileClick}>
-            <img
-              className={styles.profileImgUrl}
-              src={profileImgUrl}
-              alt="profile_img"
-            />{" "}
-            {" " + userInfo.name}
-          </button>
-        ) : null}
+      <div className={styles.themeBg}>
+        <div className={styles.section1}>
+          <h4>Network</h4>
+          {userInfo ? (
+            <button className={styles.profileBtn} onClick={handleProfileClick}>
+              <img
+                className={styles.profileImgUrl}
+                src={profileImgUrl}
+                alt="profile_img"
+              />{" "}
+              {" " + userInfo.name}
+            </button>
+          ) : null}
+        </div>
       </div>
       <div className={styles.section2}>
         <div className={styles.leftSection}>
