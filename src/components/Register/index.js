@@ -116,6 +116,7 @@ function Register() {
         localStorage.setItem("startupUserInfo", JSON.stringify(data.data));
         setSuccess(true);
         setuser(data.data);
+        history.push('/')
       } else {
         if (data) {
           seterror(data.message);
