@@ -84,6 +84,7 @@ const login = async (req, res, next) => {
 		delete data.password;
 		data["token"] = token;
 		data["userType"] = "entrepreneur";
+		data["id"] = user._id;
 
 		res.send({
 			success: true,
