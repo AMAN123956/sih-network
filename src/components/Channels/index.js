@@ -9,28 +9,28 @@ const Channel = () => {
     const [record, setrecord] = useState([{}])
 
     // localStorage.setItem('networkData',JSON.stringify(dummyData))
-        
+
     const localData = localStorage.getItem("startupUserInfo");
     const userInfo = localData ? JSON.parse(localData) : null;
 
     useEffect(() => {
         const fetchChannelList = async () => {
-            console.log('request')
-            let data;
-            if(userInfo && userInfo.id){
-             data = await axios.get(`${url}/api/channel/?userId=${userInfo.id}`);
+            try {
+                let data;
+                if (userInfo && userInfo.id) {
+                    data = await axios.get(`${url}/api/channel/?userId=${userInfo.id}`);
+                }
+                else {
+                    data = await axios.get(`${url}/api/channel`);
+                }
+                if (data.data.success) {
+                    setrecord(data.data.data)
+                } else {
+                    seterror(`${data.error}`);
+                }
             }
-            else{
-                data = await axios.get(`${url}/api/channel`);
-            }
-            console.log('channels data')
-            console.log(data)
-            if (data.data.success) {
-                console.log('startup')
-                console.log(data.data.data)
-                setrecord(data.data.data)
-            } else {
-                seterror(`${data.error}`);
+            catch (e) {
+                seterror(e.error)
             }
         }
         fetchChannelList();

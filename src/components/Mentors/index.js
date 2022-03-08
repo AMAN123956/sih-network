@@ -12,11 +12,10 @@ const Mentors = () => {
     useEffect(() => {
         const fetchInvestorList = async () => {
             try {
-                console.log('request')
                 const data = await axios.get(`${url}/api/investor`);
-                console.log(data)
+               
                 if (data.data.success) {
-                    console.log(data.data.data)
+               
                     setrecord(data.data.data)
                 } else {
                     seterror(`${data.error}`);

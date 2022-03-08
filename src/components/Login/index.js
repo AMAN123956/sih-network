@@ -8,27 +8,29 @@ import registerImg from "../../assets/img/register.png";
 import axios from "axios";
 import { url } from "../../utilities";
 function Login() {
-    const [number, setnumber] = useState("");
-    const [userType, setUserType] = useState('entrepreneur')
-    const [password, setpassword] = useState("");
+    const [number, setnumber] = useState(null);
+    const [userType, setUserType] = useState("entrepreneur");
+    const [password, setpassword] = useState(null);
     const [error, seterror] = useState(null);
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
     const [user, setuser] = useState(null);
 
     const history = useHistory();
+
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
     const localData = localStorage.getItem("startupUserInfo");
     const userInfo = localData ? JSON.parse(localData) : null;
-
+  
     const setUserTypeFunc = (e) => {
         setUserType(e.target.value)
     }
 
     useEffect(() => {
-        if (userInfo || user) {
+        if (userInfo) {
             let msg = new SpeechSynthesisUtterance();
             let voices = window.speechSynthesis.getVoices();
             msg.voice = voices[1];
@@ -38,11 +40,11 @@ function Login() {
             msg.lang = "hindi"
             speechSynthesis.cancel();
             msg.text = 'You are already Logged In';
-            console.log(msg.text)
+            // console.log(msg.text)
             speechSynthesis.speak(msg);
             history.push("/");
         } else {
-            document.querySelector('button').click();
+            document.querySelector("button").click();
             let msg = new SpeechSynthesisUtterance();
             let voices = window.speechSynthesis.getVoices();
             msg.voice = voices[1];
@@ -52,7 +54,7 @@ function Login() {
             msg.lang = "hindi"
             speechSynthesis.cancel();
             msg.text = 'Welcome to the Login Page, Press 1 If You are Blind Press 2 If You are Deaf Press 3 to Stop Audio';
-            console.log(msg.text)
+            // console.log(msg.text)
             speechSynthesis.speak(msg);
         }
         handleShow()
@@ -76,7 +78,7 @@ function Login() {
             document.removeEventListener('keydown', listener)
         }
         // eslint-disable-next-line
-    }, [userInfo]);
+    }, []);
 
     if (error) {
         setTimeout(() => {
@@ -88,20 +90,19 @@ function Login() {
         e.preventDefault();
         try {
             setLoading(true);
-            const { data } = await axios.post(`${url}/api/${userType}/login`, {
+            const data  = await axios.post(`${url}/api/${userType}/login`, {
                 number,
                 password,
             });
-
+          
             setLoading(false);
-            if (data && data.success) {
-                localStorage.setItem(
-                    "startupUserInfo",
-                    JSON.stringify(data.data)
-                );
+            console.log('data of logged in user')
+            console.log(data.data.data)
+            if (data && data.data.success) {
+                localStorage.setItem("startupUserInfo", JSON.stringify(data.data.data));
                 setSuccess(true);
-                setuser(data.data);
-                history.push('/home')
+                // setuser(data.data);
+                history.push('/')
             } else {
                 if (data) {
                     seterror(data.message);

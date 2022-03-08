@@ -14,7 +14,6 @@ import 'react-accessible-accordion/dist/fancy-example.css';
 import { Country, State, City } from 'country-state-city';
 import axios from 'axios';
 import { url } from '../../utilities'
-console.log(Country.getAllCountries())
 const states = State.getStatesOfCountry('IN')
 const cities = City.getCitiesOfCountry('IN')
 
@@ -28,12 +27,10 @@ const Filter = () => {
     let industryFilterTodos = [];
     let stateFilterTodos = [];
     const fetchData = () => {
-        console.log('network')
-        console.log(JSON.stringify(sector))
     }
 
     const industryFilter = (e) => {
-        console.log(e.target.value)
+        
 
         if (industry.includes(e.target.value)) {
             industryFilterTodos = industry.filter((t) => t !== e.target.value);
@@ -51,7 +48,7 @@ const Filter = () => {
 
 
     const sectorFilter = (e) => {
-        console.log(e.target.value)
+     
         if (sector.includes(e.target.value)) {
             sectorFilterTodos = sector.filter((t) => t !== e.target.value);
             localStorage.setItem("sector", JSON.stringify(sectorFilterTodos));
@@ -67,7 +64,6 @@ const Filter = () => {
     }
 
     const stateFilter = (e) => {
-        console.log(e.target.value)
         if (state.includes(e.target.value)) {
             stateFilterTodos = sector.filter((t) => t !== e.target.value);
             localStorage.setItem("state", JSON.stringify(stateFilterTodos));
@@ -100,9 +96,6 @@ const Filter = () => {
 
     useEffect(() => {
         async function listener(event) {
-            console.log(event.code)
-            console.log(event.target.nodeName)
-            console.log(event.which)
             const searchField = document.getElementById('searchField')
             if (searchField.value === '') {
                 if (event.code === 'Digit1') {
@@ -141,10 +134,7 @@ const Filter = () => {
             }
             
             if(event.code === 'ControlLeft'){
-                console.log("hello")
-                console.log(searchField.value)
                 const data = await axios.get(`${url}/api/${userType}/?name=${searchField.value}`)
-                console.log(data)
             }
 
              
